@@ -1,0 +1,68 @@
+# remove the following ignores for your project
+/config/pimcore/constants.php
+
+# symfony default
+/.web-server-pid
+/config/pimcore/parameters.yml
+/build/
+/phpunit.xml
+/public/bundles/
+
+# local config
+/.env.local
+/.env.local.php
+/.env.*.local
+!/config/local
+/config/local/*
+!config/local/.gitkeep
+
+/var/*
+!/var/.gitkeep
+!/var/classes/
+/var/classes/DataObject
+
+!/var/config
+/var/config/system.yml
+/var/config/maintenance.php
+
+# project specific recommendations
+/var/config/tag-manager.php
+/var/config/reports.php
+
+
+/public/var/
+/public/sitemap*.xml
+
+# PHP-CS-Fixer
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+
+# composer
+/vendor/
+
+# PhpStorm / IDEA
+.idea
+# NetBeans
+nbproject
+
+# temp
+.temp
+/.git
+/.docker/nginx.conf
+/.docker/supervisord.conf
+/.github/ISSUE_TEMPLATE/Bug-Report.yml
+/.github/ISSUE_TEMPLATE/config.yml
+/.github/ISSUE_TEMPLATE/Feature-Request.yml
+/.github/ISSUE_TEMPLATE/Improvement.yml
+/.github/workflows/pimcore-skeleton.yml
+/bin/console
+/tests/_output/.gitignore
+/tests/Functional/Command/CliCommandTest.php
+/tests/Functional/bootstrap.php
+/tests/Support/.gitkeep
+/tests/Unit/Controller/DefaultControllerTest.php
+/tests/Unit/ReadmeTest.php
+/tests/bootstrap.php
+/tests/Functional.suite.yml
+/tests/Unit.suite.yml
+/tests/_output/.gitignore
