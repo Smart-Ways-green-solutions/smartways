@@ -1,5 +1,47 @@
 <?php
 
+use CustomerManagementFrameworkBundle\PimcoreCustomerManagementFrameworkBundle;
+use Pimcore\Bundle\ObjectMergerBundle\ObjectMergerBundle;
+use Pimcore\Bundle\PerspectiveEditorBundle\PimcorePerspectiveEditorBundle;
+
 return [
-    //Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
+    Pimcore\Bundle\ApplicationLoggerBundle\PimcoreApplicationLoggerBundle::class => ['all' => true],
+    Pimcore\Bundle\CustomReportsBundle\PimcoreCustomReportsBundle::class => ['all' => true],
+    Pimcore\Bundle\GlossaryBundle\PimcoreGlossaryBundle::class => ['all' => true],
+    Pimcore\Bundle\SeoBundle\PimcoreSeoBundle::class => ['all' => true],
+    Pimcore\Bundle\SimpleBackendSearchBundle\PimcoreSimpleBackendSearchBundle::class => ['all' => true],
+    Pimcore\Bundle\StaticRoutesBundle\PimcoreStaticRoutesBundle::class => ['all' => true],
+    Pimcore\Bundle\TinymceBundle\PimcoreTinymceBundle::class => ['all' => true],
+    Pimcore\Bundle\UuidBundle\PimcoreUuidBundle::class => ['all' => true],
+    Pimcore\Bundle\WordExportBundle\PimcoreWordExportBundle::class => ['all' => true],
+    Pimcore\Bundle\XliffBundle\PimcoreXliffBundle::class => ['all' => true],
+    Pimcore\Bundle\EcommerceFrameworkBundle\PimcoreEcommerceFrameworkBundle::class => ['all' => true],
+    Pimcore\Bundle\PersonalizationBundle\PimcorePersonalizationBundle::class => ['all' => true],
+    Pimcore\Bundle\GoogleMarketingBundle\PimcoreGoogleMarketingBundle::class => ['all' => true],
+    Pimcore\Bundle\WebToPrintBundle\PimcoreWebToPrintBundle::class => ['all' => true],
+    Pimcore\Bundle\NewsletterBundle\PimcoreNewsletterBundle::class => ['all' => true],
+    Pimcore\Bundle\FileExplorerBundle\PimcoreFileExplorerBundle::class => ['all' => true],
+    Pimcore\Bundle\SystemInfoBundle\PimcoreSystemInfoBundle::class => ['all' => true],
+    Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
+    Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class => ['all' => true],
+    FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+    League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
+    Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+    Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
+    Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
+    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
+    Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
+    Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+    Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle::class => ['all' => true],
+    Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
+    Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
+    Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
+    Pimcore\Bundle\CoreBundle\PimcoreCoreBundle::class => ['all' => true],
+    Pimcore\Bundle\InstallBundle\PimcoreInstallBundle::class => ['all' => true],
+    FormBuilderBundle\FormBuilderBundle::class => ['all' => true],
+    PimcorePerspectiveEditorBundle::class => ['all' => true],
+    PimcoreCustomerManagementFrameworkBundle::class => ['all' => true],
+    ObjectMergerBundle::class => ['all' => true],
 ];
