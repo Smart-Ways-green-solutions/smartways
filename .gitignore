@@ -52,8 +52,6 @@ nbproject
 /.docker/supervisord.conf
 /.github/
 
-/bin/console
-
 /tests/
 /node_modules/
 /.editorconfig
