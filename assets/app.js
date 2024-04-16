@@ -7,8 +7,8 @@ import './styles/app.css';
 //window.$ = $;
 
 // import * as bootstrap from 'bootstrap';
-import 'bootstrap';
-import 'bootstrap-icons'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 //import toast from 'bootstrap/js/src/toast';
 //window.toast = toast;
