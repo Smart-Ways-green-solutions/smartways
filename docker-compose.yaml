@@ -27,7 +27,7 @@ services:
     nginx:
         image: nginx:stable-alpine
         ports:
-            - "80:80"
+            - "8888:80"
         volumes:
             - .:/var/www/html:ro
             - ./.docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
@@ -35,7 +35,7 @@ services:
             - php
 
     php:
-        #user: '1000:1000' # set to your uid:gid
+        user: '1000:1000' # set to your uid:gid
         image: pimcore/pimcore:php8.2-debug-latest
         environment:
             COMPOSER_HOME: /var/www/html
@@ -54,7 +54,7 @@ services:
             - .:/var/www/html
 
     supervisord:
-        #user: '1000:1000' # set to your uid:gid
+        user: '1000:1000' # set to your uid:gid
         image: pimcore/pimcore:php8.2-supervisord-latest
         depends_on:
             db:

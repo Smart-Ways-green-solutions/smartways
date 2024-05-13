@@ -1,2 +1,9 @@
 doctrine:
-    dbal: { connections: { default: { host: localhost, port: 3306, user: newuser, password: password, dbname: smartways, mapping_types: { enum: string, bit: boolean }, server_version: '11.3.2-MariaDB-1:11.3.2+maria~deb10' } } }
+  dbal:
+    connections:
+      default:
+        user: '%env(DATABASE_USER)%'
+        password: '%env(DATABASE_PASSWORD)%'
+        dbname: '%env(DATABASE_NAME)%'
+        host: '%env(DATABASE_HOST)%'
+        port: '%env(DATABASE_PORT)%'

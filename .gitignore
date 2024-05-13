@@ -55,3 +55,5 @@ nbproject
 /tests/
 /node_modules/
 /.editorconfig
+/cache/
+/public/build/
