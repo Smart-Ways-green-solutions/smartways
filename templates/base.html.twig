@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="">
-    <meta name="author" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 
     {% if not document is defined or not document %}
         {% set document = pimcore_document(1) %}
@@ -45,13 +45,18 @@
     {% endblock %}
 
 </head>
-<body>
-<div class="container py-3">
-{% include("default/header.html.twig") %}
-{% block body %}
 
-{% endblock %}
-{% include("default/footer.html.twig") %}
-</div>
+{% block fullsite %}
+<body>
+    <div class="page">
+        {% include("global/header.html.twig") %}
+        {% include "global/navigation.html.twig" %}
+
+        {% block body %}
+        {% endblock %}
+
+        {% include("global/footer.html.twig") %}
+    </div>
 </body>
+{% endblock %}
 </html>

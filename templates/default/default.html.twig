@@ -1,11 +1,36 @@
 {% extends("base.html.twig") %}
 
 {% block body %}
-    <main>
-        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 fw-normal">SmartWays</h1>
-            <p class="fs-5 text-muted">
-            </p>
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Overview
+                        </div>
+                        <h2 class="page-title">
+                            Vertical transparent layout </h2>
+                    </div>
+                    <!-- Page title actions -->
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </main>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+
+                {% include "default/home.html.twig" %}
+
+            </div>
+        </div>
+
+    </div>
 {% endblock %}
