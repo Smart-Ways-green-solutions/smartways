@@ -5,6 +5,9 @@ security:
         pimcore_admin:
             id: Pimcore\Security\User\UserProvider
 
+        cmf_customer_provider:
+            id: cmf.security.user_provider
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,6 +21,27 @@ security:
 
         # Pimcore Admin Bundle firewall
         pimcore_admin: '%pimcore_admin_bundle.firewall_settings%'
+
+        smartcity_frontend:
+
+            provider: cmf_customer_provider
+
+            entry_point: form_login
+
+            form_login:
+                enable_csrf: true
+                login_path: 'account-login'
+                check_path: 'account-login'
+                default_target_path: 'account-index'
+
+            logout:
+                path: 'account-logout'
+                target: /
+
+                # optional: to keep logins of other firewalls (like admin)
+                invalidate_session: false
+
+            remember_me:
 
     access_control:
         # Pimcore admin ACl  // DO NOT CHANGE!
