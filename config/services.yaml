@@ -1,6 +1,8 @@
 parameters:
     secret: u0dUYVkZwBHMrfe9hNAGzxy7l9oPYQdcNrjSdhwm+Jg=
 
+    # use echo \Defuse\Crypto\Key::createNewRandomKey()->saveToAsciiSafeString(); to generate secret for data encryption
+    app_encryption_secret: "Of-#UeDc6d8xyTf60sK0x52keQNflYG=R22MGLacw14="
     # customize the full path to external executables
     # normally they are auto-detected by `which program` or auto-discovered in the configured path in
     # System Settings -> General -> Additional $PATH variable

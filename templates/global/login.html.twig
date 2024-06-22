@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block fullsite %}
+    <body class="d-flex flex-column bg-white">
+    <div class="row g-0 flex-fill">
+        <div class="col-12 col-lg-6 col-xl-4 border-top-wide border-primary d-flex flex-column justify-content-center">
+            <div class="container container-tight my-5 px-lg-5">
+                <div class="text-center mb-4">
+                    <a href="/" class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36" alt=""></a>
+                </div>
+                <h2 class="h3 text-center mb-3">
+                    Login to your account </h2>
+
+                {{ form(form) }}
+
+                <div class="text-center text-secondary mt-3">
+                    Don't have account yet? <a href="./sign-up.html" tabindex="-1">Sign up</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-8 d-none d-lg-block">
+            <div class="bg-cover h-100 min-vh-100" style="background-image: url(/misc/img/forest-path-7499014_1280.jpg)">
+                <div>Bild von
+                    <a href="https://pixabay.com/de/users/fotorieth-837884/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7499014">Aritha</a> auf
+                    <a href="https://pixabay.com/de//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=7499014">Pixabay</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </body>
+{% endblock %}

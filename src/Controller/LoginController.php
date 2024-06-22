@@ -16,22 +16,12 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
-class AccountController extends BaseController
+class LoginController extends BaseController
 {
     use PasswordMaxLengthTrait;
 
     /**
-     * @param Request $request
-     * @return Response
-     */
-    #[\Symfony\Component\Routing\Attribute\Route('/login', name: 'post_show')]
-    public function testAction(Request $request): Response
-    {
-        return $this->render('global/signin.html.twig');
-    }
-
-    /**
-     * @Route("/{_locale}/account/login", name="account-login")
+     * @Route("/login", name="account-login")
      *
      * @param AuthenticationUtils $authenticationUtils
      * @param Request $request
@@ -48,11 +38,13 @@ class AccountController extends BaseController
 
         //redirect user to index page if logged in
         if ($user && $this->isGranted('ROLE_USER')) {
-            return $this->redirectToRoute('account-index');
+            return $this->redirectToRoute('home');
         }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+
+        // dd($error);
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -62,7 +54,7 @@ class AccountController extends BaseController
         ];
 
         $form = $this->createForm(LoginFormType::class, $formData, [
-            'action' => $this->generateUrl('account-login'),
+            'action' => $this->generateUrl("account-login.de")
         ]);
 
         //store referer in session to get redirected after login
@@ -70,7 +62,7 @@ class AccountController extends BaseController
         //    $request->getSession()->set('_security.demo_frontend.target_path', $request->headers->get('referer'));
         //}
 
-        return $this->render('account/login.html.twig', [
+        return $this->render('global/login.html.twig', [
             'form' => $form->createView(),
             'error' => $error
         ]);
@@ -78,7 +70,7 @@ class AccountController extends BaseController
 
 
     /**
-     * @Route("/{_locale}/account-blocked", name="account-blocked")
+     * @Route("/account-blocked", name="account-blocked")
      * @param UserInterface $user
      * @return Response
      */
@@ -94,24 +86,7 @@ class AccountController extends BaseController
 
 
     /**
-     * @return Response
-     */
-    public function loginFormAction(): Response
-    {
-        $formData = [];
-
-        $form = $this->createForm(LoginFormType::class, $formData, [
-            'action' => $this->generateUrl('account-login'),
-        ]);
-
-        return $this->render('account/login-form.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-
-
-    /**
-     * @Route("/account/send-password-recovery", name="account-password-send-recovery")
+     * @Route("/send-password-recovery", name="account-password-send-recovery")
      *
      * @param Request $request
      * @param PasswordRecoveryService $service
@@ -146,7 +121,7 @@ class AccountController extends BaseController
 
 
     /**
-     * @Route("/account/reset-password", name="account-reset-password")
+     * @Route("/reset-password", name="account-reset-password")
      *
      * @param Request $request
      * @param PasswordRecoveryService $service

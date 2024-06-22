@@ -1,6 +1,7 @@
 imports:
     - { resource: 'local/' }
-
+    - { resource: services.yaml }
+    - { resource: cmf.yaml }
 
 pimcore:
     security:

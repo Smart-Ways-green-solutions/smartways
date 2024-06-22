@@ -21,23 +21,30 @@ class LoginFormType extends AbstractType
     {
         $builder
             ->add('_username', EmailType::class, [
-                'label' => 'user.email',
+                'label' => 'E-Mail Adresse',
                 'label_attr' => [
-                    'class' => 'sr-only'
+                    'class' => 'form-label',
+                ],
+                'attr' => [
+                    'class' => 'form-control mb-2'
                 ]
             ])
             ->add('_password', PasswordType::class, [
-                'label' => 'user.password',
+                'label' => 'Passwort',
                 'label_attr' => [
-                    'class' => 'sr-only'
+                    'class' => 'form-label',
                 ],
                 'attr' => [
-                    'maxlength' => PasswordHasherInterface::MAX_PASSWORD_LENGTH
+                    'maxlength' => PasswordHasherInterface::MAX_PASSWORD_LENGTH,
+                    'class' => 'form-control mb-2'
                 ]
             ])
             ->add('_target_path', HiddenType::class)
             ->add('_submit', SubmitType::class, [
-                'label' => 'general.login'
+                'label' => 'Login',
+                'attr' => [
+                    'class' => 'btn btn-primary w-100'
+                ]
             ]);
     }
 

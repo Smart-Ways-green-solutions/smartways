@@ -15,6 +15,7 @@ class DefaultController extends BaseController
      * @param Request $request
      * @return Response
      */
+    #[Route('/home', name: 'home')]
     public function defaultAction(Request $request): Response
     {
         return $this->render('default/default.html.twig');

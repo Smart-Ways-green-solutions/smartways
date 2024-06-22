@@ -1,4 +1,5 @@
 security:
+
     enable_authenticator_manager: true
 
     providers:
@@ -22,6 +23,8 @@ security:
         # Pimcore Admin Bundle firewall
         pimcore_admin: '%pimcore_admin_bundle.firewall_settings%'
 
+        cmf_webservice: '%customer_management_framework.firewall_settings%'
+
         smartcity_frontend:
 
             provider: cmf_customer_provider
@@ -32,7 +35,7 @@ security:
                 enable_csrf: true
                 login_path: 'account-login'
                 check_path: 'account-login'
-                default_target_path: 'account-index'
+                default_target_path: 'home'
 
             logout:
                 path: 'account-logout'

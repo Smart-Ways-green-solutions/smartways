@@ -14,4 +14,4 @@ app_localized:
         cs: /cs
 
 account-logout:
-    path: '{_locale}/logout'
+    path: '/logout'
