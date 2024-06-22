@@ -2,13 +2,9 @@
 
 namespace App\Controller;
 
-use App\EventListener\AuthenticationLoginListener;
 use App\Form\LoginFormType;
 use App\Form\PasswordMaxLengthTrait;
-use App\Model\Customer;
 use App\Services\PasswordRecoveryService;
-use Pimcore\Bundle\EcommerceFrameworkBundle\Factory;
-use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\Order\Listing\Filter\CustomerObject;
 use Pimcore\Translation\Translator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +19,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class AccountController extends BaseController
 {
     use PasswordMaxLengthTrait;
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    #[\Symfony\Component\Routing\Attribute\Route('/login', name: 'post_show')]
+    public function testAction(Request $request): Response
+    {
+        return $this->render('global/signin.html.twig');
+    }
 
     /**
      * @Route("/{_locale}/account/login", name="account-login")

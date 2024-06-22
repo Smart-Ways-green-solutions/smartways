@@ -7,7 +7,7 @@ use Pimcore\Model\Document\Hardlink;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Web2printController extends FrontendController
+class Web2printController extends BaseController
 {
     /**
      * @param Request $request
