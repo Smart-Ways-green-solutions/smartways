@@ -26,7 +26,10 @@
  * - mobile [input]
  * - fax [input]
  * - deliveryDays [multiselect]
- * - permission_index [checkbox]
+ * - permission_wegepate [checkbox]
+ * - permission_lagerist [checkbox]
+ * - permission_wegemanager [checkbox]
+ * - permission_admin [checkbox]
  * - idEncoded [input]
  * - lastLogin [datetime]
  * - active [checkbox]
@@ -45,7 +48,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1719088051,
+   'modificationDate' => 1719150668,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '\\CustomerManagementFrameworkBundle\\Model\\AbstractCustomer\\DefaultAbstractUserawareCustomer',
@@ -911,8 +914,74 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                     array (
                       0 => 
                       \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
-                         'name' => 'permission_index',
-                         'title' => 'Index',
+                         'name' => 'permission_wegepate',
+                         'title' => 'permission_wegepate',
+                         'tooltip' => '',
+                         'mandatory' => false,
+                         'noteditable' => false,
+                         'index' => false,
+                         'locked' => false,
+                         'style' => '',
+                         'permissions' => NULL,
+                         'fieldtype' => '',
+                         'relationType' => false,
+                         'invisible' => false,
+                         'visibleGridView' => false,
+                         'visibleSearch' => false,
+                         'blockedVarsForExport' => 
+                        array (
+                        ),
+                         'defaultValue' => NULL,
+                         'defaultValueGenerator' => '',
+                      )),
+                      1 => 
+                      \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
+                         'name' => 'permission_lagerist',
+                         'title' => 'Permission _lagerist',
+                         'tooltip' => '',
+                         'mandatory' => false,
+                         'noteditable' => false,
+                         'index' => false,
+                         'locked' => false,
+                         'style' => '',
+                         'permissions' => NULL,
+                         'fieldtype' => '',
+                         'relationType' => false,
+                         'invisible' => false,
+                         'visibleGridView' => false,
+                         'visibleSearch' => false,
+                         'blockedVarsForExport' => 
+                        array (
+                        ),
+                         'defaultValue' => NULL,
+                         'defaultValueGenerator' => '',
+                      )),
+                      2 => 
+                      \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
+                         'name' => 'permission_wegemanager',
+                         'title' => 'Permission _wegemanager',
+                         'tooltip' => '',
+                         'mandatory' => false,
+                         'noteditable' => false,
+                         'index' => false,
+                         'locked' => false,
+                         'style' => '',
+                         'permissions' => NULL,
+                         'fieldtype' => '',
+                         'relationType' => false,
+                         'invisible' => false,
+                         'visibleGridView' => false,
+                         'visibleSearch' => false,
+                         'blockedVarsForExport' => 
+                        array (
+                        ),
+                         'defaultValue' => NULL,
+                         'defaultValueGenerator' => '',
+                      )),
+                      3 => 
+                      \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
+                         'name' => 'permission_admin',
+                         'title' => 'Permission _admin',
                          'tooltip' => '',
                          'mandatory' => false,
                          'noteditable' => false,

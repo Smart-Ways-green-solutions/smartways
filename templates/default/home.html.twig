@@ -1,3 +1,6 @@
+{% do pimcore_head_title('My first part') %}
+{% do pimcore_head_meta().appendName('description', 'My SEO description for my awesome page') %}
+
 <div class="row row-deck row-cards">
 
     <div class="col-12">
@@ -156,7 +159,7 @@
                         <td>$887</td>
                         <td class="text-end">
                             <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
+                              <button class="btn dropdown-toggle align-text-top" data-placement="left" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                               <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#">
                                   Action

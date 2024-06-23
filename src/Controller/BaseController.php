@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Pimcore\Controller\FrontendController;
@@ -32,4 +33,13 @@ class BaseController extends FrontendController
     {
         return array_merge($request->request->all(), $request->query->all());
     }
+
+    // TODO
+    public function checkPermission(DataObject\Customer $user, array $permissions)
+    {
+        if ($user->getPermission_wegepate() && in_array("wegepate", $permissions)) {
+            return true;
+        }
+    }
+
 }
