@@ -36,7 +36,7 @@ class BenutzerController extends BaseController
     #[IsGranted("IS_AUTHENTICATED")]
     public function createUserAction(Request $request): Response
     {
-        return $this->render('verwaltung/benutzer.html.twig');
+        return $this->render('verwaltung/benutzer_anlegen.html.twig');
     }
 
     /**
@@ -48,8 +48,8 @@ class BenutzerController extends BaseController
     #[IsGranted("IS_AUTHENTICATED")]
     public function editUserAction(Request $request, int $userid): Response
     {
-        dd(\Pimcore\Model\DataObject\Customer::getById($userid));
-        return $this->render('verwaltung/benutzer.html.twig');
+        // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
+        return $this->render('verwaltung/benutzer_bearbeiten.html.twig');
     }
 
     /**
