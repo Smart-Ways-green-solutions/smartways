@@ -54,7 +54,7 @@ class LoginController extends BaseController
         ];
 
         $form = $this->createForm(LoginFormType::class, $formData, [
-            'action' => $this->generateUrl("account-login.de")
+            'action' => $this->generateUrl("account-login")
         ]);
 
         //store referer in session to get redirected after login

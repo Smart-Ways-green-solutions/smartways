@@ -111,6 +111,7 @@ pimcore:
 
 #### SYMFONY OVERRIDES
 framework:
+    csrf_protection: ~
 
 #### DEFINE LOCATION OF MANIFEST WHEN WORKING WITH SYMFONY ENCORE
 #    assets:

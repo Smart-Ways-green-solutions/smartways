@@ -6,6 +6,7 @@ use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class HerstellerController extends BaseController
 {
@@ -14,6 +15,7 @@ class HerstellerController extends BaseController
      * @return Response
      */
     #[Route('/verwaltung/hersteller', name: 'verwaltung_hersteller')]
+    #[IsGranted("IS_AUTHENTICATED")]
     public function testAction(Request $request): Response
     {
         return $this->render('verwaltung/hersteller.html.twig');
