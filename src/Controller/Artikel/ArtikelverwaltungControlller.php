@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Verwaltung;
+namespace App\Controller\Artikel;
 
 use App\Controller\BaseController;
 use App\Model\Customer;
@@ -9,21 +9,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class BenutzerController extends BaseController
+class ArtikelverwaltungControlller extends BaseController
 {
     /**
      * @param Request $request
      * @return Response
      */
-    #[Route('/verwaltung/benutzer', name: 'verwaltung_benutzer')]
+    #[Route('/artikel/artikelverwaltung', name: 'artikel_verwaltung')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function userAction(Request $request): Response
+    public function artikelAction(Request $request): Response
     {
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
         $currentUsers = new \Pimcore\Model\DataObject\Customer\Listing();
 
-        return $this->render('verwaltung/benutzer.html.twig', [
+        return $this->render('artikel/artikelverwaltung.html.twig', [
             'currentUsers' => $currentUsers,
         ]);
     }
@@ -32,11 +32,11 @@ class BenutzerController extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/verwaltung/benutzer-anlegen', name: 'verwaltung_benutzer-anlegen')]
+    #[Route('/artikel/artikel-anlegen', name: 'artikel_verwaltung-anlegen')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function createUserAction(Request $request): Response
+    public function createArtikelAction(Request $request): Response
     {
-        return $this->render('verwaltung/benutzer_anlegen.html.twig');
+        return $this->render('');
     }
 
     /**
@@ -44,12 +44,12 @@ class BenutzerController extends BaseController
      * @param int $userid
      * @return Response
      */
-    #[Route('/verwaltung/benutzer-bearbeiten/{userid}', name: 'verwaltung_benutzer-bearbeiten')]
+    #[Route('/artikel/artikel-bearbeiten/{userid}', name: 'artikel_verwaltung-bearbeiten')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function editUserAction(Request $request, int $userid): Response
+    public function editArtikelAction(Request $request, int $userid): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
-        return $this->render('verwaltung/benutzer_bearbeiten.html.twig');
+        return $this->render('');
     }
 
     /**
@@ -57,13 +57,12 @@ class BenutzerController extends BaseController
      * @param int $userid
      * @return Response
      */
-    #[Route('/verwaltung/benutzer-loeschen/{userid}', name: 'verwaltung_benutzer-loeschen')]
+    #[Route('/artikel/artikel-loeschen/{artikelid}', name: 'artikel_verwaltung-loeschen')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function deleteUserAction(Request $request, int $userid): Response
+    public function deleteArtikelAction(Request $request, int $artikeld): Response
     {
-        $user = \Pimcore\Model\DataObject\Customer::getById($userid);
         // $user->delete();
 
-        return $this->redirectToRoute("verwaltung_benutzer");
+        return $this->redirectToRoute("artikel_verwaltung");
     }
 }
