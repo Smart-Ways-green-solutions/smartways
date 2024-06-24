@@ -34,42 +34,24 @@
                                 <table class="table table-vcenter table-mobile-md card-table">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Title</th>
-                                        <th>Role</th>
+                                        <th>Tag-Name</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    {% for user in currentUsers %}
                                         <tr>
-                                            <td data-label="Name">
-                                                <div class="d-flex py-1 align-items-center">
-                                                    <span class="avatar me-2" style="background-image: url(./static/avatars/010m.jpg)"></span>
-                                                    <div class="flex-fill">
-                                                        <div class="font-weight-medium">{{ user.lastname }} {{ user.firstname }}</div>
-                                                        <div class="text-secondary">
-                                                            <a href="#" class="text-reset">{{ user.email }}</a></div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-label="Title">
-                                                <div>VP Sales</div>
-                                                <div class="text-secondary">Business Development</div>
-                                            </td>
                                             <td class="text-secondary" data-label="Role">
-                                                User
+                                                Tag-Name
                                             </td>
                                             <td>
                                                 <div class="btn-list flex-nowrap">
-                                                    <a href="{{ path('verwaltung_benutzer-bearbeiten', { userid: user.id }) }}" class="btn">
+                                                    <a href="{{ path('verwaltung_tags-bearbeiten', { tagid: 111 }) }}" class="btn">
                                                         Bearbeiten
                                                     </a>
                                                 </div>
                                             </td>
                                         </tr>
-                                    {% endfor %}
 
                                     </tbody>
                                 </table>

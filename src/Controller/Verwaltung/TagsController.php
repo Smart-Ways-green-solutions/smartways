@@ -34,12 +34,12 @@ class TagsController extends BaseController
 
     /**
      * @param Request $request
-     * @param int $userid
+     * @param int $tagid
      * @return Response
      */
-    #[Route('/verwaltung/tags-bearbeiten/{userid}', name: 'verwaltung_tags-bearbeiten')]
+    #[Route('/verwaltung/tags-bearbeiten/{tagid}', name: 'verwaltung_tags-bearbeiten')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function editTagsAction(Request $request, int $userid): Response
+    public function editTagsAction(Request $request, int $tagid): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
         return $this->render('verwaltung/tags_bearbeiten.html.twig');
@@ -47,14 +47,14 @@ class TagsController extends BaseController
 
     /**
      * @param Request $request
-     * @param int $userid
+     * @param int $tagid
      * @return Response
      */
-    #[Route('/verwaltung/tags-loeschen/{userid}', name: 'verwaltung_tags-loeschen')]
+    #[Route('/verwaltung/tags-loeschen/{tagid}', name: 'verwaltung_tags-loeschen')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function deleteTagsAction(Request $request, int $userid): Response
+    public function deleteTagsAction(Request $request, int $tagid): Response
     {
-        $user = \Pimcore\Model\DataObject\Customer::getById($userid);
+        $user = \Pimcore\Model\DataObject\Customer::getById($tagid);
         // $user->delete();
 
         return $this->redirectToRoute("verwaltung_tags");
