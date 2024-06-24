@@ -37,8 +37,8 @@
                                     <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Title</th>
-                                        <th>Role</th>
+                                        <th>Funktion</th>
+                                        <th>Rollen</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
@@ -48,7 +48,6 @@
                                         <tr>
                                             <td data-label="Name">
                                                 <div class="d-flex py-1 align-items-center">
-                                                    <span class="avatar me-2" style="background-image: url(./static/avatars/010m.jpg)"></span>
                                                     <div class="flex-fill">
                                                         <div class="font-weight-medium">{{ user.lastname }} {{ user.firstname }}</div>
                                                         <div class="text-secondary">
@@ -56,12 +55,24 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td data-label="Title">
-                                                <div>VP Sales</div>
-                                                <div class="text-secondary">Business Development</div>
+                                            <td data-label="Funktion">
+                                                <div>{{ app.user.role }}</div>
                                             </td>
-                                            <td class="text-secondary" data-label="Role">
-                                                User
+                                            <td class="text-secondary" data-label="Rollen">
+                                                <div class="badges-list">
+                                                    {% if app.user.permission_admin %}
+                                                        <span class="badge bg-red text-red-fg">Admin</span>
+                                                    {% endif %}
+                                                    {% if app.user.permission_wegemanager %}
+                                                        <span class="badge bg-blue text-blue-fg">Wegemanager</span>
+                                                    {% endif %}
+                                                    {% if app.user.permission_lagerist %}
+                                                        <span class="badge bg-purple text-purple-fg">Lagerist</span>
+                                                    {% endif %}
+                                                    {% if app.user.permission_wegepate %}
+                                                        <span class="badge bg-green text-green-fg">Wegepate</span>
+                                                    {% endif %}
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="btn-list flex-nowrap">
