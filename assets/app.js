@@ -10,13 +10,15 @@ import './styles/app.css';
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap-icons/font/bootstrap-icons.css'
 
-import './tabler-v1.0.0-beta20/dist/css/tabler.css'
-import './tabler-v1.0.0-beta20/dist/css/demo.css'
+//import './tabler-v1.0.0-beta20/dist/css/tabler.css'
+//import './tabler-v1.0.0-beta20/dist/css/demo.css'
 
-import './tabler-v1.0.0-beta20/dist/js/tabler'
-import './tabler-v1.0.0-beta20/dist/js/demo-theme'
+//import './tabler-v1.0.0-beta20/dist/js/tabler'
+//import './tabler-v1.0.0-beta20/dist/js/demo-theme'
 // import './tabler-v1.0.0-beta20/dist/js/demo'
 
+import '@tabler/core/dist/js/tabler.min';
+import '@tabler/core/dist/css/tabler.min.css';
 
 //import toast from 'bootstrap/js/src/toast';
 //window.toast = toast;
