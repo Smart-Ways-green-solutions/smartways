@@ -18,7 +18,12 @@ import './styles/app.css';
 // import './tabler-v1.0.0-beta20/dist/js/demo'
 
 import '@tabler/core/dist/js/tabler.min';
+import '@tabler/core/dist/js/demo.min';
+import '@tabler/core/dist/js/demo-theme.min';
+
 import '@tabler/core/dist/css/tabler.min.css';
+import '@tabler/core/dist/css/demo.min.css';
+
 
 //import toast from 'bootstrap/js/src/toast';
 //window.toast = toast;

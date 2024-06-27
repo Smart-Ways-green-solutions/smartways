@@ -51,25 +51,25 @@
                                                     <div class="flex-fill">
                                                         <div class="font-weight-medium">{{ user.lastname }} {{ user.firstname }}</div>
                                                         <div class="text-secondary">
-                                                            <a href="#" class="text-reset">{{ user.email }}</a></div>
+                                                            <a href="mailto:{{ user.email }}" class="text-reset">{{ user.email }}</a></div>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td data-label="Funktion">
-                                                <div>{{ app.user.role }}</div>
+                                                <div>{{ user.role }}</div>
                                             </td>
                                             <td class="text-secondary" data-label="Rollen">
                                                 <div class="badges-list">
-                                                    {% if app.user.permission_admin %}
+                                                    {% if user.permission_admin %}
                                                         <span class="badge bg-red text-red-fg">Admin</span>
                                                     {% endif %}
-                                                    {% if app.user.permission_wegemanager %}
+                                                    {% if user.permission_wegemanager %}
                                                         <span class="badge bg-blue text-blue-fg">Wegemanager</span>
                                                     {% endif %}
-                                                    {% if app.user.permission_lagerist %}
+                                                    {% if user.permission_lagerist %}
                                                         <span class="badge bg-purple text-purple-fg">Lagerist</span>
                                                     {% endif %}
-                                                    {% if app.user.permission_wegepate %}
+                                                    {% if user.permission_wegepate %}
                                                         <span class="badge bg-green text-green-fg">Wegepate</span>
                                                     {% endif %}
                                                 </div>
