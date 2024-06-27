@@ -9,7 +9,8 @@
     "sass-loader": "^13.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^4.10.0",
-    "webpack-notifier": "^1.15.0"
+    "webpack-notifier": "^1.15.0",
+    "tabler-ui": "^0.0.34"
   },
   "license": "UNLICENSED",
   "private": true,
@@ -20,8 +21,8 @@
     "build": "encore production --progress"
   },
   "dependencies": {
+    "@tabler/core": "^1.0.0-beta20",
     "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "icons": "^1.0.0"
+    "bootstrap-icons": "^1.11.3"
   }
 }
