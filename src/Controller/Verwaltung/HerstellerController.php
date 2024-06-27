@@ -54,8 +54,6 @@ class HerstellerController extends BaseController
     #[IsGranted("IS_AUTHENTICATED")]
     public function deleteHerstellerAction(Request $request, int $herstellerid): Response
     {
-        $user = \Pimcore\Model\DataObject\Customer::getById($herstellerid);
-        // $user->delete();
 
         return $this->redirectToRoute("verwaltung_hersteller");
     }

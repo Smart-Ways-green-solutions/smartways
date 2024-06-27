@@ -54,8 +54,6 @@ class LieferantenController extends BaseController
     #[IsGranted("IS_AUTHENTICATED")]
     public function deleteLieferantenAction(Request $request, int $lieferantenid): Response
     {
-        $user = \Pimcore\Model\DataObject\Customer::getById($lieferantenid);
-        // $user->delete();
 
         return $this->redirectToRoute("verwaltung_lieferanten");
     }
