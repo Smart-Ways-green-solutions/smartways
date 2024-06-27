@@ -16,9 +16,48 @@ class LieferantenController extends BaseController
      */
     #[Route('/verwaltung/lieferanten', name: 'verwaltung_lieferanten')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function testAction(Request $request): Response
+    public function lieferantenAction(Request $request): Response
     {
         return $this->render('verwaltung/lieferanten.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/verwaltung/lieferanten-anlegen', name: 'verwaltung_lieferanten-anlegen')]
+    #[IsGranted("IS_AUTHENTICATED")]
+    public function createLieferantenAction(Request $request): Response
+    {
+        return $this->render('verwaltung/lieferanten_anlegen.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @param int $lieferantenid
+     * @return Response
+     */
+    #[Route('/verwaltung/lieferanten-bearbeiten/{lieferantenid}', name: 'verwaltung_lieferanten-bearbeiten')]
+    #[IsGranted("IS_AUTHENTICATED")]
+    public function editLieferantenAction(Request $request, int $lieferantenid): Response
+    {
+        // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
+        return $this->render('verwaltung/lieferanten_bearbeiten.html.twig');
+    }
+
+    /**
+     * @param Request $request
+     * @param int $lieferantenid
+     * @return Response
+     */
+    #[Route('/verwaltung/lieferanten-loeschen/{lieferantenid}', name: 'verwaltung_lieferanten-loeschen')]
+    #[IsGranted("IS_AUTHENTICATED")]
+    public function deleteLieferantenAction(Request $request, int $lieferantenid): Response
+    {
+        $user = \Pimcore\Model\DataObject\Customer::getById($lieferantenid);
+        // $user->delete();
+
+        return $this->redirectToRoute("verwaltung_lieferanten");
     }
 
 }

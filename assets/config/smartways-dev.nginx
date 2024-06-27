@@ -119,7 +119,6 @@ server {
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
 
-        #fastcgi_pass php-pimcore10;
 	    fastcgi_pass 127.0.0.1:9000;
 
         # Prevents URIs that include the front controller. This will 404:
@@ -136,10 +135,10 @@ server {
             allow 127.0.0.1;
             # add additional IP's or Ranges
             deny all;
-            fastcgi_pass php-pimcore10;
-        }
+            fastcgi_pass 127.0.0.1:9000;
+	    }
         location /fpm-ping {
-            fastcgi_pass php-pimcore10;
+            fastcgi_pass 127.0.0.1:9000;
         }
     }
     # nginx Status

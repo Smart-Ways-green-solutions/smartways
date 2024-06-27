@@ -17,7 +17,9 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-
+                            <a href="{{ path('verwaltung_hersteller-anlegen') }}" class="btn btn-primary">
+                                Neuen Hersteller anlegen
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -26,9 +28,45 @@
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-vcenter table-mobile-md card-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Hersteller-Name</th>
+                                        <th>Hersteller-Website</th>
+                                        <th class="w-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td data-label="Name">
+                                               Hersteller Name
+                                            </td>
+                                            <td data-label="Name">
+                                                <a href="https://www.google.de" target="_blank">www.google.de</a>
+                                            </td>
+                                            <td>
+                                                <div class="btn-list flex-nowrap">
+                                                    <a href="{{ path('verwaltung_hersteller-bearbeiten', { herstellerid: 123 }) }}" class="btn">
+                                                        Bearbeiten
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
 
 
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
 
+                </div>
             </div>
         </div>
 

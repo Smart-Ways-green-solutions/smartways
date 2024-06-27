@@ -1,0 +1,117 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Anlegen & verwalten
+                        </div>
+                        <h2 class="page-title">
+                            Hersteller bearbeiten</h2>
+                    </div>
+                    <!-- Page title actions -->
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <form action="{{ path('verwaltung_hersteller-anlegen') }}" method="post">
+                            <div class="card">
+                                <div class="card-body">
+                                    {% if error is defined and error is not empty %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <div class="d-flex">
+                                                <div>
+                                                    <!-- SVG icon from http://tabler-icons.io/i/alert-circle -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                                                        <path d="M12 8v4" />
+                                                        <path d="M12 16h.01" />
+                                                    </svg>
+                                                </div>
+                                                <div>
+                                                    <h4 class="alert-title">Es ist ein Fehler passiert</h4>
+                                                    <div class="text-secondary">Diesen Nutzer gibt es bereits. Bitte vergeben Sie eine andere Kombination aus E-Mail-Adresse und Vor- und Nachname.</div>
+                                                    <div class="text-secondary">{{ error.getMessage() }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="row">
+
+                                        <div class="col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Hersteller-Name</label>
+                                                <input type="text" class="form-control required" name="firstname" placeholder="Vorname">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Website des Herstellers</label>
+                                                <input type="text" class="form-control required" name="lastname" placeholder="Nachname">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xl-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Ansprechpartner</label>
+                                                <input type="text" class="form-control required" name="role" placeholder="Ansprechpartner">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Kontakt E-Mail Adresse</label>
+                                                <input type="email" class="form-control required" name="email" placeholder="Kontakt E-Mail Adresse">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Anschrift</label>
+                                                <input type="email" class="form-control required" name="email" placeholder="Anschrift">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">PLZ / Ort</label>
+                                                <input type="email" class="form-control required" name="email" placeholder="PLZ / Ort">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Land</label>
+                                                <input type="email" class="form-control required" name="email" placeholder="Land">
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="card-footer text-end">
+                                    <div class="d-flex">
+                                        <a href="{{ path('verwaltung_hersteller') }}" class="btn btn-link">Abbrechen</a>
+                                        <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

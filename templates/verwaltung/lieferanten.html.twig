@@ -26,9 +26,46 @@
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-vcenter table-mobile-md card-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Lieferanten-Name</th>
+                                        <th>Lieferanten-Website</th>
+                                        <th class="w-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
 
+                                    <tr>
+                                        <td data-label="Name">
+                                            Lieferanten Name
+                                        </td>
+                                        <td data-label="Name">
+                                            <a href="https://www.google.de" target="_blank">www.google.de</a>
+                                        </td>
+                                        <td>
+                                            <div class="btn-list flex-nowrap">
+                                                <a href="{{ path('verwaltung_lieferanten-bearbeiten', { lieferantenid: 123 }) }}" class="btn">
+                                                    Bearbeiten
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 
