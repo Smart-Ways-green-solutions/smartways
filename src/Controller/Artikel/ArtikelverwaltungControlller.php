@@ -15,16 +15,14 @@ class ArtikelverwaltungControlller extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/artikel/artikelverwaltung', name: 'artikel_verwaltung')]
+    #[Route('/artikel/artikelverwaltung', name: 'artikel')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function artikelAction(Request $request): Response
     {
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        $currentUsers = new \Pimcore\Model\DataObject\Customer\Listing();
-
         return $this->render('artikel/artikelverwaltung.html.twig', [
-            'currentUsers' => $currentUsers,
+
         ]);
     }
 
@@ -32,7 +30,7 @@ class ArtikelverwaltungControlller extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/artikel/artikel-anlegen', name: 'artikel_verwaltung-anlegen')]
+    #[Route('/artikel/artikel-anlegen', name: 'artikel-anlegen')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function createArtikelAction(Request $request): Response
     {
@@ -41,12 +39,12 @@ class ArtikelverwaltungControlller extends BaseController
 
     /**
      * @param Request $request
-     * @param int $userid
+     * @param int $artikelid
      * @return Response
      */
-    #[Route('/artikel/artikel-bearbeiten/{userid}', name: 'artikel_verwaltung-bearbeiten')]
+    #[Route('/artikel/artikel-bearbeiten/{artikelid}', name: 'artikel-bearbeiten')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function editArtikelAction(Request $request, int $userid): Response
+    public function editArtikelAction(Request $request, int $artikelid): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
         return $this->render('');
@@ -57,7 +55,7 @@ class ArtikelverwaltungControlller extends BaseController
      * @param int $userid
      * @return Response
      */
-    #[Route('/artikel/artikel-loeschen/{artikelid}', name: 'artikel_verwaltung-loeschen')]
+    #[Route('/artikel/artikel-loeschen/{artikelid}', name: 'artikel-loeschen')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function deleteArtikelAction(Request $request, int $artikeld): Response
     {

@@ -17,7 +17,7 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ path('verwaltung_benutzer-anlegen') }}" class="btn btn-primary">
+                            <a href="{{ path('artikel-anlegen') }}" class="btn btn-primary">
                                 Neuen Artikel anlegen
                             </a>
                         </div>
@@ -140,46 +140,54 @@
                                     <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Title</th>
-                                        <th>Role</th>
+                                        <th>Titel</th>
+                                        <th>Lagerbestand</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
+                                    {% set k = 10 %}
+                                    {% for i in range(1, k) %}
                                     <tr>
                                         <td data-label="Name">
                                             <div class="d-flex py-1 align-items-center">
                                                 <div class="flex-fill">
-                                                    <span class="avatar me-2" style="background-image: url(./static/avatars/010m.jpg)"></span>
+                                                    <span class="avatar me-2" style="background-image: url(/misc/img/dev-item.jpg)"></span>
                                                 </div>
                                             </div>
                                         </td>
                                         <td data-label="Title">
-                                            <div>VP Sales</div>
-                                            <div class="text-secondary">Business Development</div>
-                                            <div class="tags-list">
-                                                <span class="tag"> Label 1<a href="#" class="btn-close"></a></span>
-                                                <span class="tag"> Label 1<a href="#" class="btn-close"></a></span>
-                                                <span class="tag"> Label 1<a href="#" class="btn-close"></a></span>
+                                            <div>Großes Fettes Schild im Wald</div>
+                                            <div class="text-secondary">Kurzbeschreibung, Abmessung oder so bzw evtl auch ein kleiner Hinweis</div>
+                                            <div class="tags-list mt-1">
+                                                <span class="tag"> Tag 1<a href="#" class="btn-close"></a></span>
+                                                <span class="tag"> Tag 2<a href="#" class="btn-close"></a></span>
+                                                <span class="tag"> Tag 3<a href="#" class="btn-close"></a></span>
                                             </div>
                                         </td>
                                         <td class="text-secondary" data-label="Role">
-                                            <div class="badges-list">
-                                                <span class="badge bg-azure text-azure-fg">Azure</span>
-                                                <span class="badge bg-orange text-orange-fg">Orange</span>
-                                                <span class="badge bg-lime text-lime-fg">Lime</span>
-                                                <span class="badge bg-cyan text-cyan-fg">Cyan</span>
+                                            <div class="">
+                                                <style>
+                                                    .badge-outline {
+                                                        display: block;
+                                                        margin-bottom: 5px;
+                                                    }
+                                                </style>
+                                                <span class="badge badge-outline text-blue">Murnau: 24</span>
+                                                <span class="badge badge-outline text-blue">München: 2</span>
+                                                <span class="badge badge-outline text-blue">Innsbruck: 0</span>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="btn-list flex-nowrap">
-                                                <a href="{{ path('verwaltung_benutzer-bearbeiten', { userid: 1 }) }}" class="btn">
+                                                <a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="btn">
                                                     Bearbeiten
                                                 </a>
                                             </div>
                                         </td>
                                     </tr>
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
