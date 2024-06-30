@@ -1,0 +1,98 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Anlegen & verwalten
+                        </div>
+                        <h2 class="page-title">
+                            Buuchungshistorie</h2>
+                    </div>
+                    <!-- Page title actions -->
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-vcenter table-mobile-md card-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Funktion</th>
+                                        <th>Rollen</th>
+                                        <th class="w-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr>
+                                        <td data-label="Name">
+                                            <div class="d-flex py-1 align-items-center">
+                                                <div class="flex-fill">
+                                                    <div class="font-weight-medium"></div>
+                                                    <div class="text-secondary"></div>
+                                                </div>
+                                        </td>
+                                        <td data-label="Funktion">
+                                            <div></div>
+                                        </td>
+                                        <td class="text-secondary" data-label="Rollen">
+                                            <div class="badges-list">
+
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <ul class="pagination mt-3">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>
+                                        zurück
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                        weiter
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
