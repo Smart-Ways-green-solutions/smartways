@@ -40,6 +40,13 @@
                             .avatar {
                                 --tblr-avatar-size: 5rem;
                             }
+                            .badge-outline {
+                                display: block;
+                                margin-bottom: 5px;
+                            }
+                            .btn .icon {
+                                margin: 0;
+                            }
                         </style>
 
                         <div class="card">
@@ -126,22 +133,58 @@
                         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                             <form action="./" method="get" autocomplete="off" novalidate="">
                                 <div class="input-icon">
-                    <span class="input-icon-addon">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
-                    </span>
+                                    <span class="input-icon-addon">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                    </span>
                                     <input type="text" value="" class="form-control" placeholder="Suchen ...…" aria-label="Search in website">
                                 </div>
                             </form>
                         </div>
 
+
+                        <div class="mt-2 btn-list flex-nowrap">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Lager</button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Hersteller</button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Merkliste</button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Sortieren</button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Preis aufsteigend</a>
+                                    <a class="dropdown-item" href="#">Preis absteigend</a>
+                                    <a class="dropdown-item" href="#">Lager aufsteigend</a>
+                                    <a class="dropdown-item" href="#">Lager absteigend</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="card mt-3">
                             <div class="table-responsive">
-                                <table class="table table-vcenter table-mobile-md card-table">
+                                <table class="table table-mobile-md card-table">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
                                         <th>Titel</th>
                                         <th>Lagerbestand</th>
+                                        <th>Bedarf</th>
+                                        <th>Bestellt</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
@@ -149,54 +192,87 @@
 
                                     {% set k = 10 %}
                                     {% for i in range(1, k) %}
-                                    <tr>
-                                        <td data-label="Name">
-                                            <div class="d-flex py-1 align-items-center">
-                                                <div class="flex-fill">
-                                                    <span class="avatar me-2" style="background-image: url(/misc/img/dev-item.jpg)"></span>
+                                        <tr>
+                                            <td data-label="Name">
+                                                <div class="d-flex py-1 align-items-center">
+                                                    <div class="flex-fill">
+                                                        <span class="avatar me-2" style="background-image: url(/misc/img/dev-item.jpg)"></span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td data-label="Title">
-                                            <div>Großes Fettes Schild im Wald</div>
-                                            <div class="text-secondary">Kurzbeschreibung, Abmessung oder so bzw evtl auch ein kleiner Hinweis</div>
-                                            <div class="tags-list mt-1">
-                                                <span class="tag"> Tag 1<a href="#" class="btn-close"></a></span>
-                                                <span class="tag"> Tag 2<a href="#" class="btn-close"></a></span>
-                                                <span class="tag"> Tag 3<a href="#" class="btn-close"></a></span>
-                                            </div>
-                                        </td>
-                                        <td class="text-secondary" data-label="Role">
-                                            <div class="">
-                                                <style>
-                                                    .badge-outline {
-                                                        display: block;
-                                                        margin-bottom: 5px;
-                                                    }
-                                                </style>
-                                                <span class="badge badge-outline text-blue">Murnau: 24</span>
-                                                <span class="badge badge-outline text-blue">München: 2</span>
-                                                <span class="badge badge-outline text-blue">Innsbruck: 0</span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="btn-list flex-nowrap">
-                                                <a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="btn">
-                                                    Bearbeiten
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td data-label="Title">
+                                                <div class="text-muted">Ortner</div>
+                                                <div><strong>Großes Fettes Schild im Wald</strong></div>
+                                                <div class="text-secondary">Kurzbeschreibung, Abmessung oder so bzw evtl auch ein kleiner Hinweis</div>
+                                                <div class="tags-list mt-1">
+                                                    <span class="tag"> Tag 1<a href="#" class="btn-close"></a></span>
+                                                    <span class="tag"> Tag 2<a href="#" class="btn-close"></a></span>
+                                                    <span class="tag"> Tag 3<a href="#" class="btn-close"></a></span>
+                                                </div>
+                                                <div class="text-secondary small mt-1">
+                                                    Kompatibel: <a href="" target="_blank">Artikelname Supersepp 2000 Deluxe</a>
+                                                </div>
+
+                                            </td>
+                                            <td class="text-secondary" data-label="Role">
+                                                <div class="">
+                                                    <span class="badge badge-outline text-blue">Murnau: 24</span>
+                                                    <span class="badge badge-outline text-blue">München: 2</span>
+                                                    <span class="badge badge-outline text-blue">Innsbruck: 0</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-secondary" data-label="Role">
+                                                <div class="">
+                                                    <span class="badge badge-outline text-green">Sepp Meier: 24</span>
+                                                    <span class="badge badge-outline text-green">Max Mustermann: 24</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-secondary" data-label="Role">
+                                                <div class="">
+                                                    <span class="badge badge-outline text-orange">Lieferant: 24</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-list flex-nowrap">
+                                                    <a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="btn">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     {% endfor %}
 
                                     </tbody>
                                 </table>
                             </div>
+
+
+                            <ul class="pagination mt-2">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>
+                                        zurück
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">
+                                        weiter
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>
+                                    </a>
+                                </li>
+                            </ul>
+
                         </div>
 
                     </div>
 
                 </div>
+
             </div>
         </div>
 

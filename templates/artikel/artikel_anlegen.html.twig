@@ -1,0 +1,57 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Anlegen & verwalten
+                        </div>
+                        <h2 class="page-title">
+                            Artikel anlegen</h2>
+                    </div>
+                    <!-- Page title actions -->
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <form action="{{ path('artikel-anlegen') }}" method="post">
+                            <div class="card">
+                                <div class="card-body">
+
+
+
+
+                                </div>
+
+                                <div class="card-footer text-end">
+                                    <div class="d-flex">
+                                        <a href="{{ path('verwaltung_benutzer') }}" class="btn btn-link">Abbrechen</a>
+                                        <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

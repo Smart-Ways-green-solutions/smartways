@@ -21,7 +21,7 @@ class ArtikelverwaltungControlller extends BaseController
     {
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('artikel/artikelverwaltung.html.twig', [
+        return $this->render('artikel/artikel.html.twig', [
 
         ]);
     }
@@ -34,7 +34,7 @@ class ArtikelverwaltungControlller extends BaseController
     #[IsGranted("IS_AUTHENTICATED")]
     public function createArtikelAction(Request $request): Response
     {
-        return $this->render('');
+        return $this->render('artikel/artikel_anlegen.html.twig');
     }
 
     /**
@@ -47,7 +47,7 @@ class ArtikelverwaltungControlller extends BaseController
     public function editArtikelAction(Request $request, int $artikelid): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
-        return $this->render('');
+        return $this->render('artikel/artikel_bearbeiten.html.twig');
     }
 
     /**
