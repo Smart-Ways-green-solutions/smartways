@@ -51,78 +51,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <div class="accordion" id="accordion-example">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-1">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true">
-                                                Kategorie #1
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-example" style="">
-                                            <div class="accordion-body pt-0">
-
-                                                <div class="list-group list-group-flush">
-                                                    <a href="#" class="list-group-item list-group-item-action">Nummer Null</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Subcat Eins</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Weite Cat</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Dritte Kategorie</a>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-2">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="false">
-                                                Kategorie #2
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-2" class="accordion-collapse collapse" data-bs-parent="#accordion-example" style="">
-                                            <div class="accordion-body pt-0">
-                                                <div class="list-group list-group-flush">
-                                                    <a href="#" class="list-group-item list-group-item-action">Nummer Null</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Subcat Eins</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Weite Cat</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Dritte Kategorie</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-3">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-3" aria-expanded="false">
-                                                Kategorie #3
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-3" class="accordion-collapse collapse" data-bs-parent="#accordion-example" style="">
-                                            <div class="accordion-body pt-0">
-                                                <div class="list-group list-group-flush">
-                                                    <a href="#" class="list-group-item list-group-item-action">Nummer Null</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Subcat Eins</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Weite Cat</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Dritte Kategorie</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="heading-4">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-4" aria-expanded="false">
-                                                Kategorie #4
-                                            </button>
-                                        </h2>
-                                        <div id="collapse-4" class="accordion-collapse collapse" data-bs-parent="#accordion-example" style="">
-                                            <div class="accordion-body pt-0">
-                                                <div class="list-group list-group-flush">
-                                                    <a href="#" class="list-group-item list-group-item-action">Nummer Null</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Subcat Eins</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Weite Cat</a>
-                                                    <a href="#" class="list-group-item list-group-item-action">Dritte Kategorie</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% include("artikel/_navigation.html.twig") %}
                             </div>
                         </div>
 
