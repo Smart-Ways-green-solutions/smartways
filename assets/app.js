@@ -13,11 +13,16 @@ import './styles/app.css';
 import '@tabler/core/dist/js/tabler.min';
 import '@tabler/core/dist/js/demo.min';
 import '@tabler/core/dist/js/demo-theme.min';
+import '@tabler/core/dist/libs/fslightbox/index';
 
-import 'tom-select/dist/js/tom-select.base'
+import '@tabler/core/dist/libs/tom-select/dist/js/tom-select.base';
+import '@tabler/core/dist/libs/nouislider/dist/nouislider';
+
 
 import '@tabler/core/dist/css/tabler.min.css';
 import '@tabler/core/dist/css/demo.min.css';
+
+import '@tabler/core/dist/libs/nouislider/dist/nouislider.css';
 
 import './scripts'
 

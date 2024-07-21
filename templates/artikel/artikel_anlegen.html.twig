@@ -30,82 +30,72 @@
 
                     <div class="col-12">
                         <form action="{{ path('artikel-anlegen') }}" method="post">
+
                             <div class="card">
-                                <div class="card-body">
-
-                                    <div class="row">
-                                        <div class="col-12">
-
-                                            <div class="mb-3">
-                                                {# <label class="form-label required">Artikelnummer</label> #}
-                                                <input type="text" class="form-control" name="example-text-input" placeholder="Artikelnummer">
-                                            </div>
-                                            <div class="mb-3">
-                                                {# <label class="form-label required">Produktbezeichnung</label> #}
-                                                <input type="text" class="form-control" name="example-text-input" placeholder="Produktbezeichnung">
-                                            </div>
-                                            <div class="mb-3">
-                                                {# <label class="form-label required">Produktbeschreibung kurz</label> #}
-                                                <input type="text" class="form-control" name="example-text-input" placeholder="Produktbeschreibung kurz">
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="form-label">Hersteller</div>
-                                                <select class="form-select">
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <div class="form-label">Produktbild</div>
-                                                <input type="file" class="form-control">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">Produktbeschreibung lang
-                                                    <span class="form-label-description">56/100</span></label>
-                                                <textarea class="form-control" name="example-textarea-input" rows="6" placeholder="Content..">
-                                                </textarea>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <div class="form-label">Select multiple states</div>
-                                                <select type="text" class="form-select" id="select-states" value="" multiple>
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="AK">Alaska</option>
-                                                    <option value="AZ" selected>Arizona</option>
-                                                    <option value="OR">Oregon</option>
-                                                    <option value="PA">Pennsylvania</option>
-                                                    <option value="RI">Rhode Island</option>
-                                                    <option value="SC" selected>South Carolina</option>
-                                                    <option value="SD">South Dakota</option>
-                                                    <option value="WV">West Virginia</option>
-                                                    <option value="WI">Wisconsin</option>
-                                                    <option value="WY" selected>Wyoming</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox">
-                                                    <span class="form-check-label">Dieser Artikel ist ein Proudktset</span>
-                                                </label>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs nav-fill" data-bs-toggle="tabs">
+                                        <li class="nav-item">
+                                            <a href="#tabs-productdaten" class="nav-link active" data-bs-toggle="tab">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-template"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4m0 1a1 1 0 0 1 1 -1h14a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-14a1 1 0 0 1 -1 -1z" /><path d="M4 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" /><path d="M14 12l6 0" /><path d="M14 16l6 0" /><path d="M14 20l6 0" /></svg>
+                                                Produktdaten
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-bilder" class="nav-link" data-bs-toggle="tab">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-photo-scan"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 8h.01" /><path d="M6 13l2.644 -2.644a1.21 1.21 0 0 1 1.712 0l3.644 3.644" /><path d="M13 13l1.644 -1.644a1.21 1.21 0 0 1 1.712 0l1.644 1.644" /><path d="M4 8v-2a2 2 0 0 1 2 -2h2" /><path d="M4 16v2a2 2 0 0 0 2 2h2" /><path d="M16 4h2a2 2 0 0 1 2 2v2" /><path d="M16 20h2a2 2 0 0 0 2 -2v-2" /></svg>
+                                                Bilder
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-produktset" class="nav-link" data-bs-toggle="tab">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-category-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 4h6v6h-6z" /><path d="M4 14h6v6h-6z" /><path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /><path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /></svg>
+                                                Produktset
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-lieferanten" class="nav-link" data-bs-toggle="tab">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-truck-delivery"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /><path d="M3 9l4 0" /></svg>
+                                                Lieferanten
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#tabs-lagerbestand" class="nav-link" data-bs-toggle="tab">
+                                                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 21v-13l9 -4l9 4v13" /><path d="M13 13h4v8h-10v-6h6" /><path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" /></svg>
+                                                Lagerbestand
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
+                                <div class="card-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active show" id="tabs-productdaten">
+                                            {% include("@App/artikel/_artikel_produktdaten.html.twig") %}
+                                        </div>
+                                        <div class="tab-pane" id="tabs-bilder">
+                                            {% include("@App/artikel/_artikel_bilder.html.twig") %}
+                                        </div>
+                                        <div class="tab-pane" id="tabs-produktset">
+                                            {% include("@App/artikel/_artikel_produktset.html.twig") %}
+                                        </div>
+                                        <div class="tab-pane" id="tabs-lieferanten">
+                                            {% include("@App/artikel/_artikel_lieferanten.html.twig") %}
+                                        </div>
+                                        <div class="tab-pane" id="tabs-lagerbestand">
+                                            {% include("@App/artikel/_artikel_lagerbestand.html.twig") %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                <div class="card-footer text-end">
+                            <div class="card mt-2">
+                                <div class="card-body text-end">
                                     <div class="d-flex">
                                         <a href="{{ path('verwaltung_benutzer') }}" class="btn btn-link">Abbrechen</a>
                                         <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
                                     </div>
                                 </div>
-
                             </div>
+
                         </form>
                     </div>
 
