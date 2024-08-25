@@ -7,3 +7,6 @@ doctrine:
         dbname: '%env(DATABASE_NAME)%'
         host: '%env(DATABASE_HOST)%'
         port: '%env(DATABASE_PORT)%'
+        mapping_types:
+          enum: string
+          bit: string

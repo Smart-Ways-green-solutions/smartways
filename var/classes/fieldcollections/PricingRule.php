@@ -134,8 +134,12 @@ return \Pimcore\Model\DataObject\Fieldcollection\Definition::__set_state(array(
              'referencedFields' => 
             array (
             ),
+             'permissionView' => NULL,
+             'permissionEdit' => NULL,
              'labelWidth' => 100,
              'labelAlign' => 'left',
+             'width' => NULL,
+             'height' => NULL,
              'fieldDefinitionsCache' => NULL,
           )),
         ),
@@ -164,6 +168,9 @@ return \Pimcore\Model\DataObject\Fieldcollection\Definition::__set_state(array(
   )),
    'fieldDefinitionsCache' => NULL,
    'blockedVarsForExport' => 
+  array (
+  ),
+   'activeDispatchingEvents' => 
   array (
   ),
 ));

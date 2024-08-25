@@ -3,6 +3,7 @@
 /**
  * Inheritance: no
  * Variants: no
+ * Title: Titel Produktset
  *
  * Fields Summary:
  * - artikelnummer [input]
@@ -29,7 +30,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'title' => 'Titel Produktset',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1715784299,
+   'modificationDate' => 1724606316,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',

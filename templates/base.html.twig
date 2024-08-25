@@ -24,13 +24,13 @@
         {% endif %}
     {% endif %}
 
-    {% block layout_head_meta deferred %}
-    {{ pimcore_head_title() }}
-    {{ pimcore_head_meta() }}
-    {% if pimcore_placeholder('canonical').count() %}
-        <link rel="canonical" href="{{ pimcore_placeholder('canonical') }}"/>
-    {% endif %}
-    {% endblock %}
+{#    {% block layout_head_meta deferred %}#}
+{#    {{ pimcore_head_title() }}#}
+{#    {{ pimcore_head_meta() }}#}
+{#    {% if pimcore_placeholder('canonical').count() %}#}
+{#        <link rel="canonical" href="{{ pimcore_placeholder('canonical') }}"/>#}
+{#    {% endif %}#}
+{#    {% endblock %}#}
 
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('theme/favicon/apple-touch-icon.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('theme/favicon/favicon-32x32.png') }}">

@@ -21,7 +21,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1708863056,
+   'modificationDate' => 1724606316,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '\\Pimcore\\Bundle\\EcommerceFrameworkBundle\\Model\\AbstractCategory',
@@ -255,6 +255,8 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                      'permissionEdit' => NULL,
                      'labelWidth' => 100,
                      'labelAlign' => 'left',
+                     'width' => NULL,
+                     'height' => NULL,
                      'fieldDefinitionsCache' => NULL,
                   )),
                   1 => 
