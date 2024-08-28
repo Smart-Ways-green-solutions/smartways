@@ -1,0 +1,114 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Lagerinhalte verwalten
+                        </div>
+                        <h2 class="page-title">
+                            Lagerverwaltung</h2>
+                    </div>
+                    <!-- Page title actions -->
+                    <div class="col-auto ms-auto d-print-none">
+                        <div class="btn-list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+
+                        <div class="card">
+
+                            <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                                <form action="./" method="get" autocomplete="off" novalidate="">
+                                    <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                    </span>
+                                        <input type="text" value="" class="form-control" placeholder="Suchen ...…" aria-label="Search in website">
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card mt-3">
+                            <div class="table-responsive">
+                                <table class="table table-mobile-md card-table">
+                                    <thead>
+                                    <tr>
+                                        <th>Titel</th>
+                                        <th>Kontakt</th>
+                                        <th>Bedarf</th>
+                                        <th>Bestellt</th>
+                                        <th class="w-1"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% set k = 3 %}
+                                    {% for i in range(1, k) %}
+                                        <tr>
+                                            <td data-label="Title">
+                                                <div><strong>Bauhof Murnau</strong></div>
+                                                <div class="text-secondary">
+                                                    Lageranschrift 123<br />
+                                                    12345 Lagerort
+                                                </div>
+                                            </td>
+                                            <td class="text-secondary" data-label="Role">
+                                                Max Mustermann<br />
+                                                +49 171 1234567<br />
+                                                <a href="mailto:">lager2@stadt-murnau.de</a>
+                                            </td>
+                                            <td class="text-secondary" data-label="Role">
+                                                <div class="">
+                                                    <span class="badge badge-outline text-green">Sepp Meier: 24</span>
+                                                    <span class="badge badge-outline text-green">Max Mustermann: 24</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-secondary" data-label="Role">
+                                                <div class="">
+                                                    <span class="badge badge-outline text-orange">Lieferant: 24</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-list flex-nowrap">
+                                                    <a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="btn btn-icon btn-outline-blue">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

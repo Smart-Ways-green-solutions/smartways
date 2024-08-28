@@ -21,7 +21,7 @@ class LagerController extends BaseController
     {
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('', [
+        return $this->render('lager/lagerverwaltung.html.twig', [
 
         ]);
     }
