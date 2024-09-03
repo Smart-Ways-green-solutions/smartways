@@ -6,7 +6,6 @@
 nginx sample config in: assets/config/
 https://pimcore.com/docs/platform/Pimcore/Installation_and_Upgrade/System_Setup_and_Hosting/Nginx_Configuration/#configuration
 
-
 git clone
 
 .env -> mysql settings

@@ -13,12 +13,12 @@
 
 return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'dao' => NULL,
-   'id' => '6',
+   'id' => '7',
    'name' => 'TermSegmentBuilderDefinition',
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1724606316,
+   'modificationDate' => 1725355338,
    'userOwner' => NULL,
    'userModification' => 0,
    'parentClass' => 'CustomerManagementFrameworkBundle\\Model\\AbstractTermSegmentBuilderDefinition',

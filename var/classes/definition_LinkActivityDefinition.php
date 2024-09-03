@@ -22,12 +22,12 @@
 
 return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'dao' => NULL,
-   'id' => '7',
+   'id' => '8',
    'name' => 'LinkActivityDefinition',
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1724606316,
+   'modificationDate' => 1725355338,
    'userOwner' => NULL,
    'userModification' => 0,
    'parentClass' => '',
