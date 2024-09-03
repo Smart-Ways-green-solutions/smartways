@@ -9,10 +9,10 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Anlegen & verwalten
+                            Lagerbuchungen
                         </div>
                         <h2 class="page-title">
-                            Buuchungshistorie</h2>
+                            Buchungshistorie</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -28,40 +28,78 @@
             <div class="container-xl">
                 <div class="row row-cards">
 
+                    <div class="col-6">
+                        <div class="flex-grow-1 flex-md-grow-0">
+                            <form action="./" method="get" autocomplete="off" novalidate="">
+                                <div class="input-icon">
+                                    <span class="input-icon-addon">
+                                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                    </span>
+                                    <input type="text" value="" class="form-control" placeholder="Suchen ...…" aria-label="Search in website">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="btn-list flex-nowrap">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Lager</button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                </div>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Benutzer</button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="col-12">
                         <div class="card">
+
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-mobile-md card-table">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Funktion</th>
-                                        <th>Rollen</th>
-                                        <th class="w-1"></th>
+                                        <th>Datum / Zeit</th>
+                                        <th>Lager</th>
+                                        <th>Menge</th>
+                                        <th>Artikelnr</th>
+                                        <th>Artikel</th>
+                                        <th>Benutzer</th>
+                                        <th class="w-1">Kommentar</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    <tr>
-                                        <td data-label="Name">
-                                            <div class="d-flex py-1 align-items-center">
-                                                <div class="flex-fill">
-                                                    <div class="font-weight-medium"></div>
-                                                    <div class="text-secondary"></div>
-                                                </div>
-                                        </td>
-                                        <td data-label="Funktion">
-                                            <div></div>
-                                        </td>
-                                        <td class="text-secondary" data-label="Rollen">
-                                            <div class="badges-list">
-
-                                            </div>
-                                        </td>
-                                        <td>
-
-                                        </td>
-                                    </tr>
+                                    {% set k = 10 %}
+                                    {% for i in range(1, k) %}
+                                        <tr>
+                                            <td>22.07.2024</td>
+                                            <td>Murnau</td>
+                                            <td class="text-red"><strong>-{{ i - 2 }}</strong></td>
+                                            <td>12345</td>
+                                            <td><strong>Super Artikel 5000</strong></td>
+                                            <td class="text-secondary small">sepp@maxmustermann.de</td>
+                                            <td class="text-secondary small">Inventur</td>
+                                        </tr>
+                                        <tr>
+                                            <td>22.07.2024</td>
+                                            <td>Murnau</td>
+                                            <td class="text-green"><strong>{{ i + 3 }}</strong></td>
+                                            <td>12345</td>
+                                            <td><strong>Super Artikel 5000</strong></td>
+                                            <td class="text-secondary small">sepp@maxmustermann.de</td>
+                                            <td class="text-secondary small">Inventur</td>
+                                        </tr>
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
