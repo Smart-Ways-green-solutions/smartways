@@ -36,7 +36,6 @@ return [
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Pimcore\Bundle\CoreBundle\PimcoreCoreBundle::class => ['all' => true],
     Pimcore\Bundle\InstallBundle\PimcoreInstallBundle::class => ['all' => true],
-    FormBuilderBundle\FormBuilderBundle::class => ['all' => true],
     Pimcore\Bundle\PerspectiveEditorBundle\PimcorePerspectiveEditorBundle::class => ['all' => true],
     CustomerManagementFrameworkBundle\PimcoreCustomerManagementFrameworkBundle::class => ['all' => true],
     Pimcore\Bundle\ObjectMergerBundle\ObjectMergerBundle::class => ['all' => true],

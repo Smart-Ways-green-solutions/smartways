@@ -15,12 +15,12 @@
 
 return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'dao' => NULL,
-   'id' => '2',
+   'id' => '6',
    'name' => 'CustomerSegment',
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1724606316,
+   'modificationDate' => 1725355337,
    'userOwner' => NULL,
    'userModification' => 0,
    'parentClass' => '\\CustomerManagementFrameworkBundle\\Model\\AbstractCustomerSegment',
@@ -261,6 +261,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                  'blockedVarsForExport' => 
                 array (
                 ),
+                 'options' => NULL,
                  'defaultValue' => NULL,
                  'columnLength' => 190,
                  'dynamicOptions' => false,
