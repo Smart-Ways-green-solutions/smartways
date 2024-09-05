@@ -1,0 +1,105 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Anlegen & verwalten
+                        </div>
+                        <h2 class="page-title">
+                            Bestellvorschlage / Zu bestellende Artikel
+                        </h2>
+                    </div>
+                    <!-- Page title actions -->
+{#                    <div class="col-auto ms-auto d-print-none">#}
+{#                        <div class="btn-list">#}
+{#                            <a href="{{ path('verwaltung_benutzer-anlegen') }}" class="btn btn-primary">#}
+{#                                Neuen Benutzer anlegen#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="">
+                                <table class="table card-table table-vcenter text-nowrap datatable">
+                                        <thead>
+                                            <tr>
+                                                <th class="w-1">No.</th>
+                                                <th>Invoice Subject</th>
+                                                <th>Client</th>
+                                                <th>VAT No.</th>
+                                                <th>Created</th>
+                                                <th>Status</th>
+                                                <th>Anzahl</th>
+                                                <th>Bestellen bei</th>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
+
+                                    {% set k = 10 %}
+                                    {% for i in range(1, k) %}
+                                    <tr>
+                                        <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
+                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td>Carlson Limited</td>
+                                        <td>87956621</td>
+                                        <td>15 Dec 2017</td>
+                                        <td>
+                                            <span class="badge bg-success me-1"></span> Paid
+                                        </td>
+                                        <td><input type="text" class="form-control w-25" name="" placeholder="" value="1"></td>
+                                        <td class="text-end">
+                                            <select class="form-select">
+                                                <option value="">Hersteller 02</option>
+                                                <option value="">Hersteller Zwei</option>
+                                                <option value="">Dritter Hersteller</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="card-footer d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col col-auto">
+                                        <select class="form-select">
+                                            <option value="" selected="selected">Auftrag wählen</option>
+                                            <option value="">Neuen Auftrag erstellen</option>
+                                            <option value="">In Auftrag 01 legen</option>
+                                            <option value="">In Auftrag 021 legen</option>
+                                            <option value="">In Auftrag 013 legen</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

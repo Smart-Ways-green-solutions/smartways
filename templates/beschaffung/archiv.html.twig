@@ -1,0 +1,44 @@
+{% extends("base.html.twig") %}
+
+{% block body %}
+    <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+            <div class="container-xl">
+                <div class="row g-2 align-items-center">
+                    <div class="col">
+                        <!-- Page pre-title -->
+                        <div class="page-pretitle">
+                            Anlegen & verwalten
+                        </div>
+                        <h2 class="page-title">
+                            Bestell-Archiv</h2>
+                    </div>
+                    <!-- Page title actions -->
+{#                    <div class="col-auto ms-auto d-print-none">#}
+{#                        <div class="btn-list">#}
+{#                            <a href="{{ path('verwaltung_benutzer-anlegen') }}" class="btn btn-primary">#}
+{#                                Neuen Benutzer anlegen#}
+{#                            </a>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        <!-- Page body -->
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+
+                    <div class="col-12">
+                        <div class="card">
+                            <a href="{{ path('bestellvorschlag-archiv-details', { auftragid: 0 }) }}" class="btn btn-primary">Archiv Details</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
