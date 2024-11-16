@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Verwaltung;
+namespace App\Controller\Administration;
 
 use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,22 +14,22 @@ class TagsController extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/verwaltung/tags', name: 'verwaltung_tags')]
+    #[Route('/scadmin/tags', name: 'administration_tags')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function tagsAction(Request $request): Response
     {
-        return $this->render('verwaltung/tags.html.twig');
+        return $this->render('administration/tags.html.twig');
     }
 
     /**
      * @param Request $request
      * @return Response
      */
-    #[Route('/verwaltung/tags-anlegen', name: 'verwaltung_tags-anlegen')]
+    #[Route('/scadmin/tags-create', name: 'administration_tags-create')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function createTagsAction(Request $request): Response
     {
-        return $this->render('verwaltung/tags_anlegen.html.twig');
+        return $this->render('administration/tags_create.html.twig');
     }
 
     /**
@@ -37,12 +37,12 @@ class TagsController extends BaseController
      * @param int $tagid
      * @return Response
      */
-    #[Route('/verwaltung/tags-bearbeiten/{tagid}', name: 'verwaltung_tags-bearbeiten')]
+    #[Route('/scadmin/tags-edit/{tagid}', name: 'administration_tags-edit')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function editTagsAction(Request $request, int $tagid): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
-        return $this->render('verwaltung/tags_bearbeiten.html.twig');
+        return $this->render('administration/tags_edit.html.twig');
     }
 
     /**
@@ -50,14 +50,14 @@ class TagsController extends BaseController
      * @param int $tagid
      * @return Response
      */
-    #[Route('/verwaltung/tags-loeschen/{tagid}', name: 'verwaltung_tags-loeschen')]
+    #[Route('/scadmin/tags-delete/{tagid}', name: 'administration_tags-delete')]
     #[IsGranted("IS_AUTHENTICATED")]
     public function deleteTagsAction(Request $request, int $tagid): Response
     {
         $user = \Pimcore\Model\DataObject\Customer::getById($tagid);
         // $user->delete();
 
-        return $this->redirectToRoute("verwaltung_tags");
+        return $this->redirectToRoute("administration_tags");
     }
 
 }

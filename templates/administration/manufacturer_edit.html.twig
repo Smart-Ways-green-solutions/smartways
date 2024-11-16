@@ -12,7 +12,7 @@
                             Anlegen & verwalten
                         </div>
                         <h2 class="page-title">
-                            Lieferanten bearbeiten</h2>
+                            Hersteller bearbeiten</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -29,7 +29,7 @@
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form action="{{ path('verwaltung_hersteller-anlegen') }}" method="post">
+                        <form action="{{ path('administration_manufacturer-create') }}" method="post">
                             <div class="card">
                                 <div class="card-body">
                                     {% if error is defined and error is not empty %}
@@ -57,13 +57,13 @@
 
                                         <div class="col-xl-6">
                                             <div class="mb-3">
-                                                <label class="form-label">Lieferanten-Name</label>
-                                                <input type="text" class="form-control required" name="firstname" placeholder="Lieferanten-Name">
+                                                <label class="form-label">Hersteller-Name</label>
+                                                <input type="text" class="form-control required" name="firstname" placeholder="Hersteller-Name">
                                             </div>
 
                                             <div class="mb-3">
-                                                <label class="form-label">Website des Lieferanten</label>
-                                                <input type="text" class="form-control required" name="lastname" placeholder="Website des Lieferanten">
+                                                <label class="form-label">Website des Herstellers</label>
+                                                <input type="text" class="form-control required" name="lastname" placeholder="Website des Herstellers">
                                             </div>
                                         </div>
 
@@ -110,7 +110,7 @@
 
                                 <div class="card-footer text-end">
                                     <div class="d-flex">
-                                        <a href="{{ path('verwaltung_lieferanten') }}" class="btn btn-link">Abbrechen</a>
+                                        <a href="{{ path('administration_manufacturer') }}" class="btn btn-link">Abbrechen</a>
                                         <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
                                     </div>
                                 </div>

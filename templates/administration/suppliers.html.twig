@@ -12,13 +12,13 @@
                             Anlegen & verwalten
                         </div>
                         <h2 class="page-title">
-                            Tags</h2>
+                            Lieferanten</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ path('verwaltung_tags-anlegen') }}" class="btn btn-primary">
-                                Neuen Tag anlegen
+                            <a href="{{ path('administration_suppliers-create') }}" class="btn btn-primary">
+                                Neuen Lieferanten anlegen
                             </a>
                         </div>
                     </div>
@@ -36,24 +36,30 @@
                                 <table class="table table-vcenter table-mobile-md card-table">
                                     <thead>
                                     <tr>
-                                        <th>Tag-Name</th>
+                                        <th>Lieferanten-Name</th>
+                                        <th>Lieferanten-Website</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                        <tr>
-                                            <td class="" data-label="Role">
-                                                Tag-Name
-                                            </td>
-                                            <td>
-                                                <div class="btn-list flex-nowrap">
-                                                    <a href="{{ path('verwaltung_tags-bearbeiten', { tagid: 111 }) }}" class="btn">
-                                                        Bearbeiten
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+
+                                    <tr>
+                                        <td data-label="Name">
+                                            Lieferanten Name
+                                        </td>
+                                        <td data-label="Name">
+                                            <a href="https://www.google.de" target="_blank">www.google.de</a>
+                                        </td>
+                                        <td>
+                                            <div class="btn-list flex-nowrap">
+                                                <a href="{{ path('administration_suppliers-edit', { lieferantenid: 123 }) }}" class="btn">
+                                                    Bearbeiten
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
 
                                     </tbody>
                                 </table>

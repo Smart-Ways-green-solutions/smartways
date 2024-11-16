@@ -12,7 +12,7 @@
                             Anlegen & verwalten
                         </div>
                         <h2 class="page-title">
-                            Lager bearbeiten</h2>
+                            Lager anlegen</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -30,7 +30,7 @@
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form action="{{ path('verwaltung_hersteller-anlegen') }}" method="post">
+                        <form action="{{ path('administration_warehouse-create') }}" method="post">
                             <div class="card">
                                 <div class="card-body">
                                     {% if error is defined and error is not empty %}
@@ -119,7 +119,7 @@
 
                                 <div class="card-footer text-end">
                                     <div class="d-flex">
-                                        <a href="{{ path('verwaltung_lieferanten') }}" class="btn btn-link">Abbrechen</a>
+                                        <a href="{{ path('administration_warehouse') }}" class="btn btn-link">Abbrechen</a>
                                         <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
                                     </div>
                                 </div>

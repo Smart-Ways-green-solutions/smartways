@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Lager;
+namespace App\Controller\Warehouse;
 
 use App\Controller\BaseController;
 use App\Model\Customer;
@@ -9,19 +9,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class LagerController extends BaseController
+class WarehouseController extends BaseController
 {
     /**
      * @param Request $request
      * @return Response
      */
-    #[Route('/lager/lagerverwaltung', name: 'lager')]
+    #[Route('/warehouse/warehouses', name: 'warehouse')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function lagerAction(Request $request): Response
+    public function warehouseAction(Request $request): Response
     {
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('lager/lagerverwaltung.html.twig', [
+        return $this->render('warehouse/warehouse.html.twig', [
 
         ]);
     }
@@ -30,9 +30,9 @@ class LagerController extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/lager/lagerinhalt', name: 'lager-inhalt')]
+    #[Route('/warehouse/inventory', name: 'warehouse-inventory')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function lagerInhaltAction(Request $request): Response
+    public function warehouseInventoryAction(Request $request): Response
     {
         return $this->render('');
     }
@@ -41,12 +41,12 @@ class LagerController extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/lager/lagerhistorie', name: 'lager-historie')]
+    #[Route('/warehouse/history', name: 'warehouse-history')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function lagerHistorieAction(Request $request): Response
+    public function warehouseHistoryAction(Request $request): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
-        return $this->render('lager/lager_historie.html.twig');
+        return $this->render('warehouse/warehouse_history.html.twig');
     }
 
 

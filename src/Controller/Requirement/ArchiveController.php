@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Bedarf;
+namespace App\Controller\Requirement;
 
 use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -8,19 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class ArchivController extends BaseController
+class ArchiveController extends BaseController
 {
     /**
      * @param Request $request
      * @return Response
      */
-    #[Route('/bedarf/archiv', name: 'bedarf-archiv')]
+    #[Route('/requirement/archive', name: 'requirement-archive')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function archivAction(Request $request): Response
+    public function archiveAction(Request $request): Response
     {
         // $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('bedarf/archiv.html.twig', [
+        return $this->render('requirement/archive.html.twig', [
         ]);
     }
 
@@ -30,13 +30,13 @@ class ArchivController extends BaseController
      * @param int $auftragid
      * @return Response
      */
-    #[Route('/bedarf/archiv/{auftragid}', name: 'bedarf-archiv-details')]
+    #[Route('/requirement/archive/{auftragid}', name: 'requirement-archive-details')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function archivDetailsAction(Request $request, int $auftragid): Response
+    public function archiveDetailsAction(Request $request, int $auftragid): Response
     {
         // $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('bedarf/archiv-details.html.twig', [
+        return $this->render('requirement/archive-details.html.twig', [
         ]);
     }
 }
