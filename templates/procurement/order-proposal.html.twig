@@ -9,7 +9,7 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Anlegen & verwalten
+                            {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
                             Bestellvorschlage / Zu bestellende Artikel
@@ -53,7 +53,7 @@
                                     {% for i in range(1, k) %}
                                     <tr>
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -75,7 +75,7 @@
 
                                     <tr class="bg-azure text-white">
                                         <td><span class="badge bg-white text-black">SET</span></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -93,7 +93,7 @@
                                     </tr>
                                     <tr class="bg-azure-lt">
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -111,7 +111,7 @@
                                     </tr>
                                     <tr class="bg-azure-lt">
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -129,7 +129,7 @@
                                     </tr>
                                     <tr class="bg-azure-lt">
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -150,7 +150,7 @@
 
                                     <tr class="bg-indigo text-white">
                                         <td><span class="badge bg-white text-black">KSET</span></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -168,7 +168,7 @@
                                     </tr>
                                     <tr class="bg-indigo-lt">
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -186,7 +186,7 @@
                                     </tr>
                                     <tr class="bg-indigo-lt">
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>
@@ -204,7 +204,7 @@
                                     </tr>
                                     <tr class="bg-indigo-lt">
                                         <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></td>
-                                        <td><a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
+                                        <td><a href="{{ path('items-edit', { artikelid: 1 }) }}" class="text-reset" target="_blank" tabindex="-1">Artikel Superartikel 2000 Extended</a></td>
                                         <td>Carlson Limited</td>
                                         <td>87956621</td>
                                         <td>15 Dec 2017</td>

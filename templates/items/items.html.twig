@@ -9,7 +9,7 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Anlegen & verwalten
+                            {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
                             Artikelverwaltung</h2>
@@ -17,7 +17,7 @@
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
-                            <a href="{{ path('artikel-anlegen') }}" class="btn btn-primary">
+                            <a href="{{ path('items-create') }}" class="btn btn-primary">
                                 Neuen Artikel anlegen
                             </a>
                         </div>
@@ -51,7 +51,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                {% include("artikel/_navigation.html.twig") %}
+                                {% include("items/_navigation.html.twig") %}
                             </div>
                         </div>
 
@@ -132,7 +132,7 @@
                                             <td data-label="Name">
                                                 <div class="d-flex py-1 align-items-center">
                                                     <div class="flex-fill">
-                                                        <a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}"><span class="avatar me-2" style="background-image: url(/misc/img/dev-item.jpg)"></span></a>
+                                                        <a href="{{ path('items-edit', { artikelid: 1 }) }}"><span class="avatar me-2" style="background-image: url(/misc/img/dev-item.jpg)"></span></a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -170,7 +170,7 @@
                                             </td>
                                             <td>
                                                 <div class="btn-list flex-nowrap">
-                                                    <a href="{{ path('artikel-bearbeiten', { artikelid: 1 }) }}" class="btn btn-icon btn-outline-blue">
+                                                    <a href="{{ path('items-edit', { artikelid: 1 }) }}" class="btn btn-icon btn-outline-blue">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
                                                     </a>
                                                 </div>

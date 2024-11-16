@@ -9,7 +9,7 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Anlegen & verwalten
+                            {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
                             Lager bearbeiten</h2>
@@ -119,8 +119,8 @@
 
                                 <div class="card-footer text-end">
                                     <div class="d-flex">
-                                        <a href="{{ path('administration_warehouse') }}" class="btn btn-link">Abbrechen</a>
-                                        <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
+                                        <a href="{{ path('administration_warehouse') }}" class="btn btn-link">{{ "Cancel"|trans }}</a>
+                                        <button type="submit" class="btn btn-primary ms-auto">{{ "Save"|trans }}</button>
                                     </div>
                                 </div>
 

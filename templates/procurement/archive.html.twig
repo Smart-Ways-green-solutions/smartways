@@ -9,7 +9,7 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Anlegen & verwalten
+                            {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
                             Bestell-Archiv</h2>
@@ -32,7 +32,7 @@
 
                     <div class="col-12">
                         <div class="card">
-                            <a href="{{ path('bestellvorschlag-archiv-details', { auftragid: 0 }) }}" class="btn btn-primary">Archiv Details</a>
+                            <a href="{{ path('procurement_archive-details', { auftragid: 0 }) }}" class="btn btn-primary">Archiv Details</a>
                         </div>
                     </div>
 

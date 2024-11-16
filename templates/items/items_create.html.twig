@@ -9,7 +9,7 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Anlegen & verwalten
+                            {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
                             Artikel anlegen</h2>
@@ -29,7 +29,7 @@
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form action="{{ path('artikel-anlegen') }}" method="post">
+                        <form action="{{ path('items-create') }}" method="post">
 
                             <div class="card">
                                 <div class="card-header">
@@ -69,19 +69,19 @@
                                 <div class="card-body">
                                     <div class="tab-content">
                                         <div class="tab-pane active show" id="tabs-productdaten">
-                                            {% include("@App/artikel/_artikel_produktdaten.html.twig") %}
+                                            {% include("items/_items_data.html.twig") %}
                                         </div>
                                         <div class="tab-pane" id="tabs-bilder">
-                                            {% include("@App/artikel/_artikel_bilder.html.twig") %}
+                                            {% include("items/_items_images.html.twig") %}
                                         </div>
                                         <div class="tab-pane" id="tabs-produktset">
-                                            {% include("@App/artikel/_artikel_produktset.html.twig") %}
+                                            {% include("items/_items_set.html.twig") %}
                                         </div>
                                         <div class="tab-pane" id="tabs-lieferanten">
-                                            {% include("@App/artikel/_artikel_lieferanten.html.twig") %}
+                                            {% include("items/_items_suppliers.html.twig") %}
                                         </div>
                                         <div class="tab-pane" id="tabs-lagerbestand">
-                                            {% include("@App/artikel/_artikel_lagerbestand.html.twig") %}
+                                            {% include("items/_items_inventory.html.twig") %}
                                         </div>
                                     </div>
                                 </div>
@@ -90,8 +90,8 @@
                             <div class="card mt-2">
                                 <div class="card-body text-end">
                                     <div class="d-flex">
-                                        <a href="{{ path('verwaltung_benutzer') }}" class="btn btn-link">Abbrechen</a>
-                                        <button type="submit" class="btn btn-primary ms-auto">Speichern</button>
+                                        <a href="{{ path('items') }}" class="btn btn-link">{{ "Cancel"|trans }}</a>
+                                        <button type="submit" class="btn btn-primary ms-auto">{{ "Save"|trans }}</button>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Beschaffung;
+namespace App\Controller\Procurement;
 
 use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Request;
@@ -8,19 +8,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class BestellvorschlagController extends BaseController
+class OrderproposalController extends BaseController
 {
     /**
      * @param Request $request
      * @return Response
      */
-    #[Route('/bestellvorschlag/bestellvorschlag', name: 'bestellvorschlag')]
+    #[Route('/procurement/orderproposal', name: 'procurement-orderproposal')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function bestellvorschlagAction(Request $request): Response
+    public function orderproposalAction(Request $request): Response
     {
         // $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('beschaffung/bestellvorschlag.html.twig', [
+        return $this->render('procurement/order-proposal.html.twig', [
         ]);
     }
 

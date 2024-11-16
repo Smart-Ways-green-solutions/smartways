@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Artikel;
+namespace App\Controller\Items;
 
 use App\Controller\BaseController;
 use App\Model\Customer;
@@ -9,19 +9,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class ArtikelverwaltungControlller extends BaseController
+class ItemsControlller extends BaseController
 {
     /**
      * @param Request $request
      * @return Response
      */
-    #[Route('/artikel/artikelverwaltung', name: 'artikel')]
+    #[Route('/items/items', name: 'items')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function artikelAction(Request $request): Response
+    public function itemsAction(Request $request): Response
     {
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
-        return $this->render('artikel/artikel.html.twig', [
+        return $this->render('items/items.html.twig', [
 
         ]);
     }
@@ -30,11 +30,11 @@ class ArtikelverwaltungControlller extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/artikel/artikel-anlegen', name: 'artikel-anlegen')]
+    #[Route('/items/items-create', name: 'items-create')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function createArtikelAction(Request $request): Response
+    public function createItemsAction(Request $request): Response
     {
-        return $this->render('artikel/artikel_anlegen.html.twig');
+        return $this->render('items/items_create.html.twig');
     }
 
     /**
@@ -42,12 +42,12 @@ class ArtikelverwaltungControlller extends BaseController
      * @param int $artikelid
      * @return Response
      */
-    #[Route('/artikel/artikel-bearbeiten/{artikelid}', name: 'artikel-bearbeiten')]
+    #[Route('/items/items-edit/{artikelid}', name: 'items-edit')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function editArtikelAction(Request $request, int $artikelid): Response
+    public function editItemsAction(Request $request, int $artikelid): Response
     {
         // dd(\Pimcore\Model\DataObject\Customer::getById($userid));
-        return $this->render('artikel/artikel_bearbeiten.html.twig');
+        return $this->render('items/items_edit.html.twig');
     }
 
     /**
@@ -55,12 +55,12 @@ class ArtikelverwaltungControlller extends BaseController
      * @param int $userid
      * @return Response
      */
-    #[Route('/artikel/artikel-loeschen/{artikelid}', name: 'artikel-loeschen')]
+    #[Route('/items/items-delete/{artikelid}', name: 'items-delete')]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function deleteArtikelAction(Request $request, int $artikeld): Response
+    public function deleteItemsAction(Request $request, int $artikeld): Response
     {
         // $user->delete();
 
-        return $this->redirectToRoute("artikel_verwaltung");
+        return $this->redirectToRoute("items");
     }
 }
