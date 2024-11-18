@@ -8,9 +8,9 @@
                 <div class="empty-img">
                     <img src="./static/illustrations/undraw_quitting_time_dm8t.svg" height="128" alt="">
                 </div>
-                <p class="empty-title">Zugriff verweigert</p>
+                <p class="empty-title">{{ "Access denied"|trans }}</p>
                 <p class="empty-subtitle text-secondary">
-                    Sie besitzen keine ausreichenden Rechte um diese Seite zu besuchen! </p>
+                    {{ "Insufficient permissions to access this page."|trans }}</p>
                 <div class="empty-action">
                     <a href="{{ path('home') }}" class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -19,7 +19,8 @@
                             <path d="M5 12l6 6"></path>
                             <path d="M5 12l6 -6"></path>
                         </svg>
-                        Zurück zur Startseite
+                        {{ "Back to home"|trans }}
+                    </a>
                 </div>
             </div>
         </div>
