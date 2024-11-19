@@ -44,12 +44,12 @@
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbeschreibung kurz</label> #}
-    <input type="text" class="form-control" name="example-text-input" placeholder="Produktbeschreibung kurz">
+    <input type="text" class="form-control" name="example-text-input" placeholder="{{ "Short description"|trans }}">
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Produktbeschreibung lang</label>
-        <textarea class="form-control" name="example-textarea-input" rows="6" placeholder="Content.."></textarea>
+    <label class="form-label">{{ "Long description"|trans }}</label>
+        <textarea class="form-control" name="example-textarea-input" rows="6" placeholder=""></textarea>
 </div>
 
 <div class="row mb-3">
@@ -57,14 +57,14 @@
 
         <fieldset class="form-fieldset">
             <div class="mb-3">
-                <label class="form-label">VK (brutto)</label>
+                <label class="form-label">{{ "Price (with tax)"|trans }}</label>
                 <input type="text" class="form-control" autocomplete="off">
             </div>
 
             <div class="mb-3">
                 <select class="form-select">
-                    <option value="">Normaler Steuersatz</option>
-                    <option value="">Ermäßigter Steuersatz</option>
+                    <option value="">{{ "Regular tax"|trans }}</option>
+                    <option value="">{{ "Reduced tax"|trans }}</option>
                 </select>
             </div>
         </fieldset>
@@ -74,7 +74,7 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Kompatibel mit</h3>
+                <h3 class="card-title">{{ "Compatible with"|trans }}</h3>
             </div>
 
             <div class="list-group list-group-flush list-group-hoverable">
@@ -158,7 +158,7 @@
             <div class="list-group list-group-flush list-group-hoverable mt-3">
                 <div class="list-group-item">
                     <div class="row align-items-center">
-                        <label class="form-label">Kompatibles Produkt hinzufügen</label>
+                        <label class="form-label">{{ "Add compatible product"|trans }}</label>
                         <select type="text" class="form-select" id="select-people" value="">
                             <option value="1" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/000m.jpg)&quot;&gt;&lt;/span&gt;">Paweł Kuna</option>
                             <option value="2" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot;&gt;JL&lt;/span&gt;">Jeffie Lewzey</option>
@@ -179,7 +179,7 @@
 </div>
 
 <div class="mb-3">
-    <div class="form-label">Tags wählen</div>
+    <div class="form-label">{{ "Choose tags"|trans }}</div>
     <select type="text" class="form-select" id="select-states" value="" multiple>
         <option value="">Tag One</option>
         <option value="" selected>Tag Zwei</option>
@@ -193,22 +193,22 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label required">Größe</label>
+    <label class="form-label required">{{ "Size"|trans }}</label>
     <input type="text" class="form-control" name="example-text-input" placeholder="Größe">
 </div>
 
 <div class="mb-3">
-    <label class="form-label required">Transport-Größe</label>
+    <label class="form-label required">{{ "Transport size"|trans }}</label>
     <input type="text" class="form-control" name="example-text-input" placeholder="Transport-Größe">
 </div>
 
 <div class="mb-3">
-    <label class="form-label required">Transport-Hinweis</label>
+    <label class="form-label required">{{ "Transport note"|trans }}</label>
     <input type="text" class="form-control" name="example-text-input" placeholder="Transport-Hinweis">
 </div>
 
 <div class="mb-3">
-    <label class="form-label">Technische Informationen</label>
+    <label class="form-label">{{ "Technical information"|trans }}</label>
     <textarea class="form-control" name="example-textarea-input" rows="6" placeholder="Content.."></textarea>
 </div>
 

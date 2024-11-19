@@ -1,7 +1,7 @@
 <div class="mb-3">
     <label class="form-check form-switch">
         <input class="form-check-input" type="checkbox">
-        <span class="form-check-label">Dieser Artikel ist ein Produkt-Set</span>
+        <span class="form-check-label">{{ "This item is a set"|trans }}</span>
     </label>
 </div>
 
@@ -9,7 +9,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Enthaltene Artikel im Set</h3>
+            <h3 class="card-title">{{ "Items in set"|trans }}</h3>
         </div>
 
         <div class="list-group list-group-flush list-group-hoverable">
@@ -77,7 +77,7 @@
         <div class="list-group list-group-flush list-group-hoverable mt-3">
             <div class="list-group-item">
                 <div class="row align-items-center">
-                    <label class="form-label">Enthaltenes Produkt hinzufügen</label>
+                    <label class="form-label">{{ "Add item to set"|trans }}</label>
                     <select type="text" class="form-select" id="select-people" value="">
                         <option value="3" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Mallory Hulme</option>
                         <option value="4" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Dunn Slane</option>

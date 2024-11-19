@@ -3,10 +3,10 @@
         <table class="table table-vcenter card-table table-striped">
             <thead>
             <tr>
-                <th>Lager</th>
-                <th>Vorhanden</th>
-                <th>Angefordert</th>
-                <th>Bestellt</th>
+                <th>{{ "Warehouse"|trans }}</th>
+                <th>{{ "In stock"|trans }}</th>
+                <th>{{ "To procure"|trans }}</th>
+                <th>{{ "Ordered"|trans }}</th>
                 <th class="w-1"></th>
                 <th class="w-1"></th>
             </tr>
@@ -18,22 +18,10 @@
                     <td class="text-secondary">112</td>
                     <td class="text-secondary">12</td>
                     <td>
-                        <a href="#" class="btn btn-primary w-100">Einbuchen</a>
+                        <a href="#" class="btn btn-primary w-100">{{ "Add stock"|trans }}</a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger w-100">Ausbuchen</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Lager Hinterhof 22</td>
-                    <td class="text-secondary">235</td>
-                    <td class="text-secondary">112</td>
-                    <td class="text-secondary">12</td>
-                    <td>
-                        <a href="#" class="btn btn-primary w-100">Einbuchen</a>
-                    </td>
-                    <td>
-                        <a href="#" class="btn btn-danger w-100">Ausbuchen</a>
+                        <a href="#" class="btn btn-danger w-100">{{ "Remove stock"|trans }}</a>
                     </td>
                 </tr>
                 <tr>
@@ -42,10 +30,22 @@
                     <td class="text-secondary">112</td>
                     <td class="text-secondary">12</td>
                     <td>
-                        <a href="#" class="btn btn-primary w-100">Einbuchen</a>
+                        <a href="#" class="btn btn-primary w-100">{{ "Add stock"|trans }}</a>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-danger w-100">Ausbuchen</a>
+                        <a href="#" class="btn btn-danger w-100">{{ "Remove stock"|trans }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Lager Hinterhof 22</td>
+                    <td class="text-secondary">235</td>
+                    <td class="text-secondary">112</td>
+                    <td class="text-secondary">12</td>
+                    <td>
+                        <a href="#" class="btn btn-primary w-100">{{ "Add stock"|trans }}</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger w-100">{{ "Remove stock"|trans }}</a>
                     </td>
                 </tr>
             </tbody>
