@@ -12,13 +12,13 @@
                             {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
-                            Artikelverwaltung</h2>
+                            {{ "Items"|trans }}</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="{{ path('items-create') }}" class="btn btn-primary">
-                                Neuen Artikel anlegen
+                                {{ "Add item"|trans }}
                             </a>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                                     <span class="input-icon-addon">
                                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
                                     </span>
-                                    <input type="text" value="" class="form-control" placeholder="Suchen ...…" aria-label="Search in website">
+                                    <input type="text" value="" class="form-control" placeholder="{{ "Search"|trans }} ..." aria-label="Search in website">
                                 </div>
                             </form>
                         </div>
@@ -73,40 +73,33 @@
 
                         <div class="mt-2 btn-list flex-nowrap">
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Lager</button>
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Warehouse"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Hersteller</button>
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Manufacturer"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Merkliste</button>
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Tag"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Tag</button>
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Sort"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                </div>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Sortieren</button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Preis aufsteigend</a>
-                                    <a class="dropdown-item" href="#">Preis absteigend</a>
-                                    <a class="dropdown-item" href="#">Lager aufsteigend</a>
-                                    <a class="dropdown-item" href="#">Lager absteigend</a>
+                                    <a class="dropdown-item" href="#">{{ "Price asc"|trans }}</a>
+                                    <a class="dropdown-item" href="#">{{ "Price desc"|trans }}</a>
+                                    <a class="dropdown-item" href="#">{{ "Inventory asc"|trans }}</a>
+                                    <a class="dropdown-item" href="#">{{ "Inventory desc"|trans }}</a>
                                 </div>
                             </div>
                         </div>
@@ -116,11 +109,11 @@
                                 <table class="table table-mobile-md card-table">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Titel</th>
-                                        <th>Lagerbestand</th>
-                                        <th>Bedarf</th>
-                                        <th>Bestellt</th>
+                                        <th>{{ "Name"|trans }}</th>
+                                        <th>{{ "Title"|trans }}</th>
+                                        <th>{{ "Inventory"|trans }}</th>
+                                        <th>{{ "Required"|trans }}</th>
+                                        <th>{{ "Ordered"|trans }}</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
@@ -138,7 +131,7 @@
                                             </td>
                                             <td data-label="Title">
                                                 <div class="text-muted">Ortner / 667788767</div>
-                                                <div><strong>Großes Fettes Schild im Wald</strong> <span class="badge bg-teal text-teal-fg">SET</span></div>
+                                                <div><strong>Großes Fettes Schild im Wald</strong> <span class="badge bg-teal text-teal-fg">{{ "SET"|trans }}</span></div>
                                                 <div class="text-secondary">Kurzbeschreibung, Abmessung oder so bzw evtl auch ein kleiner Hinweis</div>
                                                 <div class="tags-list mt-1">
                                                     <span class="tag"> Tag 1<a href="#" class="btn-close"></a></span>
@@ -146,7 +139,7 @@
                                                     <span class="tag"> Tag 3<a href="#" class="btn-close"></a></span>
                                                 </div>
                                                 <div class="text-secondary small mt-1">
-                                                    Kompatibel: <a href="" target="_blank">Artikelname Supersepp 2000 Deluxe</a>
+                                                    {{ "Compatible with"|trans }}: <a href="" target="_blank">Artikelname Supersepp 2000 Deluxe</a>
                                                 </div>
 
                                             </td>
@@ -187,7 +180,7 @@
                                 <li class="page-item disabled">
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>
-                                        zurück
+                                        {{ "Last page"|trans }}
                                     </a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -197,7 +190,7 @@
                                 <li class="page-item"><a class="page-link" href="#">5</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">
-                                        weiter
+                                        {{ "Next page"|trans }}
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>
                                     </a>
                                 </li>

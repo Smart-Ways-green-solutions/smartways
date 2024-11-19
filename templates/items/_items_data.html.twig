@@ -1,15 +1,15 @@
 <div class="mb-3">
     {# <label class="form-label required">Artikelnummer</label> #}
-    <input type="text" class="form-control" name="example-text-input" placeholder="Artikelnummer">
+    <input type="text" class="form-control" name="example-text-input" placeholder="{{ "ItemNo"|trans }}">
 </div>
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbezeichnung</label> #}
-    <input type="text" class="form-control" name="example-text-input" placeholder="Produktbezeichnung">
+    <input type="text" class="form-control" name="example-text-input" placeholder="{{ "Item name"|trans }}">
 </div>
 
 <div class="mb-3">
-    <div class="form-label">Hersteller</div>
+    <div class="form-label">{{ "Manufacturer"|trans }}</div>
     <select class="form-select">
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="mb-3">
-    <div class="form-label">Infrastruktur-Typ</div>
+    <div class="form-label">{{ "Infrastructure type"|trans }}</div>
     <select class="form-select">
         <option value="1">Schild</option>
         <option value="2">Steg</option>

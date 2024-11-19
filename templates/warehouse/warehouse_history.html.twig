@@ -9,10 +9,10 @@
                     <div class="col">
                         <!-- Page pre-title -->
                         <div class="page-pretitle">
-                            Lagerbuchungen
+                            {{ "Inventory booking"|trans }}
                         </div>
                         <h2 class="page-title">
-                            Buchungshistorie</h2>
+                            {{ "Booking history"|trans }}</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -44,14 +44,14 @@
                     <div class="col-6">
                         <div class="btn-list flex-nowrap">
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Lager</button>
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Warehouse"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                 </div>
                             </div>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">Benutzer</button>
+                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "User"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
@@ -68,13 +68,13 @@
                                 <table class="table table-vcenter table-mobile-md card-table">
                                     <thead>
                                     <tr>
-                                        <th>Datum / Zeit</th>
-                                        <th>Lager</th>
-                                        <th>Menge</th>
-                                        <th>Artikelnr</th>
-                                        <th>Artikel</th>
-                                        <th>Benutzer</th>
-                                        <th class="w-1">Kommentar</th>
+                                        <th>{{ "Date / Time"|trans }}</th>
+                                        <th>{{ "Warehouse"|trans }}</th>
+                                        <th>{{ "Amount"|trans }}</th>
+                                        <th>{{ "ItemNr"|trans }}</th>
+                                        <th>{{ "Name"|trans }}</th>
+                                        <th>{{ "User"|trans }}</th>
+                                        <th class="w-1">{{ "Comment"|trans }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -109,7 +109,7 @@
                                 <li class="page-item disabled">
                                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>
-                                        zurück
+                                        {{ "back"|trans }}
                                     </a>
                                 </li>
                                 <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -119,7 +119,7 @@
                                 <li class="page-item"><a class="page-link" href="#">5</a></li>
                                 <li class="page-item">
                                     <a class="page-link" href="#">
-                                        weiter
+                                        {{ "next page"|trans }}
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>
                                     </a>
                                 </li>

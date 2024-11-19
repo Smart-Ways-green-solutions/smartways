@@ -12,13 +12,13 @@
                             {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
-                            Benutzerverwaltung</h2>
+                            {{ "User management"|trans }}</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
                         <div class="btn-list">
                             <a href="{{ path('administration_users-create') }}" class="btn btn-primary">
-                                Neuen Benutzer anlegen
+                                {{ "Add user"|trans }}
                             </a>
                         </div>
                     </div>
@@ -36,9 +36,9 @@
                                 <table class="table table-vcenter table-mobile-md card-table">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Funktion</th>
-                                        <th>Rollen</th>
+                                        <th>{{ "Name"|trans }}</th>
+                                        <th>{{ "Function"|trans }}</th>
+                                        <th>{{ "Role"|trans }}</th>
                                         <th class="w-1"></th>
                                     </tr>
                                     </thead>
@@ -61,16 +61,16 @@
                                             <td class="text-secondary" data-label="Rollen">
                                                 <div class="badges-list">
                                                     {% if user.permission_admin %}
-                                                        <span class="badge bg-red text-red-fg">Admin</span>
+                                                        <span class="badge bg-red text-red-fg">{{ "Administrator"|trans }}</span>
                                                     {% endif %}
                                                     {% if user.permission_wegemanager %}
-                                                        <span class="badge bg-blue text-blue-fg">Wegemanager</span>
+                                                        <span class="badge bg-blue text-blue-fg">{{ "Path mentor"|trans }}</span>
                                                     {% endif %}
                                                     {% if user.permission_lagerist %}
-                                                        <span class="badge bg-purple text-purple-fg">Lagerist</span>
+                                                        <span class="badge bg-purple text-purple-fg">{{ "Inventory manager"|trans }}</span>
                                                     {% endif %}
                                                     {% if user.permission_wegepate %}
-                                                        <span class="badge bg-green text-green-fg">Wegepate</span>
+                                                        <span class="badge bg-green text-green-fg">{{ "Path manager"|trans }}</span>
                                                     {% endif %}
                                                 </div>
                                             </td>
