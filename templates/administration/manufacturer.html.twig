@@ -25,12 +25,18 @@
                 </div>
             </div>
         </div>
+        {% include "form/modal.html.twig" %}
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-cards">
 
                     <div class="col-12">
+                        {% for type, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ type }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endfor %}
                         <div class="card">
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-mobile-md card-table">
@@ -43,21 +49,33 @@
                                     </thead>
                                     <tbody>
 
-                                        <tr>
-                                            <td data-label="Name">
-                                               Hersteller Name
-                                            </td>
-                                            <td data-label="Name">
-                                                <a href="https://www.google.de" target="_blank">www.google.de</a>
-                                            </td>
-                                            <td>
-                                                <div class="btn-list flex-nowrap">
-                                                    <a href="{{ path('administration_manufacturer-edit', { herstellerid: 123 }) }}" class="btn">
-                                                        {{ "Edit"|trans }}
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {% if manufacturerList is defined and manufacturerList is not empty %}        
+                                            {% for manufacturer in manufacturerList %}
+                                            <tr>
+                                                <td data-label="Name">
+                                                    {{manufacturer.name}}
+                                                </td>
+                                                <td data-label="Name">
+                                                    <a href="https://www.google.de" target="_blank"> {{manufacturer.website}}</a>
+                                                </td>
+                                                <td>
+                                                    <div class="btn-list flex-nowrap">
+                                                        <a href="{{ path('administration_manufacturer-edit', { id: manufacturer.id }) }}" class="btn">
+                                                            {{ "Edit"|trans }}
+                                                        </a>
+                                                        <a id="delete-item" data-href="{{ path('administration_manufacturer-delete', { id: manufacturer.id }) }}" class="btn btn-danger"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-small">
+                                                            {{'Delete'|trans}}
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr> 
+                                                <td colspan='3'> {{"No data found"|trans}} </td>
+                                            </tr>
+                                        {% endif %}
 
                                     </tbody>
                                 </table>

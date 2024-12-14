@@ -11,8 +11,15 @@
                         <div class="page-pretitle">
                             {{ "Create & edit"|trans }}
                         </div>
-                        <h2 class="page-title">
-                            {{ "Add user"|trans }}</h2>
+                        {% if userid is not empty %}
+                            <h2 class="page-title">
+                                {{ "Edit user"|trans }}
+                            </h2>
+                        {% else %}
+                            <h2 class="page-title">
+                                {{ "Add user"|trans }}
+                            </h2>
+                        {% endif %}
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -29,82 +36,41 @@
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form action="{{ path('administration_users-create') }}" method="post">
+                        
                             <div class="card">
                                 <div class="card-body">
-                                {% if error is defined and error is not empty %}
-                                    <div class="alert alert-danger" role="alert">
-                                        <div class="d-flex">
-                                            <div>
-                                                <!-- SVG icon from http://tabler-icons.io/i/alert-circle -->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-alert-circle">
-                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-                                                    <path d="M12 8v4" />
-                                                    <path d="M12 16h.01" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <h4 class="alert-title">Es ist ein Fehler passiert</h4>
-                                                <div class="text-secondary">Diesen Nutzer gibt es bereits. Bitte vergeben Sie eine andere Kombination aus E-Mail-Adresse und Vor- und Nachname.</div>
-                                                <div class="text-secondary">{{ error.getMessage() }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
+                               
 
+                                {% form_theme form 'bootstrap_5_layout.html.twig' %}
+                                    {% for type, messages in app.flashes %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ type }}">{{ message }}</div>
+                                    {% endfor %}
+                                {% endfor %}
+                                {{ form_start(form) }}
                                     <div class="row">
                                         <div class="col-xl-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ "First name"|trans }}</label>
-                                                <input type="text" class="form-control required" name="firstname" placeholder="{{ "First name"|trans }}">
-                                            </div>
+                                            
+                                                {{ form_row(form.firstname) }}
+                                                {{ form_row(form.lastname) }}
+                                                {{ form_row(form.role) }}
+                                                {{ form_row(form.email) }}
 
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ "Last name"|trans }}</label>
-                                                <input type="text" class="form-control required" name="lastname" placeholder="{{ "Last name"|trans }}">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ "Function"|trans }}</label>
-                                                <input type="text" class="form-control required" name="role" placeholder="Funktion">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ "eMail-Address"|trans }}</label>
-                                                <input type="email" class="form-control required" name="email" placeholder="E-Mail Adresse">
-                                            </div>
                                         </div>
                                         <div class="col-xl-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ "Password"|trans }}</label>
-                                                <input type="password" class="form-control required" name="password" placeholder="Passwort">
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ "Repeat password"|trans }}</label>
-                                                <input type="password" class="form-control required" name="password-repeated" placeholder="Passwort wiederholen">
-                                            </div>
+                                            {{ form_row(form.password) }}
+                                            {{ form_row(form['password-repeated']) }}
+                                      
 
                                             <label class="form-label">{{ "User rights"|trans }}</label>
 
                                             <fieldset class="form-fieldset">
-                                                <label class="form-check">
-                                                    <input type="checkbox" class="form-check-input" name="permission-admin">
-                                                    <span class="form-check-label">{{ "Administrator"|trans }}</span>
-                                                </label>
-                                                <label class="form-check">
-                                                    <input type="checkbox" class="form-check-input" name="permission-wegpate">
-                                                    <span class="form-check-label">{{ "Path mentor"|trans }}</span>
-                                                </label>
-                                                <label class="form-check">
-                                                    <input type="checkbox" class="form-check-input" name="permission-lagerist">
-                                                    <span class="form-check-label">{{ "Inventory manager"|trans }}</span>
-                                                </label>
-                                                <label class="form-check">
-                                                    <input type="checkbox" class="form-check-input" name="permission-wegmanager">
-                                                    <span class="form-check-label">{{ "Path manager"|trans }}</span>
-                                                </label>
+                                                {{ form_row(form.permission_admin_v) }}
+                                                {{ form_row(form.permission_wegepate_v) }}
+                                                {{ form_row(form.permission_lagerist_v) }}
+                                                {{ form_row(form.permission_wegemanager_v) }}
+                                          
+                                         
                                             </fieldset>
 
                                         </div>
@@ -119,8 +85,10 @@
                                     </div>
                                 </div>
 
+                                {{ form_end(form) }}
+
                             </div>
-                        </form>
+                       
                     </div>
 
                 </div>

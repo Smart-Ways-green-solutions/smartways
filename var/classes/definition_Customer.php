@@ -49,7 +49,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1724611953,
+   'modificationDate' => 1734174202,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '\\CustomerManagementFrameworkBundle\\Model\\AbstractCustomer\\DefaultAbstractUserawareCustomer',
@@ -946,7 +946,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                       0 => 
                       \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
                          'name' => 'permission_wegepate',
-                         'title' => 'permission_wegepate',
+                         'title' => 'Permission wegepate',
                          'tooltip' => '',
                          'mandatory' => false,
                          'noteditable' => false,
@@ -968,7 +968,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                       1 => 
                       \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
                          'name' => 'permission_lagerist',
-                         'title' => 'Permission _lagerist',
+                         'title' => 'Permission lagerist',
                          'tooltip' => '',
                          'mandatory' => false,
                          'noteditable' => false,
@@ -990,7 +990,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                       2 => 
                       \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
                          'name' => 'permission_wegemanager',
-                         'title' => 'Permission _wegemanager',
+                         'title' => 'Permission wegemanager',
                          'tooltip' => '',
                          'mandatory' => false,
                          'noteditable' => false,
@@ -1012,7 +1012,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                       3 => 
                       \Pimcore\Model\DataObject\ClassDefinition\Data\Checkbox::__set_state(array(
                          'name' => 'permission_admin',
-                         'title' => 'Permission _admin',
+                         'title' => 'Permission admin',
                          'tooltip' => '',
                          'mandatory' => false,
                          'noteditable' => false,

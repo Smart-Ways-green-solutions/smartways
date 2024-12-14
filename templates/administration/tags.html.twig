@@ -25,12 +25,18 @@
                 </div>
             </div>
         </div>
+        {% include "form/modal.html.twig" %}
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-cards">
 
                     <div class="col-12">
+                        {% for type, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ type }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endfor %}
                         <div class="card">
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-mobile-md card-table">
@@ -42,18 +48,32 @@
                                     </thead>
                                     <tbody>
 
-                                        <tr>
-                                            <td class="" data-label="Role">
-                                                Tag-Name
-                                            </td>
-                                            <td>
-                                                <div class="btn-list flex-nowrap">
-                                                    <a href="{{ path('administration_tags-edit', { tagid: 111 }) }}" class="btn">
-                                                        {{ "Edit"|trans }}
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {% if tags is defined and tags is not empty %}        
+                                            {% for tag in tags %}
+                                            <tr>
+                                                <td data-label="Name">
+                                                    {{tag.name}}
+                                                </td>
+                                                
+                                                <td>
+                                                    <div class="btn-list flex-nowrap">
+                                                        <a href="{{ path('administration_tags-edit', { id: tag.id }) }}" class="btn">
+                                                            {{ "Edit"|trans }}
+                                                        </a>
+                                                        <a id="delete-item" data-href="{{ path('administration_tags-delete', { id: tag.id }) }}" class="btn btn-danger"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-small">
+                                                            {{'Delete'|trans}}
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <tr> 
+                                                <td colspan='2'> {{"No data found"|trans}} </td>
+                                            </tr>
+                                        {% endif %}
+
 
                                     </tbody>
                                 </table>

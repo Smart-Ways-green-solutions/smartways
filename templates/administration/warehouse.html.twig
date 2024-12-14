@@ -25,12 +25,20 @@
                 </div>
             </div>
         </div>
+         {% include "form/modal.html.twig" %}
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-cards">
 
+                
                     <div class="col-12">
+                        {% for type, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ type }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endfor %}
+
                         <div class="card">
                             <div class="table-responsive">
                                 <table class="table table-vcenter table-mobile-md card-table">
@@ -43,36 +51,46 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-
-
-                                        <tr>
-                                            <td data-label="Name">
-                                                <div class="d-flex py-1 align-items-center">
-                                                    <div class="flex-fill">
-                                                        <div class="font-weight-medium">Lager-Name</div>
-                                                        <div class="text-secondary">
-                                                            Lageranschrift 123<br />
-                                                            12345 Lagerort
+                                        {% if warehouseList is defined and warehouseList is not empty %}        
+                                            {% for warehouse in warehouseList %}
+                                                <tr>
+                                                    <td data-label="Name">
+                                                        <div class="d-flex py-1 align-items-center">
+                                                            <div class="flex-fill">
+                                                                <div class="font-weight-medium">{{warehouse.name}}</div>
+                                                                <div class="text-secondary">
+                                                                    {{warehouse.address}}
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-secondary">
-                                                Max Mustermann<br />
-                                                <a href="tel:+491711234567">+49 171 1234567</a><br />
-                                                <a href="mailto:test@smartdings.com">test@smartdings.com</a><br />
-                                            </td>
-                                            <td class="text-secondary">
-                                                Mo-Fr 8-17 Uhr
-                                            </td>
-                                            <td>
-                                                <div class="btn-list flex-nowrap">
-                                                    <a href="{{ path('administration_warehouse-edit', { lagerid: 1234 }) }}" class="btn">
-                                                        {{ "Edit"|trans }}
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </td>
+                                                    <td class="text-secondary">
+                                                       {{warehouse.contactPerson}}<br />
+                                                        <a href="tel:+491711234567">{{warehouse.phone}}</a><br />
+                                                        <a href="mailto:test@smartdings.com">{{warehouse.emailAddress}}</a><br />
+                                                    </td>
+                                                    <td class="text-secondary">
+                                                       {{warehouse.openingHours}}
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-list flex-nowrap">
+                                                            <a href="{{ path('administration_warehouse-edit', { lagerid: warehouse.id }) }}" class="btn">
+                                                                {{ "Edit"|trans }}
+                                                            </a>
+                                                            <a id="delete-item" data-href="{{ path('administration_warehouse-delete', { id: warehouse.id }) }}" class="btn btn-danger"
+                                                            data-bs-toggle="modal" data-bs-target="#modal-small"
+                                                            >{{'Delete'|trans}}</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                            {% endfor %}
+                                         {% else %}
+                                            <tr> 
+                                                <td colspan='4'> {{"No data found"|trans}} </td>
+                                            </tr>
+                                        {% endif %}
+                                       
 
 
                                     </tbody>

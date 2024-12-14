@@ -62,6 +62,15 @@ services:
         tags: [ 'console.command' ]
 
 
+    App\Services\:
+        resource: '../src/Services/*'
+        tags: [ 'console.service' ]   
+
+    App\EventSubscriber\AccessSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+
+
 
     # Example custom templating helper
     # App\Templating\Helper\Example:

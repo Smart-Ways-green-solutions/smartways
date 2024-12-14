@@ -25,11 +25,18 @@
                 </div>
             </div>
         </div>
+         {% include "form/modal.html.twig" %}
+        
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-cards">
 
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }}">{{ message }}</div>
+                    {% endfor %}
+                {% endfor %}
                     <div class="col-12">
                         <div class="card">
                             <div class="table-responsive">
@@ -79,6 +86,9 @@
                                                     <a href="{{ path('administration_users-edit', { userid: user.id }) }}" class="btn">
                                                         {{ "Edit"|trans }}
                                                     </a>
+                                                    <a id="delete-item" data-href="{{ path('administration_users-delete', { userid: user.id }) }}" class="btn btn-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#modal-small"
+                                                    >{{'Delete'|trans}}</a>
                                                 </div>
                                             </td>
                                         </tr>

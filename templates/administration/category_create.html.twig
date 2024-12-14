@@ -11,8 +11,14 @@
                         <div class="page-pretitle">
                             {{ "Create & edit"|trans }}
                         </div>
+                     
+                                {% if id is defined and id is not empty %}
+                        <h2 class="page-title">
+                            {{ "Edit category"|trans }}</h2>
+                            {% else %}
                         <h2 class="page-title">
                             {{ "Create category"|trans }}</h2>
+                            {% endif %}
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -30,21 +36,11 @@
 
                     <div class="col-12">
                         <div class="card">
+                        
                             <div class="card-body">
-
-                                <div class="mb-3">
-                                    <label class="form-label">Category description</label>
-                                    <input type="text" class="form-control required" name="example-text-input" placeholder="Category description">
-                                </div>
-
+                                {% include "form/commonbuilder.html.twig" with {cancelUrl: path('administration_category')} %}
                             </div>
-
-                            <div class="card-footer text-end">
-                                <div class="d-flex">
-                                    <a href="#" class="btn btn-link">{{ "Cancel"|trans }}</a>
-                                    <button type="submit" class="btn btn-primary ms-auto">{{ "Save"|trans }}</button>
-                                </div>
-                            </div>
+                          
 
                         </div>
 
