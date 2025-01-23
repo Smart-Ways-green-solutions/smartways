@@ -2,7 +2,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id="heading-1">
             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true">
-                Lieferant Eins
+                Supplier 1
             </button>
         </h2>
         <div id="collapse-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
@@ -11,15 +11,15 @@
                 <fieldset class="form-fieldset">
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            <label class="form-label">EK (netto) beim Lieferanten</label>
+                            <label class="form-label">{{ "Supplier NET price"|trans }}</label>
                             <input type="text" class="form-control" autocomplete="off">
                         </div>
                         <div class="col-12 col-md-4">
-                            <label class="form-label required">Artikel-Nr beim Lieferanten</label>
+                            <label class="form-label required">{{ "Supplier Item-ID"|trans }}</label>
                             <input type="text" class="form-control" autocomplete="off">
                         </div>
                         <div class="col-12 col-md-4">
-                            <label class="form-label">Typische Lieferzeit</label>
+                            <label class="form-label">{{ "Typical delivery Time"|trans }}</label>
                             <input type="text" class="form-control" autocomplete="off">
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                     <div class="card">
 
                         <div class="card-header">
-                            <h3 class="card-title">Offene Bestellungen beim Lieferanten</h3>
+                            <h3 class="card-title">{{ "Open orders"|trans }}</h3>
                         </div>
 
                         <div class="list-group list-group-flush list-group-hoverable">
@@ -37,9 +37,9 @@
                             <div class="list-group-item">
                                 <div class="row align-items-center">
                                     <div class="col text-truncate">
-                                        <a href="#" target="_blank" class="text-reset d-block">Bestellung vom 22.03.2024</a>
+                                        <a href="#" target="_blank" class="text-reset d-block">{{ "Order from"|trans }} 22.03.2024</a>
                                         <div class="d-block text-secondary text-truncate mt-n1">
-                                            Bestellt von: Max Mustermann
+                                            {{ "Ordered by"|trans }} Max Mustermann
                                         </div>
                                     </div>
                                 </div>
@@ -48,9 +48,9 @@
                             <div class="list-group-item">
                                 <div class="row align-items-center">
                                     <div class="col text-truncate">
-                                        <a href="#" target="_blank" class="text-reset d-block">Bestellung vom 22.03.2024</a>
+                                        <a href="#" target="_blank" class="text-reset d-block">{{ "Order from"|trans }} 22.03.2024</a>
                                         <div class="d-block text-secondary text-truncate mt-n1">
-                                            Bestellt von: Max Mustermann
+                                            {{ "Ordered by"|trans }} Max Mustermann
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id="heading-2">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-2" aria-expanded="false">
-                Lieferant Zwei
+                Supplier 2
             </button>
         </h2>
         <div id="collapse-2" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
@@ -76,15 +76,15 @@
                 <fieldset class="form-fieldset">
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            <label class="form-label">EK (netto) beim Lieferanten</label>
+                            <label class="form-label">{{ "Supplier NET price"|trans }}</label>
                             <input type="text" class="form-control" autocomplete="off">
                         </div>
                         <div class="col-12 col-md-4">
-                            <label class="form-label required">Artikel-Nr beim Lieferanten</label>
+                            <label class="form-label required">{{ "Supplier Item-ID"|trans }}</label>
                             <input type="text" class="form-control" autocomplete="off">
                         </div>
                         <div class="col-12 col-md-4">
-                            <label class="form-label">Typische Lieferzeit</label>
+                            <label class="form-label">{{ "Typical delivery Time"|trans }}</label>
                             <input type="text" class="form-control" autocomplete="off">
                         </div>
                     </div>
@@ -102,11 +102,11 @@
     <div class="card-body text-end">
         <div class="d-flex">
             <select class="form-select" style="width: 50%">
-                <option value="1">Lieferant 1</option>
-                <option value="2">Lieferant Two</option>
-                <option value="3">Lieferant Three</option>
+                <option value="1">Supplier 1</option>
+                <option value="2">Supplier Two</option>
+                <option value="3">Supplier Three</option>
             </select>
-            <button type="submit" class="btn btn-primary ms-auto">Lieferant hinzufügen</button>
+            <button type="submit" class="btn btn-primary ms-auto">{{ "Add supplier"|trans }}</button>
         </div>
     </div>
 </div>
