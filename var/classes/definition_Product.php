@@ -20,6 +20,8 @@
  * - TransportNote [input]
  * - Technicalinformation [textarea]
  * - images [imageGallery]
+ * - itemType [select]
+ * - components [manyToManyObjectRelation]
  * - suppliers [fieldcollections]
  * - inventories [reverseObjectRelation]
  */
@@ -31,7 +33,7 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'title' => '',
    'description' => '',
    'creationDate' => NULL,
-   'modificationDate' => 1738477025,
+   'modificationDate' => 1739105826,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -641,6 +643,92 @@ return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
              'datatype' => 'layout',
              'children' => 
             array (
+              0 => 
+              \Pimcore\Model\DataObject\ClassDefinition\Data\Select::__set_state(array(
+                 'name' => 'itemType',
+                 'title' => 'Item Type',
+                 'tooltip' => '',
+                 'mandatory' => false,
+                 'noteditable' => false,
+                 'index' => false,
+                 'locked' => false,
+                 'style' => '',
+                 'permissions' => NULL,
+                 'fieldtype' => '',
+                 'relationType' => false,
+                 'invisible' => false,
+                 'visibleGridView' => false,
+                 'visibleSearch' => false,
+                 'blockedVarsForExport' => 
+                array (
+                ),
+                 'options' => 
+                array (
+                  0 => 
+                  array (
+                    'key' => 'Component Item',
+                    'value' => 'Component Item',
+                  ),
+                  1 => 
+                  array (
+                    'key' => 'Default Item',
+                    'value' => 'Default Item',
+                  ),
+                  2 => 
+                  array (
+                    'key' => 'Item-Set',
+                    'value' => 'Item-Set',
+                  ),
+                ),
+                 'defaultValue' => '',
+                 'columnLength' => 190,
+                 'dynamicOptions' => false,
+                 'defaultValueGenerator' => '',
+                 'width' => '',
+                 'optionsProviderType' => 'configure',
+                 'optionsProviderClass' => '',
+                 'optionsProviderData' => '',
+              )),
+              1 => 
+              \Pimcore\Model\DataObject\ClassDefinition\Data\ManyToManyObjectRelation::__set_state(array(
+                 'name' => 'components',
+                 'title' => 'Components',
+                 'tooltip' => '',
+                 'mandatory' => false,
+                 'noteditable' => false,
+                 'index' => false,
+                 'locked' => false,
+                 'style' => '',
+                 'permissions' => NULL,
+                 'fieldtype' => '',
+                 'relationType' => true,
+                 'invisible' => false,
+                 'visibleGridView' => false,
+                 'visibleSearch' => false,
+                 'blockedVarsForExport' => 
+                array (
+                ),
+                 'classes' => 
+                array (
+                  0 => 
+                  array (
+                    'classes' => 'Product',
+                  ),
+                ),
+                 'displayMode' => 'grid',
+                 'pathFormatterClass' => '',
+                 'maxItems' => NULL,
+                 'visibleFields' => 'id,ItemNo,Itemname',
+                 'allowToCreateNewObject' => false,
+                 'allowToClearRelation' => true,
+                 'optimizedAdminLoading' => false,
+                 'enableTextSelection' => false,
+                 'visibleFieldDefinitions' => 
+                array (
+                ),
+                 'width' => '',
+                 'height' => '',
+              )),
             ),
              'locked' => false,
              'blockedVarsForExport' => 
