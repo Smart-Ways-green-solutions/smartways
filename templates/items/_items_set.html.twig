@@ -1,9 +1,20 @@
 <div class="mb-3">
     <label class="form-label">{{ "Item-Type"|trans }}</label>
-    <select type="text" class="form-select" id="select-people" value="">
-        <option value="3">Default Item</option>
+    <select type="text" class="form-select" id="select-people" name="itemType" value="">
+        <option value="">-Select-</option>
+        {% for item in dropdownFields %}
+            {% for key, value in item %}
+                {% if key == 'itemType' %}
+                    {% for type in value %}
+                        <option value="{{ type }}">{{ type }}</option>
+                        {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {# <option value="3">Default Item</option>
         <option value="3">Component Item</option>
-        <option value="3">Item-Set</option>
+        <option value="3">Item-Set</option> #}
     </select>
 </div>
 
@@ -14,81 +25,36 @@
             <h3 class="card-title">{{ "Items in set"|trans }}</h3>
         </div>
 
-        <div class="list-group list-group-flush list-group-hoverable">
-            <div class="list-group-item">
-                <div class="row align-items-center">
-                    <div class="col-auto">
-                        <a href="#" target="_blank">
-                            <span class="avatar" style="background-image: url(/misc/img/dev-item.jpg)"></span>
-                        </a>
-                    </div>
-                    <div class="col text-truncate">
-                        <a href="#" class="text-reset d-block">Produktname Trallala</a>
-                        <div class="d-block text-secondary text-truncate mt-n1">
-                            Hier steht die Kurzbeschreibung<br/>
-                            ArtNr: 12345
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <a href="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M4 7l16 0"/>
-                                <path d="M10 11l0 6"/>
-                                <path d="M14 11l0 6"/>
-                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
-                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-group list-group-flush list-group-hoverable">
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <a href="#" target="_blank">
-                                <span class="avatar" style="background-image: url(/misc/img/dev-item.jpg)"></span>
-                            </a>
-                        </div>
-                        <div class="col text-truncate">
-                            <a href="#" class="text-reset d-block">Produktname Trallala</a>
-                            <div class="d-block text-secondary text-truncate mt-n1">
-                                Hier steht die Kurzbeschreibung<br/>
-                                ArtNr: 12345
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M4 7l16 0"/>
-                                    <path d="M10 11l0 6"/>
-                                    <path d="M14 11l0 6"/>
-                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
-                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="item-set list-group list-group-flush list-group-hoverable">
+            
         </div>
 
         <div class="list-group list-group-flush list-group-hoverable mt-3">
             <div class="list-group-item">
                 <div class="row align-items-center">
                     <label class="form-label">{{ "Add item to set"|trans }}</label>
-                    <select type="text" class="form-select" id="select-people" value="">
-                        <option value="3" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Mallory Hulme</option>
+                    <select type="text" class="form-select" id="select-item" value="">
+                        <option value="">-Select-</option>
+                        {% for item in dropdownFields %}
+                            {% for key, value in item %}
+                                {% if key == 'Product' %}
+                                    {% for product in value %}
+                                        {% for id, name in product %}
+                                            <option value="{{ id }}">{{ name }}</option>
+                                        {% endfor %}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        {# <option value="3" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Mallory Hulme</option>
                         <option value="4" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Dunn Slane</option>
                         <option value="17" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Dyann Escala</option>
                         <option value="18" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Avivah Mugleston</option>
                         <option value="19" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot;&gt;AA&lt;/span&gt;">Arlie Armstead</option>
-                        <option value="20" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Tessie Curzon</option>
+                        <option value="20" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(/misc/img/dev-item.jpg)&quot;&gt;&lt;/span&gt;">Tessie Curzon</option> #}
                     </select>
                 </div>
+                <a id="add-item-to-set" class="btn btn-primary ms-auto float-end mt-2 d-none">Add</a>
             </div>
         </div>
 
@@ -96,3 +62,70 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var productDropdown = document.querySelector("select[id='select-item']");
+        var addProductBtn = document.getElementById('add-item-to-set');
+
+        function toggleButtonVisibility() {
+            var productId = productDropdown.value; 
+            if (productId) {
+                addProductBtn.classList.remove("d-none");
+            } else {
+                addProductBtn.classList.add("d-none");
+            }
+        }
+
+        toggleButtonVisibility();
+
+        productDropdown.addEventListener("change", toggleButtonVisibility);
+
+        addProductBtn.addEventListener("click", function () {
+            var productId = productDropdown.value;
+
+            fetch("/items/item-info", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"  // Fix: Add content type
+                },
+                body: JSON.stringify({ productId: productId })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return res.json();
+            })
+            .then(data => {
+                var productTemplate = document.querySelector("#product-template").content.cloneNode(true);
+
+                var components = document.querySelector(".item-set");
+
+                // Fix: Check if data contains the expected fields
+                productTemplate.querySelector(".product-name").textContent = data.name;
+                productTemplate.querySelector(".product-description").textContent = data.shortDescription;
+
+                var hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "components[]";
+                hiddenInput.value = productId;
+
+                // Append the hidden input to the new product block
+                var newProduct = productTemplate.querySelector(".list-group-item");
+                newProduct.appendChild(hiddenInput);
+
+                components.appendChild(productTemplate);
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("An error occurred while fetching the product data.");
+            });
+        });
+        document.querySelector(".item-set").addEventListener("click", function (event) {
+            if (event.target.closest(".delete-product")) {
+                event.target.closest(".list-group-item").remove();
+            }
+        });
+    })
+</script>

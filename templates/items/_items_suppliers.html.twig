@@ -1,5 +1,72 @@
-<div class="accordion" id="accordion-example">
-    <div class="accordion-item">
+<div class="suppliers accordion" id="accordion-example">
+    <template id="supplier-template">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-1">
+                <button class="supplier-name accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true">
+                    Supplier 1
+                </button>
+            </h2>
+            <div id="collapse-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
+                <div class="accordion-body pt-0">
+
+                    <fieldset class="form-fieldset">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">{{ "Supplier NET price"|trans }}</label>
+                                <input type="text" name="suppliers[][supplierNETprice]" class="form-control" autocomplete="off">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label class="form-label required">{{ "Supplier Item-ID"|trans }}</label>
+                                <input type="text" name="suppliers[][supplierItemID]" class="form-control" autocomplete="off">
+                            </div>
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">{{ "Typical delivery Time"|trans }}</label>
+                                <input type="text" name="suppliers[][TypicalDeliveryTime]" class="form-control" autocomplete="off">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="mt-3">
+                        <div class="card">
+
+                            <div class="card-header">
+                                <h3 class="card-title">{{ "Open orders"|trans }}</h3>
+                            </div>
+
+                            <div class="list-group list-group-flush list-group-hoverable">
+
+                                <div class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col text-truncate">
+                                            <a href="#" target="_blank" class="text-reset d-block">{{ "Order from"|trans }} 22.03.2024</a>
+                                            <div class="d-block text-secondary text-truncate mt-n1">
+                                                {{ "Ordered by"|trans }} Max Mustermann
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col text-truncate">
+                                            <a href="#" target="_blank" class="text-reset d-block">{{ "Order from"|trans }} 22.03.2024</a>
+                                            <div class="d-block text-secondary text-truncate mt-n1">
+                                                {{ "Ordered by"|trans }} Max Mustermann
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </template>
+    {# <div class="accordion-item">
         <h2 class="accordion-header" id="heading-1">
             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true">
                 Supplier 1
@@ -12,15 +79,15 @@
                     <div class="row">
                         <div class="col-12 col-md-4">
                             <label class="form-label">{{ "Supplier NET price"|trans }}</label>
-                            <input type="text" class="form-control" autocomplete="off">
+                            <input type="text" name="supplierNETprice" class="form-control" autocomplete="off">
                         </div>
                         <div class="col-12 col-md-4">
                             <label class="form-label required">{{ "Supplier Item-ID"|trans }}</label>
-                            <input type="text" class="form-control" autocomplete="off">
+                            <input type="text" name="supplierItemID" class="form-control" autocomplete="off">
                         </div>
                         <div class="col-12 col-md-4">
                             <label class="form-label">{{ "Typical delivery Time"|trans }}</label>
-                            <input type="text" class="form-control" autocomplete="off">
+                            <input type="text" name="TypicalDeliveryTime" class="form-control" autocomplete="off">
                         </div>
                     </div>
                 </fieldset>
@@ -92,7 +159,7 @@
 
             </div>
         </div>
-    </div>
+    </div> #}
 
 </div>
 
@@ -101,12 +168,93 @@
 <div class="card mt-3">
     <div class="card-body text-end">
         <div class="d-flex">
-            <select class="form-select" style="width: 50%">
-                <option value="1">Supplier 1</option>
+            <select id="suppliers-list" class="form-select" style="width: 50%">
+            <option value="">-Select-</option>
+            {% for item in dropdownFields %}
+                {% for key, value in item %}
+                    {% if key == 'Suppliers' %}
+                        {% for id, name in value %}
+                            <option value="{{ id }}">{{ name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+                {# <option value="1">Supplier 1</option>
                 <option value="2">Supplier Two</option>
-                <option value="3">Supplier Three</option>
+                <option value="3">Supplier Three</option> #}
             </select>
-            <button type="submit" class="btn btn-primary ms-auto">{{ "Add supplier"|trans }}</button>
+            <a id="add-supplier" class="btn btn-primary ms-auto">{{ "Add supplier"|trans }}</a>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var supplierDropdown = document.querySelector("select[id='suppliers-list']");
+        var addSupplierBtn = document.getElementById('add-supplier');
+
+        function toggleButtonVisibility() {
+            var supplierId = supplierDropdown.value; 
+            if (supplierId) {
+                addSupplierBtn.classList.remove("d-none");
+            } else {
+                addSupplierBtn.classList.add("d-none");
+            }
+        }
+
+        toggleButtonVisibility();
+
+        supplierDropdown.addEventListener("change", toggleButtonVisibility);
+
+        addSupplierBtn.addEventListener("click", function () {
+            var supplierId = supplierDropdown.value;
+
+            /*var supplierTemplate = document.querySelector("#supplier-template").content.cloneNode(true);
+
+            var suppliers = document.querySelector(".suppliers");
+
+            // Fix: Check if data contains the expected fields
+            supplierTemplate.querySelector(".supplier-name").textContent = data.name;
+            supplierTemplate.querySelector(".product-description").textContent = data.shortDescription;
+
+            suppliers.appendChild(supplierTemplate);*/
+
+            fetch("/items/supplier-info", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"  // Fix: Add content type
+                },
+                body: JSON.stringify({ supplierId: supplierId })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return res.json();
+            })
+            .then(data => {
+                var supplierTemplate = document.querySelector("#supplier-template").content.cloneNode(true);
+
+                var suppliers = document.querySelector(".suppliers");
+                var expandSupplierBtn = supplierTemplate.querySelector(".supplier-name");
+                supplierTemplate.querySelector("#collapse-1").setAttribute("id", "supplier-"+data.id);
+                expandSupplierBtn.setAttribute("data-bs-target", "#supplier-"+data.id);
+
+                // Fix: Check if data contains the expected fields
+                expandSupplierBtn.textContent = data.name;
+                /*supplierTemplate.querySelector(".product-description").textContent = data.shortDescription;*/
+                
+                supplierTemplate.querySelectorAll("input").forEach(input => {
+                    let name = input.getAttribute("name");
+                    input.setAttribute("name", name.replace("suppliers[]", `suppliers[${data.id}]`));
+                });
+
+                suppliers.appendChild(supplierTemplate);
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("An error occurred while fetching the supplier data.");
+            });
+        });
+    });
+</script>

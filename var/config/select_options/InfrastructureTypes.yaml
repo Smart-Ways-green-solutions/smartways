@@ -4,7 +4,23 @@ pimcore:
             definitions:
                 InfrastructureTypes:
                     id: InfrastructureTypes
-                    group: null
+                    group: ''
                     useTraits: ''
                     implementsInterfaces: ''
-                    selectOptions: {  }
+                    selectOptions:
+                        -
+                            value: Schild
+                            label: Schild
+                            name: Schild
+                        -
+                            value: Steg
+                            label: Steg
+                            name: ''
+                        -
+                            value: Unterstand
+                            label: Unterstand
+                            name: ''
+                        -
+                            value: Furt
+                            label: Furt
+                            name: ''

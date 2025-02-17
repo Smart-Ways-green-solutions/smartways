@@ -29,7 +29,7 @@
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form action="{{ path('items-create') }}" method="post">
+                        <form method="post" enctype="multipart/form-data" onsubmit="console.log('Form submitted!');">
 
                             <div class="card">
                                 <div class="card-header">

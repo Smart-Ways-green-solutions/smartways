@@ -1,26 +1,56 @@
 <div class="mb-3">
     {# <label class="form-label required">Artikelnummer</label> #}
-    <input type="text" class="form-control" name="example-text-input" placeholder="{{ "ItemNo"|trans }}">
+    <input type="text" class="form-control" name="ItemNo" placeholder="{{ "ItemNo"|trans }}">
 </div>
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbezeichnung</label> #}
-    <input type="text" class="form-control" name="example-text-input" placeholder="{{ "Item name"|trans }}">
+    <input type="text" class="form-control" name="Itemname" placeholder="{{ "Item name"|trans }}">
 </div>
 
 <div class="mb-3">
     <div class="form-label">{{ "Manufacturer"|trans }}</div>
-    <select class="form-select">
-        <option value="1">One</option>
+    <select class="form-select" name="Manufacturer">
+        {# <option value="1">One</option>
         <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option value="3">Three</option> #}
+        <option value="">-Select-</option>
+    {% for item in dropdownFields %}
+        {% for key, value in item %}
+            {% if key == 'Manufacturer' %}
+                {# <li><strong>{{ key }}:</strong></li> #}
+                <ul>
+                    {% for mitem in value %}
+                        {% for id, name in mitem %}
+                            <option value="{{ id }}">{{ name }}</option>
+                        {% endfor %}
+                        {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
     </select>
 </div>
 
 <div class="mb-3">
     <div class="form-label">{{ "Infrastructure type"|trans }}</div>
-    <select class="form-select">
-        <option value="1">Schild</option>
+    <select class="form-select" name="InfrastructureType">
+    <option value="">-Select-</option>
+        {% for item in dropdownFields %}
+            {% for key, value in item %}
+                {% if key == 'InfrastructureType' %}
+                    {# <li><strong>{{ key }}:</strong></li> #}
+                    <ul>
+                        {% for infra in value %}
+                            <option value={{ infra }}>{{ infra }}</option>
+                            {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        {# <option value="1">Schild</option>
         <option value="2">Steg</option>
         <option value="3">Unterstand</option>
         <option value="3">Furt</option>
@@ -38,18 +68,18 @@
         <option value="3">Bank</option>
         <option value="3">Sitzgruppe</option>
         <option value="3">QR-Code</option>
-        <option value="3">Wetterkreuz</option>
+        <option value="3">Wetterkreuz</option> #}
     </select>
 </div>
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbeschreibung kurz</label> #}
-    <input type="text" class="form-control" name="example-text-input" placeholder="{{ "Short description"|trans }}">
+    <input type="text" class="form-control" name="shortDescription" placeholder="{{ "Short description"|trans }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label">{{ "Long description"|trans }}</label>
-    <textarea class="form-control tinymce" name="example-textarea-input" rows="6" placeholder="Content.."></textarea>
+    <textarea class="form-control tinymce" name="longDescription" rows="6" placeholder="Content.."></textarea>
 </div>
 
 <div class="row mb-3">
@@ -58,13 +88,26 @@
         <fieldset class="form-fieldset">
             <div class="mb-3">
                 <label class="form-label">{{ "Price (with tax)"|trans }}</label>
-                <input type="text" class="form-control" autocomplete="off">
+                <input type="text" name="price" class="form-control" autocomplete="off">
             </div>
 
             <div class="mb-3">
-                <select class="form-select">
-                    <option value="">{{ "Regular tax"|trans }}</option>
-                    <option value="">{{ "Reduced tax"|trans }}</option>
+                <select class="form-select" name="textType">
+                    {# <option value="">{{ "Regular tax"|trans }}</option>
+                    <option value="">{{ "Reduced tax"|trans }}</option> #}
+                    <option value="">-Select-</option>
+                    {% for item in dropdownFields %}
+                        {% for key, value in item %}
+                            {% if key == 'textType' %}
+                                <ul>
+                                    {% for type in value %}
+                                        <option value="{{ type }}">{{ type }}</option>
+                                        {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
                 </select>
             </div>
         </fieldset>
@@ -77,45 +120,10 @@
                 <h3 class="card-title">{{ "Compatible with"|trans }}</h3>
             </div>
 
-            <div class="list-group list-group-flush list-group-hoverable">
-                <div class="list-group-item">
-                    <div class="row align-items-center">
-                        <div class="col-auto">
-                            <a href="#" target="_blank">
-                                <span class="avatar" style="background-image: url(/misc/img/dev-item.jpg)"></span>
-                            </a>
-                        </div>
-                        <div class="col text-truncate">
-                            <a href="#" class="text-reset d-block">Produktname Trallala</a>
-                            <div class="d-block text-secondary text-truncate mt-n1">
-                                Hier steht die Kurzbeschreibung<br/>
-                                ArtNr: 12345
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <a href="#" class="list-group-item-actions">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-secondary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="col-auto">
-                            <a href="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M4 7l16 0"/>
-                                    <path d="M10 11l0 6"/>
-                                    <path d="M14 11l0 6"/>
-                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
-                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <div class="compatible-products list-group list-group-flush list-group-hoverable">
+                
 
-                <div class="list-group list-group-flush list-group-hoverable">
+                {# <div class="list-group list-group-flush list-group-hoverable">
                     <div class="list-group-item">
                         <div class="row align-items-center">
                             <div class="col-auto">
@@ -152,24 +160,79 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> #}
             </div>
+
+            <template id="product-template">
+                <div class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <a href="#" target="_blank">
+                                <span class="avatar" style="background-image: url(/misc/img/dev-item.jpg)"></span>
+                            </a>
+                        </div>
+                        <div class="col text-truncate">
+                            <a href="#" class="product-name text-reset d-block">Produktname Trallala</a>
+                            <div class=" product-description d-block text-secondary text-truncate mt-n1">
+                                Hier steht die Kurzbeschreibung<br/>
+                                ArtNr: 12345
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <a href="#" class="list-group-item-actions">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon text-secondary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <a class="delete-product">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M4 7l16 0"/>
+                                    <path d="M10 11l0 6"/>
+                                    <path d="M14 11l0 6"/>
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </template>
 
             <div class="list-group list-group-flush list-group-hoverable mt-3">
                 <div class="list-group-item">
                     <div class="row align-items-center">
                         <label class="form-label">{{ "Add compatible product"|trans }}</label>
-                        <select type="text" class="form-select" id="select-people" value="">
-                            <option value="1" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/000m.jpg)&quot;&gt;&lt;/span&gt;">Paweł Kuna</option>
+                        <select type="text" class="form-select" id="compatible-product-list" value="">
+                        <option value="">-Select-</option>
+                        {% for item in dropdownFields %}
+                            {% for key, value in item %}
+                                {% if key == 'Product' %}
+                                    {# <li><strong>{{ key }}:</strong></li> #}
+                                    <ul>
+                                        {% for product in value %}
+                                            {% for id, name in product %}
+                                                <option value="{{ id }}">{{ name }}</option>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                            {# <option value="1" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/000m.jpg)&quot;&gt;&lt;/span&gt;">Paweł Kuna</option>
                             <option value="2" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot;&gt;JL&lt;/span&gt;">Jeffie Lewzey</option>
                             <option value="3" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/002m.jpg)&quot;&gt;&lt;/span&gt;">Mallory Hulme</option>
                             <option value="4" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/003m.jpg)&quot;&gt;&lt;/span&gt;">Dunn Slane</option>
                             <option value="17" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/005f.jpg)&quot;&gt;&lt;/span&gt;">Dyann Escala</option>
                             <option value="18" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/006f.jpg)&quot;&gt;&lt;/span&gt;">Avivah Mugleston</option>
                             <option value="19" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot;&gt;AA&lt;/span&gt;">Arlie Armstead</option>
-                            <option value="20" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/008f.jpg)&quot;&gt;&lt;/span&gt;">Tessie Curzon</option>
+                            <option value="20" data-custom-properties="&lt;span class=&quot;avatar avatar-xs&quot; style=&quot;background-image: url(./static/avatars/008f.jpg)&quot;&gt;&lt;/span&gt;">Tessie Curzon</option> #}
                         </select>
                     </div>
+                        <a id="add-compatible-product" class="btn btn-primary ms-auto float-end mt-2 d-none">Add</a>
                 </div>
             </div>
 
@@ -180,37 +243,117 @@
 
 <div class="mb-3">
     <div class="form-label">{{ "Choose tags"|trans }}</div>
-    <select type="text" class="form-select" id="select-states" value="" multiple>
-        <option value="">Tag One</option>
+    <select type="text" class="form-select" name="tags[]" id="select-states" value="" multiple>
+    <option value="">-Select-</option>
+    {% for item in dropdownFields %}
+        {% for key, value in item %}
+            {% if key == 'Tags' %}
+                {# <li><strong>{{ key }}:</strong></li> #}
+                <ul>
+                    {% for tag in value %}
+                        {% for id, name in tag %}
+                            <option value="{{ id }}">{{ name }}</option>
+                        {% endfor %}
+                        {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+        {# <option value="">Tag One</option>
         <option value="" selected>Tag Zwei</option>
         <option value="">Tag Three</option>
         <option value="" selected>Tag Four</option>
         <option value="">Tag Five</option>
         <option value="" selected>Tag Six</option>
         <option value="">Tag Seven</option>
-        <option value="" selected>Tag Eight</option>
+        <option value="" selected>Tag Eight</option> #}
     </select>
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Size"|trans }}</label>
-    <input type="text" class="form-control" name="example-text-input" placeholder="Größe">
+    <input type="text" class="form-control" name="Size" placeholder="Größe">
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Transport size"|trans }}</label>
-    <input type="text" class="form-control" name="example-text-input" placeholder="Transport-Größe">
+    <input type="text" class="form-control" name="TransportSize" placeholder="Transport-Größe">
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Transport note"|trans }}</label>
-    <input type="text" class="form-control" name="example-text-input" placeholder="Transport-Hinweis">
+    <input type="text" class="form-control" name="TransportNote" placeholder="Transport-Hinweis">
 </div>
 
 <div class="mb-3">
     <label class="form-label">{{ "Technical information"|trans }}</label>
-    <textarea class="form-control tinymce" name="example-textarea-input" rows="6" placeholder="Content.."></textarea>
+    <textarea class="form-control tinymce" name="Technicalinformation" rows="6" placeholder="Content.."></textarea>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var productDropdown = document.querySelector("select[id='compatible-product-list']");
+        var addProductBtn = document.getElementById('add-compatible-product');
 
+        function toggleButtonVisibility() {
+            var productId = productDropdown.value; 
+            if (productId) {
+                addProductBtn.classList.remove("d-none");
+            } else {
+                addProductBtn.classList.add("d-none");
+            }
+        }
 
+        toggleButtonVisibility();
+
+        productDropdown.addEventListener("change", toggleButtonVisibility);
+
+        addProductBtn.addEventListener("click", function () {
+            var productId = productDropdown.value;
+
+            fetch("/items/item-info", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"  // Fix: Add content type
+                },
+                body: JSON.stringify({ productId: productId })
+            })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return res.json();
+            })
+            .then(data => {
+                var productTemplate = document.querySelector("#product-template").content.cloneNode(true);
+
+                var compatibleProducts = document.querySelector(".compatible-products");
+
+                // Fix: Check if data contains the expected fields
+                productTemplate.querySelector(".product-name").textContent = data.name;
+                productTemplate.querySelector(".product-description").textContent = data.shortDescription;
+
+                var hiddenInput = document.createElement("input");
+                hiddenInput.type = "hidden";
+                hiddenInput.name = "CompatibleProducts[]";
+                hiddenInput.value = productId;
+
+                // Append the hidden input to the new product block
+                var newProduct = productTemplate.querySelector(".list-group-item");
+                newProduct.appendChild(hiddenInput);
+
+                compatibleProducts.appendChild(productTemplate);
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("An error occurred while fetching the product data.");
+            });
+        });
+        document.querySelector(".compatible-products").addEventListener("click", function (event) {
+            if (event.target.closest(".delete-product")) {
+                event.target.closest(".list-group-item").remove();
+            }
+        });
+    });
+</script>
