@@ -42,18 +42,61 @@ class ItemsControlller extends BaseController
         $this->checkPermission($this->getUser(), ["wegepate"]);
 
         $searchTerm = $request->query->get("search");
+
+        // filters
+        $manufacturer = $request->query->get("manufacturer");
+        $warehouse = $request->query->get("warehouse");
+        $tag = $request->query->get("tag");
+
+        // sort
+        $sort = $request->query->get("sort");
+
         $page = max(1, $request->query->getInt("page"));
         $limit = 2;
         $offset = ($page - 1) * $limit;
 
         $products = [];
         $allProducts = Product::getList();
-        $totalProducts = count($allProducts);
-        $totalPages = $totalProducts / $limit;
+        
         if(!empty($searchTerm)){
             $allProducts->setCondition("Itemname LIKE ?", ["%$searchTerm%"]);
         }
+        if(!empty($manufacturer)){
+            $allProducts->addConditionParam("Manufacturer__id = ?", ["$manufacturer"]);
+        }
+        // if(!empty($warehouse)){
+            
+        // }
+        if(!empty($tag)) {
+            $allProducts->addConditionParam("tags LIKE ?", ["%$tag%"]);
+        }
+
+
+        switch ($sort) {
+            case 'price_asc':
+                $allProducts->setOrderKey("price");
+                $allProducts->setOrder("ASC");
+                break;
+            case 'price_desc':
+                $allProducts->setOrderKey("price");
+                $allProducts->setOrder("DESC");
+                break;
+            // case 'inventory_asc':
+            //     $allProducts->setOrderKey("inventory");
+            //     $allProducts->setOrder("ASC");
+            //     break;
+            // case 'inventory_desc':
+            //     $allProducts->setOrderKey("inventory");
+            //     $allProducts->setOrder("DESC");
+            //     break;
+        }
+
+        $totalProducts = count($allProducts);
+        $totalPages = max(1, ceil($totalProducts / $limit));
+
         $allProducts->setLimit($limit)->setOffset($offset);
+
+        // fields for populating on the items page
         foreach($allProducts as $item) {
             $tags = [];
             $fetchedTags = $item->getTags();
@@ -114,6 +157,7 @@ class ItemsControlller extends BaseController
             "products" => $products,
             "searchTerm" => $searchTerm,
             "currentPage" => $page,
+            "totalProducts" => $totalProducts,
             "totalPages" => $totalPages,
             "warehouses" => $warehouses,
             "manufacturers" => $manufacturers,

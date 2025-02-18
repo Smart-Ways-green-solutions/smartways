@@ -63,8 +63,23 @@
                             <form method="get" autocomplete="off" novalidate="">
                                 <div class="input-icon">
                                     <span class="input-icon-addon">
-                                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path>
+                                            <path d="M21 21l-6 -6"></path>
+                                        </svg>
                                     </span>
+                                    
+                                    {# Preserve existing query parameters except search #}
+                                    {% set queryParams = app.request.query.all()|merge({'search': ''}) %}
+
+                                    {# Hidden fields for all existing query parameters except search #}
+                                    {% for key, value in queryParams %}
+                                        {% if key != 'search' %}
+                                            <input type="hidden" name="{{ key }}" value="{{ value }}">
+                                        {% endif %}
+                                    {% endfor %}
+
                                     <input type="text" name="search" value="{{ searchTerm }}" class="form-control" placeholder="{{ "Search"|trans }} ..." aria-label="Search in website">
                                 </div>
                             </form>
@@ -86,7 +101,8 @@
                                 <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Manufacturer"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     {% for manufacturer in manufacturers %}
-                                        <a class="dropdown-item" href="?manufacturer={{ manufacturer.id }}">{{ manufacturer.name }}</a>
+                                        {% set queryParams = app.request.query.all()|merge({manufacturer: manufacturer.id}) %}
+                                        <a class="dropdown-item" href="{{ path('items', queryParams) }}">{{ manufacturer.name }}</a>
                                     {% endfor %}
                                     {# <a class="dropdown-item" href="#">Manufacturer 1</a>
                                     <a class="dropdown-item" href="#">Manufacturer 2</a>
@@ -98,7 +114,8 @@
                                 <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Tag"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     {% for tag in tags %}
-                                        <a class="dropdown-item" href="#">{{ tag.name }}</a>
+                                        {% set queryParams = app.request.query.all()|merge({tag: tag.id}) %}
+                                        <a class="dropdown-item" href="{{ path('items', queryParams) }}">{{ tag.name }}</a>
                                     {% endfor %}
                                     {# <a class="dropdown-item" href="#">Tag 2</a>
                                     <a class="dropdown-item" href="#">Tag 3</a>
@@ -108,10 +125,11 @@
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Sort"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">{{ "Price asc"|trans }}</a>
-                                    <a class="dropdown-item" href="#">{{ "Price desc"|trans }}</a>
-                                    <a class="dropdown-item" href="#">{{ "Inventory asc"|trans }}</a>
-                                    <a class="dropdown-item" href="#">{{ "Inventory desc"|trans }}</a>
+                                    {% set queryParams = app.request.query.all() %}
+                                    <a class="dropdown-item" href={{ path('items', queryParams|merge({sort: 'price_asc'})) }}>{{ "Price asc"|trans }}</a>
+                                    <a class="dropdown-item" href={{ path('items', queryParams|merge({sort: 'price_desc'})) }}>{{ "Price desc"|trans }}</a>
+                                    <a class="dropdown-item" href={{ path('items', queryParams|merge({sort: 'inventory_asc'})) }}>{{ "Inventory asc"|trans }}</a>
+                                    <a class="dropdown-item" href={{ path('items', queryParams|merge({sort: 'inventory_desc'})) }}>{{ "Inventory desc"|trans }}</a>
                                 </div>
                             </div>
                             <div class="dropdown">
@@ -273,21 +291,24 @@
 
                             <ul class="pagination mt-3">
                                 <li class="page-item {{ currentPage > 1 ? '' : 'disabled' }}">
-                                    <a class="page-link" href="?page={{ currentPage - 1 }}" tabindex="-1" aria-disabled="true">
+                                    {% set queryParams = app.request.query.all()|merge({page: currentPage - 1}) %}
+                                    <a class="page-link" href="{{ path('items', queryParams) }}" tabindex="-1" aria-disabled="true">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>
                                         {{ "Last page"|trans }}
                                     </a>
                                 </li>
                                 {% for page in range(1, totalPages) %}
                                     {% set activePage = currentPage == page ? "active" : "" %}
-                                    <li class="page-item {{ currentPage == page ? 'active' : '' }}"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                                    {% set queryParams = app.request.query.all()|merge({page: page}) %}
+                                    <li class="page-item {{ currentPage == page ? 'active' : '' }}"><a class="page-link" href="{{ path('items', queryParams) }}">{{ page }}</a></li>
                                 {% endfor %}
                                 {# <li class="page-item active"><a class="page-link" href="#">2</a></li>
                                 <li class="page-item"><a class="page-link" href="#">3</a></li>
                                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                                 <li class="page-item"><a class="page-link" href="#">5</a></li> #}
                                 <li class="page-item {{ currentPage == totalPages ? 'disabled' : '' }}">
-                                    <a class="page-link" href="?page={{ currentPage + 1 }}">
+                                    {% set queryParams = app.request.query.all()|merge({page: currentPage + 1}) %}
+                                    <a class="page-link" href="{{ path('items', queryParams) }}">
                                         {{ "Next page"|trans }}
                                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>
                                     </a>
