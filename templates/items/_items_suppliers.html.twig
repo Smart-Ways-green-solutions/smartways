@@ -66,6 +66,77 @@
             </div>
         </div>
     </template>
+
+    {% if product and product.getSuppliers() is defined and product.getSuppliers() is not empty %}
+        {% for sp in product.getSuppliers() %}
+            <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-1">
+                        <button class="supplier-name accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#supplier-{{ sp.supplier.getId() }}" aria-expanded="true">
+                            {{ sp.supplier.name }}
+                        </button>
+                    </h2>
+                    <div id="supplier-{{ sp.supplier.getId() }}" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
+                        <div class="accordion-body pt-0">
+
+                            <fieldset class="form-fieldset">
+                                <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label">{{ "Supplier NET price"|trans }}</label>
+                                        <input type="text" name="suppliers[{{ sp.supplier.getId() }}][supplierNETprice]" class="form-control" autocomplete="off" value="{{ sp.getSupplierNETprice() }}">
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label required">{{ "Supplier Item-ID"|trans }}</label>
+                                        <input type="text" name="suppliers[{{ sp.supplier.getId() }}][supplierItemID]" class="form-control" autocomplete="off" value="{{ sp.getSupplierItemID() }}">
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label">{{ "Typical delivery Time"|trans }}</label>
+                                        <input type="text" name="suppliers[{{ sp.supplier.getId() }}][TypicalDeliveryTime]" class="form-control" autocomplete="off" value="{{ sp.getTypicalDeliveryTime() }}">
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="mt-3">
+                                <div class="card">
+
+                                    <div class="card-header">
+                                        <h3 class="card-title">{{ "Open orders"|trans }}</h3>
+                                    </div>
+
+                                    <div class="list-group list-group-flush list-group-hoverable">
+
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col text-truncate">
+                                                    <a href="#" target="_blank" class="text-reset d-block">{{ "Order from"|trans }} 22.03.2024</a>
+                                                    <div class="d-block text-secondary text-truncate mt-n1">
+                                                        {{ "Ordered by"|trans }} Max Mustermann
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="list-group-item">
+                                            <div class="row align-items-center">
+                                                <div class="col text-truncate">
+                                                    <a href="#" target="_blank" class="text-reset d-block">{{ "Order from"|trans }} 22.03.2024</a>
+                                                    <div class="d-block text-secondary text-truncate mt-n1">
+                                                        {{ "Ordered by"|trans }} Max Mustermann
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+        {% endfor %}
+    {% endif %}
     {# <div class="accordion-item">
         <h2 class="accordion-header" id="heading-1">
             <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1" aria-expanded="true">

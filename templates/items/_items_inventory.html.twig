@@ -1,4 +1,10 @@
 <div class="card">
+    <div class="card-header d-flex justify-content-end">
+        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add">
+            {{ "Add stock"|trans }}
+        </a>
+    </div>
+    
     <div class="table-responsive">
         <table class="table table-vcenter card-table table-striped">
             <thead>
@@ -11,8 +17,30 @@
                 <th class="w-1"></th>
             </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="stock-table-body">
+            {% if product and product.getInventories() is defined and product.getInventories() is not empty %}
+                {% for inv in product.inventories %}
+                    <tr>
+                        <td class="inventory-warehouse-name">{{ inv.Location ? inv.Location.name : '' }}</td>
+                        <td class="inventory-warehouse-amount">{{ inv.Amount }}</td>
+                        <td class="text-secondary"></td>
+                        <td class="text-secondary"></td>
+                        <td>
+                            <a href="#" class="btn btn-primary edit-stock-btn" data-bs-toggle="modal" data-bs-target="#modal-edit">
+                                {{ "Edit stock"|trans }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-remove">{{ "Remove stock"|trans }}</a>
+                        </td>
+                        <input type="hidden" name="inventories[{{ inv.getId() }}][Amount]" class="hidden-amount" value="{{ inv.amount }}">
+                        <input type="hidden" name="inventories[{{ inv.getId() }}][Location]" class="hidden-location" value="{{ inv.Location ? inv.Location.getId() : '' }}">
+                        <input type="hidden" name="inventories[{{ inv.getId() }}][Comment]" class="hidden-comment" value="{{ inv.comment }}">
+                        <input type="hidden" name="inventories[{{ inv.getId() }}][id]" class="hidden-id" value="{{ inv.getId() }}">
+                    </tr>
+                {% endfor %}
+            {% endif %}
+                {# <tr>
                     <td>Lager Hinterhof 22</td>
                     <td class="text-secondary">235</td>
                     <td class="text-secondary">112</td>
@@ -47,11 +75,32 @@
                     <td>
                         <a href="#" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#modal-remove">{{ "Remove stock"|trans }}</a>
                     </td>
-                </tr>
+                </tr> #}
             </tbody>
         </table>
     </div>
 </div>
+
+<template id="stock-row-template">
+    <tr>
+        <td class="inventory-warehouse-name"></td>
+        <td class="inventory-warehouse-amount"></td>
+        <td class="text-secondary"></td>
+        <td class="text-secondary"></td>
+        <td>
+            <a href="#" class="btn btn-primary edit-stock-btn" data-bs-toggle="modal" data-bs-target="#modal-edit">
+                {{ "Edit stock"|trans }}
+            </a>
+        </td>
+        <td>
+            <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-remove">{{ "Remove stock"|trans }}</a>
+        </td>
+        <input type="hidden" name="inventories[][Amount]" class="hidden-amount">
+        <input type="hidden" name="inventories[][Location]" class="hidden-location">
+        <input type="hidden" name="inventories[][Comment]" class="hidden-comment">
+        <input type="hidden" name="inventories[][id]" class="hidden-id">
+    </tr>
+</template>
 
 <div class="modal modal-blur fade" id="modal-add" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -66,19 +115,32 @@
                     <div class="col-lg-12">
                         <div class="mb-3">
                             <label class="form-label">{{ "Amount"|trans }}</label>
-                            <input type="text" class="form-control">
+                            <input type="text" id="inventory-amount" class="form-control">
                         </div>
                     </div>
                     <div class="col-lg-12">
                         <div>
                             <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Location"|trans }}</button>
+                                {# <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Location"|trans }}</button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" href="#">Warehouse 1</a>
                                     <a class="dropdown-item" href="#">Warehouse 2</a>
                                     <a class="dropdown-item" href="#">Warehouse 3</a>
                                     <a class="dropdown-item" href="#">Warehouse 4</a>
-                                </div>
+                                </div> #}
+                                <label class="form-label">{{ "Location"|trans }}</label>
+                                <select type="text" class="form-select" id="inventory-location" name="" value="">
+                                    <option value="">-Select-</option>
+                                    {% for item in dropdownFields %}
+                                        {% for key, value in item %}
+                                            {% if key == 'Warehouses' %}
+                                                {% for id, name in value %}
+                                                    <option value="{{ id }}" data-name="{{ name }}">{{ name }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -88,7 +150,7 @@
             <div class="modal-body">
                 <div class="mb-3">
                     <label class="form-label">{{ "Comment"|trans }}</label>
-                    <input type="text" class="form-control"
+                    <input type="text" id="inventory-comment" class="form-control"
                      {# name="example-text-input" #}
                      >
                 </div>
@@ -98,13 +160,60 @@
                 <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                     {{ "Cancel"|trans }}
                 </a>
-                <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                <a href="#" id="add-stock-btn" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                     {{ "Add to inventory"|trans }}
                 </a>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal modal-blur fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ "Edit inventory"|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">{{ "Amount"|trans }}</label>
+                    <input type="text" id="edit-inventory-amount" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ "Location"|trans }}</label>
+                    <select id="edit-inventory-location" class="form-select">
+                        <option value="">-Select-</option>
+                        {% for item in dropdownFields %}
+                            {% for key, value in item %}
+                                {% if key == 'Warehouses' %}
+                                    {% for id, name in value %}
+                                        <option value="{{ id }}" data-name="{{ name }}">{{ name }}</option>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ "Comment"|trans }}</label>
+                    <input type="text" id="edit-inventory-comment" class="form-control">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                    {{ "Cancel"|trans }}
+                </a>
+                <a href="#" id="save-edit-btn" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                    {{ "Save changes"|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="modal modal-blur fade" id="modal-remove" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -158,3 +267,73 @@
         </div>
     </div>
 </div>
+
+<script>
+    let inventoryIndex = 0;
+    document.getElementById("add-stock-btn").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default link behavior
+        console.log("add stock clicked");
+
+        let template = document.getElementById("stock-row-template");
+        let newRow = template.content.cloneNode(true); // Clone the template
+
+        let inventoryAmount = document.getElementById("inventory-amount").value;
+        let inventoryLocation = document.getElementById("inventory-location");
+        let inventoryComment = document.getElementById("inventory-comment").value;
+
+        newRow.querySelector("input.hidden-amount").setAttribute("name", "inventories[" + inventoryIndex + "][Amount]");
+        newRow.querySelector("input.hidden-location").setAttribute("name", "inventories[" + inventoryIndex + "][Location]");
+        newRow.querySelector("input.hidden-comment").setAttribute("name", "inventories[" + inventoryIndex + "][Comment]");
+
+        newRow.querySelector("input.hidden-amount").value = inventoryAmount;
+        newRow.querySelector("input.hidden-location").value = inventoryLocation.value;
+        newRow.querySelector("input.hidden-comment").value = inventoryComment;
+        newRow.querySelector("input.hidden-id").value = "";
+
+        newRow.querySelector(".inventory-warehouse-name").textContent = inventoryLocation.options[inventoryLocation.selectedIndex].getAttribute("data-name");
+        newRow.querySelector(".inventory-warehouse-amount").textContent = inventoryAmount;
+        
+        document.getElementById("stock-table-body").appendChild(newRow);
+
+        inventoryIndex++;
+    });
+
+    document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("edit-stock-btn")) {
+        let row = event.target.closest("tr");
+
+        let amount = row.querySelector(".inventory-warehouse-amount").textContent;
+        let locationId = row.querySelector("input.hidden-location").value;
+        let comment = row.querySelector("input.hidden-comment").value;
+
+        // Populate edit modal fields
+        document.getElementById("edit-inventory-amount").value = amount;
+        document.getElementById("edit-inventory-location").value = locationId;
+        document.getElementById("edit-inventory-comment").value = comment;
+
+        // Store row reference for updating later
+        document.getElementById("save-edit-btn").dataset.rowIndex = row.rowIndex;
+    }
+});
+
+document.getElementById("save-edit-btn").addEventListener("click", function () {
+    let rowIndex = this.dataset.rowIndex;
+    let table = document.getElementById("stock-table-body");
+    let row = table.rows[rowIndex - 1];
+
+    let newAmount = document.getElementById("edit-inventory-amount").value;
+    let newLocation = document.getElementById("edit-inventory-location");
+    let newComment = document.getElementById("edit-inventory-comment").value;
+
+    row.querySelector(".inventory-warehouse-amount").textContent = newAmount;
+    row.querySelector("input.hidden-amount").value = newAmount;
+    row.querySelector("input.hidden-location").value = newLocation.value;
+    row.querySelector("input.hidden-comment").value = newComment;
+});
+
+document.getElementById("modal-add").addEventListener("show.bs.modal", function () {
+    document.getElementById("inventory-amount").value = "";
+    document.getElementById("inventory-location").selectedIndex = 0; // Reset dropdown
+    document.getElementById("inventory-comment").value = "";
+});
+</script>

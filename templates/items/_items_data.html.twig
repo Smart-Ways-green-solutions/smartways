@@ -1,11 +1,11 @@
 <div class="mb-3">
     {# <label class="form-label required">Artikelnummer</label> #}
-    <input type="text" class="form-control" name="ItemNo" placeholder="{{ "ItemNo"|trans }}">
+    <input type="text" class="form-control" name="ItemNo" placeholder="{{ "ItemNo"|trans }}" value="{{ editMode ? product.getItemno() : '' }}">
 </div>
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbezeichnung</label> #}
-    <input type="text" class="form-control" name="Itemname" placeholder="{{ "Item name"|trans }}">
+    <input type="text" class="form-control" name="Itemname" placeholder="{{ "Item name"|trans }}" value="{{ editMode ? product.getItemname() : '' }}">
 </div>
 
 <div class="mb-3">
@@ -22,7 +22,7 @@
                 <ul>
                     {% for mitem in value %}
                         {% for id, name in mitem %}
-                            <option value="{{ id }}">{{ name }}</option>
+                            <option value="{{ id }}" {{ editMode and product.getManufacturer() and product.getManufacturer().getId() == id ? 'selected' : '' }}>{{ name }}</option>
                         {% endfor %}
                         {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
                     {% endfor %}
@@ -43,7 +43,7 @@
                     {# <li><strong>{{ key }}:</strong></li> #}
                     <ul>
                         {% for infra in value %}
-                            <option value={{ infra }}>{{ infra }}</option>
+                            <option value={{ infra }} {{ editMode and product.getInfrastructureType() and product.getInfrastructureType() == infra ? 'selected' : '' }}>{{ infra }}</option>
                             {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
                         {% endfor %}
                     </ul>
@@ -74,12 +74,12 @@
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbeschreibung kurz</label> #}
-    <input type="text" class="form-control" name="shortDescription" placeholder="{{ "Short description"|trans }}">
+    <input type="text" class="form-control" name="shortDescription" placeholder="{{ "Short description"|trans }}" value="{{ editMode ? product.getShortDescription() : '' }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label">{{ "Long description"|trans }}</label>
-    <textarea class="form-control tinymce" name="longDescription" rows="6" placeholder="Content.."></textarea>
+    <textarea class="form-control tinymce" name="longDescription" rows="6" placeholder="Content.." value="{{ editMode ? product.getLongDescription() : '' }}">{{ editMode ? product.getLongDescription() : '' }}</textarea>
 </div>
 
 <div class="row mb-3">
@@ -88,7 +88,7 @@
         <fieldset class="form-fieldset">
             <div class="mb-3">
                 <label class="form-label">{{ "Price (with tax)"|trans }}</label>
-                <input type="text" name="price" class="form-control" autocomplete="off">
+                <input type="text" name="price" class="form-control" autocomplete="off" value="{{ editMode ? product.getPrice() : '' }}">
             </div>
 
             <div class="mb-3">
@@ -101,7 +101,7 @@
                             {% if key == 'textType' %}
                                 <ul>
                                     {% for type in value %}
-                                        <option value="{{ type }}">{{ type }}</option>
+                                        <option value="{{ type }}" {{ editMode and product.getTextType() and product.getTextType() == type ? 'selected' : '' }}>{{ type }}</option>
                                         {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
                                     {% endfor %}
                                 </ul>
@@ -121,6 +121,48 @@
             </div>
 
             <div class="compatible-products list-group list-group-flush list-group-hoverable">
+
+                {% if product and product.getCompatibleProducts() is defined and product.getCompatibleProducts() is not empty %}
+                {% for cp in product.getCompatibleProducts() %}
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <a href="#" target="_blank">
+                                    <span class="avatar" style="background-image: url({{ cp.images and cp.images.getItems()|length > 0 ? cp.images.getItems()[0].getImage().getFullPath() : '/misc/img/dev-item.jpg' }})"></span>
+                                </a>
+                            </div>
+                            <div class="col text-truncate">
+                                <a href="#" class="product-name text-reset d-block">{{ cp.Itemname }}</a>
+                                <div class="product-description d-block text-secondary text-truncate mt-n1">
+                                    {{ cp.shortDescription }}<br/>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <a href="#" class="list-group-item-actions">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon text-secondary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="col-auto">
+                                <a class="delete-product">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M4 7l16 0"/>
+                                        <path d="M10 11l0 6"/>
+                                        <path d="M14 11l0 6"/>
+                                        <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                                        <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        {# Hidden input so that the compatible product's ID is submitted with the form #}
+                        <input type="hidden" name="CompatibleProducts[]" value="{{ cp.getId() }}">
+                    </div>
+                {% endfor %}
+            {% endif %}
                 
 
                 {# <div class="list-group list-group-flush list-group-hoverable">
@@ -241,54 +283,53 @@
     </div>
 </div>
 
+{# Build an array of tag IDs from the product's tags #}
+{% set selectedTagIds = [] %}
+{% if editMode %}
+    {% for tag in product.getTags() %}
+        {% set selectedTagIds = selectedTagIds|merge([tag.getId()]) %}
+    {% endfor %}
+{% endif %}
+
 <div class="mb-3">
     <div class="form-label">{{ "Choose tags"|trans }}</div>
-    <select type="text" class="form-select" name="tags[]" id="select-states" value="" multiple>
-    <option value="">-Select-</option>
-    {% for item in dropdownFields %}
-        {% for key, value in item %}
-            {% if key == 'Tags' %}
-                {# <li><strong>{{ key }}:</strong></li> #}
-                <ul>
-                    {% for tag in value %}
-                        {% for id, name in tag %}
-                            <option value="{{ id }}">{{ name }}</option>
+    <select class="form-select" name="tags[]" id="select-states" multiple>
+        <option value="">-Select-</option>
+        {% for item in dropdownFields %}
+            {% for key, value in item %}
+                {% if key == 'Tags' %}
+                    <ul>
+                        {% for tag in value %}
+                            {% for id, name in tag %}
+                                <option value="{{ id }}" {{ id in selectedTagIds ? 'selected' : '' }}>{{ name }}</option>
+                            {% endfor %}
                         {% endfor %}
-                        {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
-                    {% endfor %}
-                </ul>
-            {% endif %}
+                    </ul>
+                {% endif %}
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-        {# <option value="">Tag One</option>
-        <option value="" selected>Tag Zwei</option>
-        <option value="">Tag Three</option>
-        <option value="" selected>Tag Four</option>
-        <option value="">Tag Five</option>
-        <option value="" selected>Tag Six</option>
-        <option value="">Tag Seven</option>
-        <option value="" selected>Tag Eight</option> #}
     </select>
 </div>
 
+
 <div class="mb-3">
     <label class="form-label required">{{ "Size"|trans }}</label>
-    <input type="text" class="form-control" name="Size" placeholder="Größe">
+    <input type="text" class="form-control" name="Size" placeholder="Größe" value="{{ editMode ? product.getSize() : '' }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Transport size"|trans }}</label>
-    <input type="text" class="form-control" name="TransportSize" placeholder="Transport-Größe">
+    <input type="text" class="form-control" name="TransportSize" placeholder="Transport-Größe" value="{{ editMode ? product.getTransportSize() : '' }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Transport note"|trans }}</label>
-    <input type="text" class="form-control" name="TransportNote" placeholder="Transport-Hinweis">
+    <input type="text" class="form-control" name="TransportNote" placeholder="Transport-Hinweis" value="{{ editMode ? product.getTransportNote() : '' }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label">{{ "Technical information"|trans }}</label>
-    <textarea class="form-control tinymce" name="Technicalinformation" rows="6" placeholder="Content.."></textarea>
+    <textarea class="form-control tinymce" name="Technicalinformation" rows="6" placeholder="Content.." value="{{ editMode ? product.getTechnicalinformation() : '' }}">{{ editMode ? product.getTechnicalinformation() : '' }}</textarea>
 </div>
 
 <script>

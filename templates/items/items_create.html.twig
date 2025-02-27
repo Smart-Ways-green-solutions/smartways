@@ -12,7 +12,7 @@
                             {{ "Create & edit"|trans }}
                         </div>
                         <h2 class="page-title">
-                            {{ "Add item"|trans }}</h2>
+                            {{ editMode ? "Edit item"|trans : "Add item"|trans }}</h2>
                     </div>
                     <!-- Page title actions -->
                     <div class="col-auto ms-auto d-print-none">
@@ -23,13 +23,28 @@
                 </div>
             </div>
         </div>
+        {# Flash notifications #}
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="toast align-items-center text-white bg-{{ type == 'success' ? 'success' : 'danger' }} border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ message }}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
         <!-- Page body -->
         <div class="page-body">
             <div class="container-xl">
                 <div class="row row-cards">
 
                     <div class="col-12">
-                        <form method="post" enctype="multipart/form-data" onsubmit="console.log('Form submitted!');">
+                        <form method="post" enctype="multipart/form-data">
 
                             <div class="card">
                                 <div class="card-header">
@@ -104,4 +119,14 @@
         </div>
 
     </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let toasts = document.querySelectorAll(".toast");
+        toasts.forEach(toast => {
+            new bootstrap.Toast(toast, { autohide: true, delay: 3000 }).show();
+        });
+    });
+</script>
+
 {% endblock %}

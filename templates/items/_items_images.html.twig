@@ -1,36 +1,151 @@
 <div class="mb-3">
-    <div class="row g-2">
-
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title">{{ "Upload images"|trans }}</h3>
-                <div class="dropzone" id="dropzone-multiple">
-                    <div class="fallback">
-                        <input name="images[]" type="file" multiple/>
-                    </div>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">{{ "Upload images"|trans }}</h3>
+            <div class="dropzone" id="dropzone-multiple">
+                <div class="fallback">
+                    <input id="image-upload-input" name="images[]" type="file" multiple/>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
 <div class="mb-3">
-    <div class="row g-2">
-
-        {% set k = 10 %}
-        {% for i in range(1, k) %}
-
-        <div class="col-6 col-sm-4 col-lg-2">
-            <a data-fslightbox="gallery" href="/misc/img/dev-item.jpg">
-                <div class="img-responsive img-responsive-1x1 rounded border" style="background-image: url(/misc/img/dev-item.jpg)"></div>
-            </a>
-            <a href="javascript:;"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-military-rank"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 7v12a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-12l6 -4z" /><path d="M10 13l2 -1l2 1" /><path d="M10 17l2 -1l2 1" /><path d="M10 9l2 -1l2 1" /></svg></a>
-            <a href="javascript:;"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trash"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg></a>
-        </div>
-
-        {% endfor %}
-
+    <div id="image-gallery-container" class="row g-2">
+        {% if product and product.getImages().getItems() %}
+            {% set galleryItems = product.getImages().getItems() %}
+            {% for imageItem in galleryItems %}
+                {% set image = imageItem.getImage() %}
+                <div class="col-6 col-sm-4 col-lg-2">
+                    <a data-fslightbox="gallery" href="{{ image.getFullPath() }}">
+                        <div class="img-responsive img-responsive-1x1 rounded border" style="background-image: url({{ image.getFullPath() }})"></div>
+                    </a>
+                    {# <a href="javascript:;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-military-rank">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M18 7v12a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-12l6 -4z" />
+                            <path d="M10 13l2 -1l2 1" />
+                            <path d="M10 17l2 -1l2 1" />
+                            <path d="M10 9l2 -1l2 1" />
+                        </svg>
+                    </a> #}
+                    <a href="javascript:;" class="delete-image" data-asset-id="{{ image.getId() }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M4 7l16 0"/>
+                            <path d="M10 11l0 6"/>
+                            <path d="M14 11l0 6"/>
+                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                        </svg>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% if editMode %}
+                <div class="col-12">
+                    <p>{{ "No images available"|trans }}</p>
+                </div>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // For multiple file uploads, you can use an input or Dropzone.
+    // Here, we'll demonstrate with a standard file input.
+    var fileInput = document.getElementById("image-upload-input");
+    
+    // Trigger file selection (you can tie this to a button click instead)
+    // For example:
+    
+    fileInput.addEventListener("change", function () {
+        // Get selected files.
+        var files = fileInput.files;
+        if (files.length) {
+            var formData = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                formData.append("images[]", files[i]);
+            }
+
+            // Upload via AJAX to /items/upload-image
+            fetch("/items/image/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Upload failed");
+                }
+                return response.json();
+            })
+            .then(function (results) {
+                // results is an array of objects: [{id: assetId, fullPath: ...}, ...]
+                results.forEach(function (data) {
+                    appendImageThumbnail(data);
+                });
+                fileInput.value = "";
+            })
+            .catch(function (error) {
+                console.error("Error uploading images:", error);
+                alert("Error uploading images");
+            });
+        }
+    });
+
+    // Function to append image thumbnail and hidden input
+    function appendImageThumbnail(data) {
+        var container = document.getElementById("image-gallery-container");
+        var colDiv = document.createElement("div");
+        colDiv.className = "col-6 col-sm-4 col-lg-2";
+        
+        colDiv.innerHTML = `
+            <a data-fslightbox="gallery" href="${data.fullPath}">
+                <div class="img-responsive img-responsive-1x1 rounded border" style="background-image: url(${data.fullPath})"></div>
+            </a>
+            <a href="javascript:;" class="delete-image" data-asset-id="${data.id}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-trash">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M4 7l16 0"/>
+                    <path d="M10 11l0 6"/>
+                    <path d="M14 11l0 6"/>
+                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                </svg>
+            </a>
+            <input type="hidden" name="images[]" value="${data.id}">
+        `;
+        container.appendChild(colDiv);
+    }
+
+    // Delegate deletion event for images.
+    document.getElementById("image-gallery-container").addEventListener("click", function (event) {
+        var deleteBtn = event.target.closest(".delete-image");
+        if (deleteBtn) {
+            var assetId = deleteBtn.getAttribute("data-asset-id");
+            fetch("/items/image/delete", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: assetId })
+            })
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Deletion failed");
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                deleteBtn.closest(".col-6").remove();
+            })
+            .catch(function (error) {
+                console.error("Delete error:", error);
+                alert("Error deleting image");
+            });
+        }
+    });
+});
+</script>

@@ -5,7 +5,9 @@ namespace App\Controller\Items;
 use App\Controller\BaseController;
 use App\Model\Customer;
 use Exception;
+use Pimcore\Model\Asset;
 use Pimcore\Model\Asset\Folder as AssetFolder;
+use Pimcore\Model\Asset\Image;
 use Pimcore\Model\DataObject;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\ClassDefinition\Data\Fieldcollections;
@@ -18,6 +20,7 @@ use Pimcore\Model\DataObject\Data\Hotspotimage as DataHotspotimage;
 use Pimcore\Model\DataObject\Folder;
 use Pimcore\Model\DataObject\Manufacturer;
 use Pimcore\Model\DataObject\Product;
+use Pimcore\Model\DataObject\ProductPrice;
 use Pimcore\Model\DataObject\Supplier;
 use Pimcore\Model\DataObject\Tags;
 use Pimcore\Model\DataObject\Warehouse;
@@ -169,228 +172,245 @@ class ItemsControlller extends BaseController
      * @param Request $request
      * @return Response
      */
-    #[Route('/items/items-create', name: 'items-create', methods: ['GET', 'POST'])]
+    #[Route('/items/items-create/{id?}', name: 'items-create', methods: ['GET', 'POST'])]
     #[IsGranted("IS_AUTHENTICATED")]
-    public function createItemsAction(Request $request): Response
+    public function createItemsAction(Request $request, ?int $id = null): Response
     {
-        if($request->isMethod('POST')){
-
-            $formData = $request->request->all();
-            // $formFields = array_keys($formData);
-
-            try{
-                $product = new Product();
-                $product->setPath("/Products");
-                $productName = $request->get("Itemname");
-                if($productName) {
-                    $product->setKey($productName);
-                }
-                $productsFolder = Folder::getByPath("/Products");
-                $product->setParentId($productsFolder->getId());
-
-                // foreach($formData as $key => $item) {
-                //     echo $key . " => ";
-                //     var_dump($item);
-                //     echo "<br>";
-                // }
-
-                foreach($formData as $key => $item) {
-                    $setterMethod = "set" . ucfirst($key);
-                    echo $key;
-                    echo "<br>";
-                    $field = $product->getClass()->getFieldDefinition($key);
-                    if($field) {
-                        $fieldType = $field->getFieldType();
-                        echo $field->getName()." => ".$fieldType;
-                        echo "<br>";
-                        echo $field->getName()." => ";
-                        var_dump($item);
-                        echo "<br><br>";
+        try {
+            if ($request->isMethod('POST')) {
+                $formData = $request->request->all();
+                
+                if ($id) {
+                    // echo "existing product";
+                    $product = Product::getById($id);
+                    if (!$product) {
+                        throw new \Exception("Product not found.");
                     }
-
-                    if($fieldType == "fieldcollections" && $key == "suppliers" && !empty($item)) {
-                        echo "field collection entered";
+                } else {
+                    // echo "new product";
+                    $product = new Product();
+                    $product->setPath("/Products");
+                    $productName = $request->get("Itemname");
+                    if($productName) {
+                        $product->setKey($productName);
+                    }
+                    $productsFolder = Folder::getByPath("/Products");
+                    $product->setParentId($productsFolder->getId());
+                }
+                
+                foreach ($formData as $key => $item) {
+                    // echo $key . "<br>";
+                    // var_dump($item);
+                    // echo "<br>";
+                    $field = $product->getClass()->getFieldDefinition($key);
+                    if (!$field) {
+                        continue;
+                    }
+                    $fieldType = $field->getFieldType();
+                    // echo $fieldType;
+                    // echo "<br><br>";
+                    $setterMethod = "set" . ucfirst($key);
+                    
+                    // Handle field collections for suppliers separately.
+                    if ($fieldType === "fieldcollections" && $key === "suppliers" && !empty($item)) {
                         $fieldCollection = new \Pimcore\Model\DataObject\Fieldcollection();
-    
+                        
                         foreach ($item as $subKey => $supplierData) {
-                            echo $subKey;
-                            // Create a new Field Collection Item of type "Supplier"
+                            // echo "<br>inside looping supplier data and id: ".$subKey;
                             $supplierItem = new \Pimcore\Model\DataObject\Fieldcollection\Data\SuppliersFieldCollection();
-                            
                             $supplier = Supplier::getById($subKey);
                             $supplierItem->setSupplier($supplier);
                             $supplierItem->setSupplierNETprice($supplierData['supplierNETprice']);
                             $supplierItem->setSupplierItemID($supplierData['supplierItemID']);
                             $supplierItem->setTypicalDeliveryTime($supplierData['TypicalDeliveryTime']);
+
                             
-                            // Add the item to the Field Collection
                             $fieldCollection->add($supplierItem);
+
                         }
-                        
-                        // Assign Field Collection to the object
                         $product->$setterMethod($fieldCollection);
-                    } elseif ($fieldType == "manyToOneRelation" || $fieldType == "manyToManyObjectRelation") {
+                    }
+                    // Process relation fields.
+                    elseif ($fieldType === "manyToOneRelation" || $fieldType === "manyToManyObjectRelation") {
                         $fieldClasses = $field->getClasses();
                         $objectClass = $fieldClasses[0]["classes"];
-                    
-                        // Fully Qualified Class Name
                         $fqClassName = "\\Pimcore\\Model\\DataObject\\" . $objectClass;
-                    
-                        if ($fieldType == "manyToOneRelation") {
+                        
+                        if ($fieldType === "manyToOneRelation") {
                             $object = $fqClassName::getById($item);
                             $product->$setterMethod($object);
-                        } elseif ($fieldType == "manyToManyObjectRelation") {
+                        } elseif ($fieldType === "manyToManyObjectRelation") {
                             $objects = [];
-                            // var_dump($item);
-                            foreach ($item as $id) {
-                                $obj = $fqClassName::getById($id);
+                            foreach ($item as $idItem) {
+                                $obj = $fqClassName::getById($idItem);
                                 if ($obj) {
                                     $objects[] = $obj;
                                 }
                             }
                             $product->$setterMethod($objects);
                         }
-                    } else {
+                    }
+                    // Skip reverse object relation and imageGallery fields.
+                    elseif (in_array($fieldType, ["reverseObjectRelation", "imageGallery"])) {
+                        continue;
+                    }
+                    // Default handling for regular fields.
+                    else {
                         if (!empty($item)) {
-                            // echo $setterMethod;
-                            // echo "<br>";
                             $product->$setterMethod($item);
                         }
                     }
                 }
-
-                // Handling images field
-                if (!empty($_FILES['images']['name'][0])) {  
-                    $imageGallery = new \Pimcore\Model\DataObject\Data\ImageGallery();  
-                    $items = [];  
                 
-                    foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {  
-                        if ($_FILES['images']['error'][$index] == UPLOAD_ERR_OK) {  
-                            $originalFilename = $_FILES['images']['name'][$index];  
-                            $extension = pathinfo($originalFilename, PATHINFO_EXTENSION);
-                            $baseName = pathinfo($originalFilename, PATHINFO_FILENAME);
-
-                            // Generate a unique filename (timestamp + random number)
-                            $uniqueFilename = $baseName . '-' . time() . '-' . rand(1000, 9999) . '.' . $extension;  
+                // Handle images upload.
+                if (!empty($request->get('images'))) {
+                    $assetIds = $request->get('images');
+                    $imageGallery = new \Pimcore\Model\DataObject\Data\ImageGallery();
+                    $galleryItems = [];
                 
-                            $image = new \Pimcore\Model\Asset\Image();
-                            $folder = AssetFolder::getByPath("/product-images");
-                            if(!$folder) {
-                                $folder = new AssetFolder();
-                                $folder->setParentId(1);
-                                $folder->setKey("product-images");
-                                $folder->save();
-                            }
-                            $image->setParent($folder);
-                            $image->setFilename($uniqueFilename);
-                            $image->setData(file_get_contents($tmpName));
-                            $image->save();
-
-                            // Convert to Hotspotimage
-                            $hotspotImage = new DataHotspotimage();
+                    foreach ($assetIds as $assetId) {
+                        $image = \Pimcore\Model\Asset\Image::getById($assetId);
+                        if ($image instanceof \Pimcore\Model\Asset\Image) {
+                            // Wrap the asset into a Hotspotimage for ImageGallery.
+                            $hotspotImage = new \Pimcore\Model\DataObject\Data\Hotspotimage();
                             $hotspotImage->setImage($image);
-                
-                            // Add image to ImageGallery
-                            $items[] = $hotspotImage;
+                            $galleryItems[] = $hotspotImage;
                         }
                     }
                 
-                    $imageGallery->setItems($items);
+                    $imageGallery->setItems($galleryItems);
                     $product->setImages($imageGallery);
-                }                
-
-
+                }
+                
                 $product->setPublished(true);
                 $product->save();
-
-                return new Response("Submitted successfully");
-            } catch(Exception $e){
-                echo $e->getMessage();
-                return new Response("Problem adding product");
-            }
-
-            return new Response("Submitted successfully");
-        } else {
-            $dropdownFields = [];
-            $product = new Product();
-            $productClass = ClassDefinition::getByName("Product");
-            $productFields = $productClass->getFieldDefinitions();
-            foreach($productFields as $field) {
-                if (in_array(get_class($field), [ManyToOneRelation::class, ManyToManyObjectRelation::class, Select::class, Fieldcollections::class])) {
-                    // echo $field->getName();
-                    // echo "<br>";
-                    if($field instanceof Select) {
-                        // var_dump(get_class_methods($field));
-                        if($field->getOptionsProviderData()) {
-                            $options = DataObject\Service::getOptionsForSelectField($product, $field->getName());
-                            $options = array_keys($options);
+                
+                // Process inventory entries (reverse object relation field)
+                if (!empty($request->get("inventories"))) {
+                    $inventories = $request->get("inventories");
+                    foreach ($inventories as $inventory) {
+                        // If the form is an edit form
+                        if(!empty($inventory['id'])) {
+                            $productPrice = ProductPrice::getById($inventory['id']);
                         } else {
-                            // var_dump($field->getOptions());
-                            $options = array_column($field->getOptions(), "key");
+                            $productPrice = new ProductPrice();
                         }
-                        // echo $field->getName();
-                        // var_dump($options);
-                        // echo "<br>";
-                        $dropdownFields[] = [
-                            $field->getName() => is_null($options) ? [] : $options
-                        ];
+                        $warehouse = \Pimcore\Model\DataObject\Warehouse::getById($inventory['Location']);
+                        $productPrice->setKey($product->getItemNo() . "-" . $warehouse->getName());
+                        $productPricesFolder = Folder::getByPath("/ProductPrices");
+                        $productPrice->setParentId($productPricesFolder->getId());
+                        
+                        $productPrice->setProduct($product);
+                        $productPrice->setLocation($warehouse);
+                        $productPrice->setAmount($inventory['Amount']);
+                        $productPrice->setComment($inventory['Comment']);
+                        
+                        $productPrice->setPublished(true);
+                        $productPrice->save();
                     }
-                    if (in_array(get_class($field), [ManyToOneRelation::class, ManyToManyObjectRelation::class])) {
-                        $allowedClasses = $field->getClasses();
-                        // var_dump($allowedClasses);
-                        foreach($allowedClasses as $className) {
-                            $classes = $className["classes"];
-                            $fetchedClass = "Pimcore\\Model\\DataObject\\$classes";
-                            if(class_exists($fetchedClass)) {
-                                $listClass = $fetchedClass . "\\Listing";
-                                $objectList = new $listClass();
+                }
+                
+                $this->addFlash('success', 'Product saved successfully!');
 
-                                $objects = $objectList->load();
-                                $objectNames = [];
-
-                                foreach($objects as $object) {
-                                    $objectId = $object->getId();
-                                    if($classes == "Product") {
-                                        $objectName = $object->getItemname();
-                                        if(is_null($objectName)) {
-                                            $objectName = $object->getKey();
+                return $this->redirectToRoute('items-create');
+            } else {
+                $dropdownFields = [];
+                
+                $product = new Product();
+                $productClass = \Pimcore\Model\DataObject\ClassDefinition::getByName("Product");
+                $productFields = $productClass->getFieldDefinitions();
+                foreach ($productFields as $field) {
+                    if (in_array(get_class($field), [
+                        ManyToOneRelation::class,
+                        ManyToManyObjectRelation::class,
+                        Select::class,
+                        Fieldcollections::class
+                    ])) {
+                        if ($field instanceof Select) {
+                            if ($field->getOptionsProviderData()) {
+                                $options = \Pimcore\Model\DataObject\Service::getOptionsForSelectField($product, $field->getName());
+                                $options = array_keys($options);
+                            } else {
+                                $options = array_column($field->getOptions(), "key");
+                            }
+                            $dropdownFields[] = [
+                                $field->getName() => $options ?? []
+                            ];
+                        }
+                        if (in_array(get_class($field), [
+                            ManyToOneRelation::class,
+                            ManyToManyObjectRelation::class
+                        ])) {
+                            $allowedClasses = $field->getClasses();
+                            foreach ($allowedClasses as $className) {
+                                $classes = $className["classes"];
+                                $fetchedClass = "Pimcore\\Model\\DataObject\\" . $classes;
+                                if (class_exists($fetchedClass)) {
+                                    $listClass = $fetchedClass . "\\Listing";
+                                    $objectList = new $listClass();
+                                    $objects = $objectList->load();
+                                    $objectNames = [];
+                                    foreach ($objects as $object) {
+                                        $objectId = $object->getId();
+                                        if ($classes == "Product") {
+                                            $objectName = $object->getItemname() ?: $object->getKey();
+                                        } else {
+                                            $objectName = $object->getName() ?: $object->getKey();
                                         }
-                                    } else {
-                                        $objectName = $object->getName();
-                                        if(is_null($objectName)) {
-                                            $objectName = $object->getKey();
-                                        }
+                                        $objectNames[] = [
+                                            $objectId => $objectName
+                                        ];
                                     }
-                                    $objectNames[] = [
-                                        $objectId => $objectName
+                                    $dropdownFields[] = [
+                                        $classes => $objectNames
                                     ];
                                 }
+                            }
+                        }
+                        if ($field instanceof Fieldcollections && $field->getName() == "suppliers") {
+                            $suppliers = Supplier::getList();
+                            foreach ($suppliers as $supplier) {
+                                $supplierId = $supplier->getId();
+                                $supplierName = $supplier->getName();
                                 $dropdownFields[] = [
-                                    $classes => $objectNames
+                                    "Suppliers" => [
+                                        $supplierId => $supplierName
+                                    ]
                                 ];
                             }
                         }
                     }
-                    if($field instanceof Fieldcollections && $field->getName() == "suppliers") {
-                        $suppliers = Supplier::getList();
-                        foreach($suppliers as $supplier) {
-                            $supplierId = $supplier->getId();
-                            $supplierName = $supplier->getName();
-                            $dropdownFields[] = [
-                                "Suppliers" => [
-                                    $supplierId => $supplierName
-                                ]
-                            ];
-                        }
-                    }
+                }
+                // Add Warehouses to dropdown fields.
+                $warehouses = \Pimcore\Model\DataObject\Warehouse::getList();
+                foreach ($warehouses as $warehouse) {
+                    $warehouseId = $warehouse->getId();
+                    $warehouseName = $warehouse->getName();
+                    $dropdownFields[] = [
+                        "Warehouses" => [
+                            $warehouseId => $warehouseName
+                        ]
+                    ];
+                }
+
+                $productFieldValues = [];
+
+                if($id) {
+                    $product = Product::getById($id);
                 }
             }
-            // var_dump($dropdownFields);
+            
+            return $this->render('items/items_create.html.twig', [
+                "dropdownFields" => $dropdownFields,
+                "editMode"  => ($id !== null),
+                "product"   => $id ? $product : null
+            ]);
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            return new Response("Problem adding product", 500);
         }
-        return $this->render('items/items_create.html.twig', [
-            "dropdownFields" => $dropdownFields
-        ]);
     }
+
 
     /**
      * @param Request $request
@@ -410,8 +430,8 @@ class ItemsControlller extends BaseController
                 $productImages = $product->getImages()->getItems();
                 $productImg = "";
                 if (!empty($productImages)) {
-                    $productImg = $productImages[0]->getImage(); // Get the actual image
-                    $productImg = $productImg->getFullPath(); // Get image path if needed
+                    $productImg = $productImages[0]->getImage();
+                    $productImg = $productImg->getFullPath();
                 }
                 return new JsonResponse([
                     "id" => $productId,
@@ -447,6 +467,84 @@ class ItemsControlller extends BaseController
             } else {
                 return new Response('Supplier not found', 404);
             }
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    #[Route('/items/image/upload', name: 'items-image-upload', methods: ['GET', 'POST'])]
+    #[IsGranted("IS_AUTHENTICATED")]
+    public function imageUploadAction(Request $request): JsonResponse
+    {
+        $files = $request->files->all()['images'] ?? null;
+        if (!$files) {
+            return new JsonResponse(['error' => 'No files provided'], 400);
+        }
+        
+        $results = [];
+        try {
+            $folder = AssetFolder::getByPath("/product-images");
+            if (!$folder) {
+                $folder = new AssetFolder();
+                $folder->setParentId(1);
+                $folder->setKey("product-images");
+                $folder->save();
+            }
+            
+            foreach ($files as $file) {
+                if (!$file->isValid()) {
+                    continue;
+                }
+                
+                $originalFilename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $baseName = pathinfo($originalFilename, PATHINFO_FILENAME);
+                $uniqueFilename = $baseName . '-' . time() . '-' . rand(1000, 9999) . '.' . $extension;
+                
+                $image = new Image();
+                $image->setParent($folder);
+                $image->setFilename($uniqueFilename);
+                $image->setData(file_get_contents($file->getPathname()));
+                $image->save();
+                
+                $hotspotImage = new \Pimcore\Model\DataObject\Data\Hotspotimage();
+                $hotspotImage->setImage($image);
+                
+                $results[] = [
+                    'id' => $image->getId(),
+                    'fullPath' => $image->getFullPath()
+                ];
+            }
+            
+            return new JsonResponse($results);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    #[Route('/items/image/delete', name: 'items-image-delete', methods: ['POST'])]
+    #[IsGranted("IS_AUTHENTICATED")]
+    public function imageDeleteAction(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $assetId = $data['id'];
+
+        if (!$assetId) {
+            return new JsonResponse(['error' => 'Invalid asset ID'], 400);
+        }
+
+        $asset = Image::getById((int) $assetId);
+        if (!$asset) {
+            return new JsonResponse(['error' => 'Asset not found'], 404);
+        }
+
+        try {
+            $asset->delete();
+            return new JsonResponse(['message' => 'Asset deleted successfully']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Failed to delete asset: ' . $e->getMessage()], 500);
         }
     }
 
