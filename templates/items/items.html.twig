@@ -167,34 +167,51 @@
                                                 </div>
                                             </td>
                                             <td data-label="Title">
-                                                <div class="text-muted">Ortner / 667788767</div>
+                                                <div class="text-muted">Item No / {{ product.itemno }}</div>
                                                 <div><strong>{{ product.name }}</strong>
-                                                    {% if loop.index is divisible by(3) %}
+                                                    {% if product.itemType == "Item-Set" %}
                                                     <span class="badge bg-teal text-teal-fg">{{ "SET"|trans }}</span>
-                                                    {% elseif loop.index is divisible by(2) %}
+                                                    {% elseif product.itemType == "Component Item" %}
                                                     <span class="badge bg-azure text-azure-fg">{{ "COMP"|trans }}</span>
                                                     {% else %}
                                                     {% endif %}
                                                 </div>
-                                                <div class="text-secondary">{{ product.description }}</div>
-                                                <div class="tags-list mt-1">
-                                                    {% for tag in product.tags %}
-                                                        <span class="tag"> {{ tag }}<a href="#" class="btn-close"></a></span>
-                                                    {% endfor %}
-                                                    {# <span class="tag"> Tag 2<a href="#" class="btn-close"></a></span>
-                                                    <span class="tag"> Tag 3<a href="#" class="btn-close"></a></span> #}
-                                                </div>
-                                                <div class="text-secondary small mt-1">
-                                                    {{ "Compatible with"|trans }}: <a href="" target="_blank">Artikelname Supersepp 2000 Deluxe</a>
-                                                </div>
+                                                {% if product.description %}
+                                                    <div class="text-secondary">{{ product.description }}</div>
+                                                {% endif %}
+                                                {% if product.tags %}
+                                                    <div class="tags-list mt-1">
+                                                        {% for tag in product.tags %}
+                                                            <span class="tag"> 
+                                                                {{ tag }}
+                                                                {# <a href="#" class="btn-close"></a> #}
+                                                            </span>
+                                                        {% endfor %}
+                                                        {# <span class="tag"> Tag 2<a href="#" class="btn-close"></a></span>
+                                                        <span class="tag"> Tag 3<a href="#" class="btn-close"></a></span> #}
+                                                    </div>
+                                                {% endif %}
+                                                {% if product.compatible_product %}
+                                                    <div class="text-secondary small mt-1">
+                                                        {{ "Compatible with"|trans }}: <a href="{{ path('items-create', { id: product.compatible_product.id }) }}" target="_blank">{{ product.compatible_product.name }}</a>
+                                                    </div>
+                                                {% endif %}
 
                                             </td>
                                             <td class="text-secondary" data-label="Role">
                                                 <div class="">
-                                                    <span class="badge badge-outline text-blue">Murnau: 24</span>
+                                                    {% if product.inventories %}
+                                                        {% set total = 0 %}
+                                                        {% for inventory in product.inventories %}
+                                                            {% set total = total + inventory.Amount %}
+                                                            <span class="badge badge-outline text-blue">{{ inventory.Location.getName() }}: {{ inventory.Amount }}</span>
+                                                        {% endfor %}
+                                                        <span class="badge badge-outline text-bg-blue ">ALL: {{ total }}</span>
+                                                    {% endif %}
+                                                    {# <span class="badge badge-outline text-blue">Murnau: 24</span>
                                                     <span class="badge badge-outline text-blue">München: 2</span>
                                                     <span class="badge badge-outline text-blue">Innsbruck: 0</span>
-                                                    <span class="badge badge-outline text-bg-blue ">ALL: 26</span>
+                                                    <span class="badge badge-outline text-bg-blue ">ALL: 26</span> #}
                                                 </div>
                                             </td>
                                             <td class="text-secondary" data-label="Role">
@@ -215,6 +232,18 @@
                                                 <div class="btn-list flex-nowrap">
                                                     <a href="{{ path('items-create', { id: product.id }) }}" class="btn btn-icon btn-outline-blue">
                                                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+                                                    </a>
+                                                </div>
+                                                <div class="btn-list flex-nowrap">
+                                                    <a href="javascript:;" class="btn btn-icon btn-outline-blue mt-2" data-bs-toggle="modal" data-bs-target="#deleteModal" data-product-id="{{ product.id }}">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-trash">
+                                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                                            <path d="M4 7l16 0"/>
+                                                            <path d="M10 11l0 6"/>
+                                                            <path d="M14 11l0 6"/>
+                                                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                                                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                                                        </svg>
                                                     </a>
                                                 </div>
                                             </td>
@@ -288,6 +317,25 @@
                                 </table>
                             </div>
 
+                            <!-- Delete Confirmation Modal -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure you want to delete this product?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <ul class="pagination mt-3">
                                 <li class="page-item {{ currentPage > 1 ? '' : 'disabled' }}">
@@ -325,4 +373,36 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let productId;
+
+            document.querySelectorAll("[data-bs-target='#deleteModal']").forEach(button => {
+                button.addEventListener("click", function () {
+                    productId = this.getAttribute("data-product-id");
+                });
+            });
+
+            // Handle delete action
+            document.getElementById("confirmDelete").addEventListener("click", function () {
+                fetch(`/delete-product/${productId}`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert("Failed to delete the product.");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
+            });
+        });
+</script>
 {% endblock %}

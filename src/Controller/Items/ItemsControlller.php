@@ -5,6 +5,7 @@ namespace App\Controller\Items;
 use App\Controller\BaseController;
 use App\Model\Customer;
 use Exception;
+use Pimcore\Db;
 use Pimcore\Model\Asset;
 use Pimcore\Model\Asset\Folder as AssetFolder;
 use Pimcore\Model\Asset\Image;
@@ -60,6 +61,7 @@ class ItemsControlller extends BaseController
 
         $products = [];
         $allProducts = Product::getList();
+        $db = Db::get();
         
         if(!empty($searchTerm)){
             $allProducts->setCondition("Itemname LIKE ?", ["%$searchTerm%"]);
@@ -75,29 +77,58 @@ class ItemsControlller extends BaseController
         }
 
 
-        switch ($sort) {
-            case 'price_asc':
-                $allProducts->setOrderKey("price");
-                $allProducts->setOrder("ASC");
-                break;
-            case 'price_desc':
-                $allProducts->setOrderKey("price");
-                $allProducts->setOrder("DESC");
-                break;
-            // case 'inventory_asc':
-            //     $allProducts->setOrderKey("inventory");
-            //     $allProducts->setOrder("ASC");
-            //     break;
-            // case 'inventory_desc':
-            //     $allProducts->setOrderKey("inventory");
-            //     $allProducts->setOrder("DESC");
-            //     break;
+        // Sorting
+        if (in_array($sort, ['inventory_asc', 'inventory_desc'])) {
+            $order = ($sort === 'inventory_asc') ? 'ASC' : 'DESC';
+        
+            // Fetch product IDs sorted by total inventory
+            $query = "
+                SELECT p.oo_id, COALESCE(SUM(pp.amount), 0) AS total_inventory
+                FROM object_product AS p
+                LEFT JOIN object_productprice AS pp ON pp.product__id = p.oo_id
+                GROUP BY p.oo_id
+                ORDER BY total_inventory $order;
+            ";
+            $sortedProductIds = array_column($db->fetchAllAssociative($query), 'oo_id');
+        
+            // Fetch products normally
+            $allProductsArray = iterator_to_array($allProducts);
+            
+            // Map products by ID for reordering
+            $productsById = [];
+            foreach ($allProductsArray as $product) {
+                $productsById[$product->getId()] = $product;
+            }
+        
+            // Reorder the products based on sortedProductIds
+            $sortedProducts = [];
+            foreach ($sortedProductIds as $id) {
+                if (isset($productsById[$id])) {
+                    $sortedProducts[] = $productsById[$id];
+                }
+            }
+        
+            $allProducts = $sortedProducts;
+        } else {
+            // Apply normal sorting
+            switch ($sort) {
+                case 'price_asc':
+                    $allProducts->setOrderKey("price")->setOrder("ASC");
+                    break;
+                case 'price_desc':
+                    $allProducts->setOrderKey("price")->setOrder("DESC");
+                    break;
+            }
         }
 
         $totalProducts = count($allProducts);
         $totalPages = max(1, ceil($totalProducts / $limit));
 
-        $allProducts->setLimit($limit)->setOffset($offset);
+        if((in_array($sort, ['inventory_asc', 'inventory_desc']))) {
+            $allProducts = array_slice($allProducts, $offset, $limit);
+        } else {
+            $allProducts->setLimit($limit)->setOffset($offset);
+        }
 
         // fields for populating on the items page
         foreach($allProducts as $item) {
@@ -113,12 +144,25 @@ class ItemsControlller extends BaseController
                 $firstImage = $imageGallery->getItems()[0]->getImage()->getFullPath();
             }
 
+            $compatibleProduct = null;
+            $compatibleProducts = $item->getCompatibleProducts();
+            if(count($compatibleProducts) > 0 ) {
+                $compatibleProduct = [
+                    "id" => $item->getCompatibleProducts()[0]->getId(),
+                    "name" => $item->getCompatibleProducts()[0]->getItemname()
+                ];
+            }
+
             $product = [
                 "id" => $item->getId(),
+                "itemno" => $item->getItemNo(),
                 "name" => $item->getItemname(),
                 "image" => $firstImage,
                 "description" => $item->getShortDescription(),
-                "tags" => $tags
+                "tags" => $tags,
+                "compatible_product" => $compatibleProduct,
+                "itemType" => $item->getItemType(),
+                "inventories" => $item->getInventories()
             ];
 
             $products[] = $product;
@@ -315,10 +359,12 @@ class ItemsControlller extends BaseController
                 return $this->redirectToRoute('items-create');
             } else {
                 $dropdownFields = [];
-                
+                $addedKeys = []; // Tracking added dropdown field names to prevent duplicates
+            
                 $product = new Product();
                 $productClass = \Pimcore\Model\DataObject\ClassDefinition::getByName("Product");
                 $productFields = $productClass->getFieldDefinitions();
+            
                 foreach ($productFields as $field) {
                     if (in_array(get_class($field), [
                         ManyToOneRelation::class,
@@ -326,85 +372,114 @@ class ItemsControlller extends BaseController
                         Select::class,
                         Fieldcollections::class
                     ])) {
+                        // Handling Select Fields
                         if ($field instanceof Select) {
-                            if ($field->getOptionsProviderData()) {
-                                $options = \Pimcore\Model\DataObject\Service::getOptionsForSelectField($product, $field->getName());
-                                $options = array_keys($options);
-                            } else {
-                                $options = array_column($field->getOptions(), "key");
+                            $fieldName = $field->getName();
+                            if (!isset($addedKeys[$fieldName])) {
+                                if ($field->getOptionsProviderData()) {
+                                    $options = \Pimcore\Model\DataObject\Service::getOptionsForSelectField($product, $fieldName);
+                                    $options = array_keys($options);
+                                } else {
+                                    $options = array_column($field->getOptions(), "key");
+                                }
+                                $dropdownFields[] = [
+                                    $fieldName => $options ?? []
+                                ];
+                                $addedKeys[$fieldName] = true;
                             }
-                            $dropdownFields[] = [
-                                $field->getName() => $options ?? []
-                            ];
                         }
-                        if (in_array(get_class($field), [
-                            ManyToOneRelation::class,
-                            ManyToManyObjectRelation::class
-                        ])) {
+            
+                        // Handling Relations (ManyToOne / ManyToMany)
+                        if (in_array(get_class($field), [ManyToOneRelation::class, ManyToManyObjectRelation::class])) {
                             $allowedClasses = $field->getClasses();
                             foreach ($allowedClasses as $className) {
-                                $classes = $className["classes"];
-                                $fetchedClass = "Pimcore\\Model\\DataObject\\" . $classes;
-                                if (class_exists($fetchedClass)) {
-                                    $listClass = $fetchedClass . "\\Listing";
-                                    $objectList = new $listClass();
-                                    $objects = $objectList->load();
-                                    $objectNames = [];
-                                    foreach ($objects as $object) {
-                                        $objectId = $object->getId();
-                                        if ($classes == "Product") {
-                                            $objectName = $object->getItemname() ?: $object->getKey();
-                                        } else {
-                                            $objectName = $object->getName() ?: $object->getKey();
+                                $classType = $className["classes"];
+                                if (!isset($addedKeys[$classType])) {
+                                    $fetchedClass = "Pimcore\\Model\\DataObject\\" . $classType;
+                                    if (class_exists($fetchedClass)) {
+                                        $listClass = $fetchedClass . "\\Listing";
+                                        $objectList = new $listClass();
+                                        $objects = $objectList->load();
+                                        $objectNames = [];
+            
+                                        foreach ($objects as $object) {
+                                            $objectId = $object->getId();
+                                            $objectName = ($classType == "Product") ? 
+                                                ($object->getItemname() ?: $object->getKey()) : 
+                                                ($object->getName() ?: $object->getKey());
+            
+                                            $objectNames[] = [
+                                                $objectId => $objectName
+                                            ];
                                         }
-                                        $objectNames[] = [
-                                            $objectId => $objectName
+            
+                                        $dropdownFields[] = [
+                                            $classType => $objectNames
                                         ];
+                                        $addedKeys[$classType] = true;
                                     }
-                                    $dropdownFields[] = [
-                                        $classes => $objectNames
-                                    ];
                                 }
                             }
                         }
+            
+                        // Handling Fieldcollections (Suppliers)
                         if ($field instanceof Fieldcollections && $field->getName() == "suppliers") {
-                            $suppliers = Supplier::getList();
-                            foreach ($suppliers as $supplier) {
-                                $supplierId = $supplier->getId();
-                                $supplierName = $supplier->getName();
+                            if (!isset($addedKeys["Suppliers"])) {
+                                $suppliers = Supplier::getList();
+                                $supplierData = [];
+            
+                                foreach ($suppliers as $supplier) {
+                                    $supplierData[$supplier->getId()] = $supplier->getName();
+                                }
+            
                                 $dropdownFields[] = [
-                                    "Suppliers" => [
-                                        $supplierId => $supplierName
-                                    ]
+                                    "Suppliers" => $supplierData
                                 ];
+                                $addedKeys["Suppliers"] = true;
                             }
                         }
                     }
                 }
-                // Add Warehouses to dropdown fields.
-                $warehouses = \Pimcore\Model\DataObject\Warehouse::getList();
-                foreach ($warehouses as $warehouse) {
-                    $warehouseId = $warehouse->getId();
-                    $warehouseName = $warehouse->getName();
+
+                // Item set products
+                // $itemSetProducts = [];
+                // foreach($dropdownFields as $name => $value) {
+                //     if($name == "Product") {
+                //         $itemSetProducts = $value;
+                //         foreach($itemSetProducts as $product) {
+                //             if($product[])
+                //         }
+                //     }
+                // }
+            
+                // Handling Warehouses
+                if (!isset($addedKeys["Warehouses"])) {
+                    $warehouses = \Pimcore\Model\DataObject\Warehouse::getList();
+                    $warehouseData = [];
+            
+                    foreach ($warehouses as $warehouse) {
+                        $warehouseData[$warehouse->getId()] = $warehouse->getName();
+                    }
+            
                     $dropdownFields[] = [
-                        "Warehouses" => [
-                            $warehouseId => $warehouseName
-                        ]
+                        "Warehouses" => $warehouseData
                     ];
+                    $addedKeys["Warehouses"] = true;
                 }
-
+            
                 $productFieldValues = [];
-
-                if($id) {
+                if ($id) {
                     $product = Product::getById($id);
                 }
+            
+                return $this->render('items/items_create.html.twig', [
+                    "dropdownFields" => $dropdownFields,
+                    "editMode"  => ($id !== null),
+                    "product"   => $id ? $product : null
+                ]);
             }
             
-            return $this->render('items/items_create.html.twig', [
-                "dropdownFields" => $dropdownFields,
-                "editMode"  => ($id !== null),
-                "product"   => $id ? $product : null
-            ]);
+            
         } catch (\Exception $e) {
             echo $e->getMessage();
             return new Response("Problem adding product", 500);
@@ -545,6 +620,50 @@ class ItemsControlller extends BaseController
             return new JsonResponse(['message' => 'Asset deleted successfully']);
         } catch (\Exception $e) {
             return new JsonResponse(['error' => 'Failed to delete asset: ' . $e->getMessage()], 500);
+        }
+    }
+
+    #[Route('/items/inventory/delete', name: 'items-inventory-delete', methods: ['POST'])]
+    #[IsGranted("IS_AUTHENTICATED")]
+    public function imageInventoryAction(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['inventoryId']) || empty($data['inventoryId'])) {
+            return new JsonResponse(['success' => false, 'message' => 'Invalid inventory ID'], 400);
+        }
+
+        $inventoryId = (int) $data['inventoryId'];
+        $inventory = ProductPrice::getById($inventoryId);
+
+        if (!$inventory) {
+            return new JsonResponse(['success' => false, 'message' => 'Inventory item not found'], 404);
+        }
+
+        try {
+            $inventory->delete();
+            return new JsonResponse(['success' => true, 'message' => 'Inventory deleted successfully']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['success' => false, 'message' => 'Failed to delete inventory: ' . $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * @Route("/delete-product/{id}", methods={"DELETE"})
+     */
+    public function deleteProductAction($id, Request $request): JsonResponse
+    {
+        $product = Product::getById($id);
+
+        if (!$product) {
+            return new JsonResponse(["success" => false, "message" => "Product not found"], 404);
+        }
+
+        try {
+            $product->delete();
+            return new JsonResponse(["success" => true, "message" => "Product deleted successfully"]);
+        } catch (\Exception $e) {
+            return new JsonResponse(["success" => false, "message" => "Error deleting product"], 500);
         }
     }
 

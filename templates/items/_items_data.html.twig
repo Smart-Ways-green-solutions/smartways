@@ -255,9 +255,11 @@
                                 {% if key == 'Product' %}
                                     {# <li><strong>{{ key }}:</strong></li> #}
                                     <ul>
-                                        {% for product in value %}
-                                            {% for id, name in product %}
-                                                <option value="{{ id }}">{{ name }}</option>
+                                        {% for prod in value %}
+                                            {% for id, name in prod %}
+                                                {% if not editMode or (product is defined and product.getId() != id) %}
+                                                    <option value="{{ id }}">{{ name }}</option>
+                                                {% endif %}
                                             {% endfor %}
                                         {% endfor %}
                                     </ul>

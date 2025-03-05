@@ -224,35 +224,8 @@
             </div>
 
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="mb-3">
-                            <label class="form-label">{{ "Amount"|trans }}</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">{{ "Location"|trans }}</button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Warehouse 1</a>
-                                    <a class="dropdown-item" href="#">Warehouse 2</a>
-                                    <a class="dropdown-item" href="#">Warehouse 3</a>
-                                    <a class="dropdown-item" href="#">Warehouse 4</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal-body">
                 <div class="mb-3">
-                    <label class="form-label">{{ "Comment"|trans }}</label>
-                    <input type="text" class="form-control" 
-                    {# name="example-text-input" #}
-                    >
+                    <p>Are you sure you want to remove this stock from inventory?</p>
                 </div>
             </div>
 
@@ -260,7 +233,7 @@
                 <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                     {{ "Cancel"|trans }}
                 </a>
-                <a href="#" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
+                <a href="#" id="delete-stock-btn" class="btn btn-danger ms-auto" data-bs-dismiss="modal">
                     {{ "Remove from inventory"|trans }}
                 </a>
             </div>
@@ -284,6 +257,7 @@
         newRow.querySelector("input.hidden-amount").setAttribute("name", "inventories[" + inventoryIndex + "][Amount]");
         newRow.querySelector("input.hidden-location").setAttribute("name", "inventories[" + inventoryIndex + "][Location]");
         newRow.querySelector("input.hidden-comment").setAttribute("name", "inventories[" + inventoryIndex + "][Comment]");
+        newRow.querySelector("input.hidden-id").setAttribute("name", "inventories[" + inventoryIndex + "][id]");
 
         newRow.querySelector("input.hidden-amount").value = inventoryAmount;
         newRow.querySelector("input.hidden-location").value = inventoryLocation.value;
@@ -329,6 +303,45 @@ document.getElementById("save-edit-btn").addEventListener("click", function () {
     row.querySelector("input.hidden-amount").value = newAmount;
     row.querySelector("input.hidden-location").value = newLocation.value;
     row.querySelector("input.hidden-comment").value = newComment;
+});
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn-danger")) {
+        let row = event.target.closest("tr");
+        let id = row.querySelector(".hidden-id").value;
+
+        // Store the row reference and ID in the delete button's dataset
+        let deleteBtn = document.getElementById("delete-stock-btn");
+        deleteBtn.dataset.rowIndex = row.rowIndex;
+        deleteBtn.dataset.inventoryId = id;
+    }
+});
+
+document.getElementById("delete-stock-btn").addEventListener("click", function () {
+    let rowIndex = this.dataset.rowIndex;
+    let inventoryId = this.dataset.inventoryId;
+    let table = document.getElementById("stock-table-body");
+    let row = table.rows[rowIndex - 1];
+
+    if (inventoryId) {
+        fetch('/items/inventory/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ inventoryId: inventoryId })
+        })
+        .then(response => {
+            if (response.ok) {
+                row.remove();
+            } else {
+                console.error("Failed to delete stock");
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    } else {
+        row.remove(); // If there's no ID, just remove the row from the UI
+    }
 });
 
 document.getElementById("modal-add").addEventListener("show.bs.modal", function () {

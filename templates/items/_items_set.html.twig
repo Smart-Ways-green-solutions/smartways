@@ -6,7 +6,7 @@
             {% for key, value in item %}
                 {% if key == 'itemType' %}
                     {% for type in value %}
-                        <option value="{{ type }}">{{ type }}</option>
+                        <option value="{{ type }}" {{ editMode and product.getItemType() and product.getItemType() == type ? 'selected' : '' }}>{{ type }}</option>
                         {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
                     {% endfor %}
                 {% endif %}
@@ -18,7 +18,7 @@
     </select>
 </div>
 
-<div class="col-12">
+<div class="col-12 item-set-block">
 
     <div class="card">
         <div class="card-header">
@@ -78,9 +78,11 @@
                         {% for item in dropdownFields %}
                             {% for key, value in item %}
                                 {% if key == 'Product' %}
-                                    {% for product in value %}
-                                        {% for id, name in product %}
-                                            <option value="{{ id }}">{{ name }}</option>
+                                    {% for prod in value %}
+                                        {% for id, name in prod %}
+                                            {% if not editMode or (product is defined and product.getId() != id) %}
+                                                <option value="{{ id }}">{{ name }}</option>
+                                            {% endif %}
                                         {% endfor %}
                                     {% endfor %}
                                 {% endif %}
@@ -107,6 +109,20 @@
     document.addEventListener("DOMContentLoaded", function () {
         var productDropdown = document.querySelector("select[id='select-item']");
         var addProductBtn = document.getElementById('add-item-to-set');
+        var itemTypeDropdown = document.querySelector('select[name="itemType"]');
+
+        function toggleItemBlockVisibility() {
+            var itemTypeValue = itemTypeDropdown.value;
+            if(itemTypeValue == "Item-Set") {
+                document.querySelector(".item-set-block").style.display = "block";
+            } else {
+                document.querySelector(".item-set-block").style.display = "none";
+            }
+        }
+
+        toggleItemBlockVisibility();
+
+        itemTypeDropdown.addEventListener("change", toggleItemBlockVisibility);
 
         function toggleButtonVisibility() {
             var productId = productDropdown.value; 
@@ -123,11 +139,12 @@
 
         addProductBtn.addEventListener("click", function () {
             var productId = productDropdown.value;
+            var selectedOption = productDropdown.querySelector(`option[value="${productId}"]`);
 
             fetch("/items/item-info", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"  // Fix: Add content type
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ productId: productId })
             })
@@ -139,10 +156,8 @@
             })
             .then(data => {
                 var productTemplate = document.querySelector("#product-template").content.cloneNode(true);
-
                 var components = document.querySelector(".item-set");
 
-                // Fix: Check if data contains the expected fields
                 productTemplate.querySelector(".product-name").textContent = data.name;
                 productTemplate.querySelector(".product-description").textContent = data.shortDescription;
 
@@ -151,20 +166,45 @@
                 hiddenInput.name = "components[]";
                 hiddenInput.value = productId;
 
-                // Append the hidden input to the new product block
                 var newProduct = productTemplate.querySelector(".list-group-item");
                 newProduct.appendChild(hiddenInput);
 
                 components.appendChild(productTemplate);
+
+                // Remove the added item from the dropdown
+                if (selectedOption) {
+                    selectedOption.remove();
+                }
+
+                // Hide the add button since nothing is selected now
+                toggleButtonVisibility();
             })
             .catch(err => {
                 console.error("Error:", err);
                 alert("An error occurred while fetching the product data.");
             });
         });
+
+
         document.querySelector(".item-set").addEventListener("click", function (event) {
-            if (event.target.closest(".delete-product")) {
-                event.target.closest(".list-group-item").remove();
+            var deleteBtn = event.target.closest(".delete-product");
+
+            if (deleteBtn) {
+                var productItem = deleteBtn.closest(".list-group-item");
+                var productId = productItem.querySelector("input[name='components[]']").value;
+                var productName = productItem.querySelector(".product-name").textContent;
+
+                // Remove from the list
+                productItem.remove();
+
+                // Restore the removed product back to the dropdown
+                var newOption = document.createElement("option");
+                newOption.value = productId;
+                newOption.textContent = productName;
+                productDropdown.appendChild(newOption);
+
+                // Hide the add button since nothing is selected
+                toggleButtonVisibility();
             }
         });
     })

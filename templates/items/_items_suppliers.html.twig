@@ -261,71 +261,66 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var supplierDropdown = document.querySelector("select[id='suppliers-list']");
-        var addSupplierBtn = document.getElementById('add-supplier');
+    var supplierDropdown = document.getElementById("suppliers-list");
+    var addSupplierBtn = document.getElementById('add-supplier');
 
-        function toggleButtonVisibility() {
-            var supplierId = supplierDropdown.value; 
-            if (supplierId) {
-                addSupplierBtn.classList.remove("d-none");
-            } else {
-                addSupplierBtn.classList.add("d-none");
+    // Get all supplier names already present in the list
+    var selectedSuppliers = document.querySelectorAll('.suppliers .supplier-name');
+    var supplierNames = Array.from(selectedSuppliers).map(supplier => supplier.textContent.trim());
+
+    function customizeDropdownValues() {
+        for (let i = supplierDropdown.options.length - 1; i >= 0; i--) {
+            let optionText = supplierDropdown.options[i].text.trim();
+            if (supplierNames.includes(optionText)) {
+                supplierDropdown.remove(i);
             }
         }
+    }
 
-        toggleButtonVisibility();
+    customizeDropdownValues();
 
-        supplierDropdown.addEventListener("change", toggleButtonVisibility);
+    function toggleButtonVisibility() {
+        var supplierId = supplierDropdown.value;
+        addSupplierBtn.classList.toggle("d-none", !supplierId);
+    }
 
-        addSupplierBtn.addEventListener("click", function () {
-            var supplierId = supplierDropdown.value;
+    toggleButtonVisibility();
+    supplierDropdown.addEventListener("change", toggleButtonVisibility);
 
-            /*var supplierTemplate = document.querySelector("#supplier-template").content.cloneNode(true);
+    addSupplierBtn.addEventListener("click", function () {
+        var supplierId = supplierDropdown.value;
+        
+        fetch("/items/supplier-info", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ supplierId: supplierId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            var supplierTemplate = document.querySelector("#supplier-template").content.cloneNode(true);
+            var suppliersContainer = document.querySelector(".suppliers");
+            var expandSupplierBtn = supplierTemplate.querySelector(".supplier-name");
 
-            var suppliers = document.querySelector(".suppliers");
+            supplierTemplate.querySelector(".accordion-collapse").id = "supplier-" + data.id;
+            expandSupplierBtn.setAttribute("data-bs-target", "#supplier-" + data.id);
+            expandSupplierBtn.textContent = data.name;
 
-            // Fix: Check if data contains the expected fields
-            supplierTemplate.querySelector(".supplier-name").textContent = data.name;
-            supplierTemplate.querySelector(".product-description").textContent = data.shortDescription;
-
-            suppliers.appendChild(supplierTemplate);*/
-
-            fetch("/items/supplier-info", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"  // Fix: Add content type
-                },
-                body: JSON.stringify({ supplierId: supplierId })
-            })
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return res.json();
-            })
-            .then(data => {
-                var supplierTemplate = document.querySelector("#supplier-template").content.cloneNode(true);
-
-                var suppliers = document.querySelector(".suppliers");
-                var expandSupplierBtn = supplierTemplate.querySelector(".supplier-name");
-                supplierTemplate.querySelector("#collapse-1").setAttribute("id", "supplier-"+data.id);
-                expandSupplierBtn.setAttribute("data-bs-target", "#supplier-"+data.id);
-
-                // Fix: Check if data contains the expected fields
-                expandSupplierBtn.textContent = data.name;
-                /*supplierTemplate.querySelector(".product-description").textContent = data.shortDescription;*/
-                
-                supplierTemplate.querySelectorAll("input").forEach(input => {
-                    let name = input.getAttribute("name");
-                    input.setAttribute("name", name.replace("suppliers[]", `suppliers[${data.id}]`));
-                });
-
-                suppliers.appendChild(supplierTemplate);
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                alert("An error occurred while fetching the supplier data.");
+            supplierTemplate.querySelectorAll("input").forEach(input => {
+                let name = input.getAttribute("name");
+                input.setAttribute("name", name.replace("suppliers[]", `suppliers[${data.id}]`));
             });
+
+            suppliersContainer.appendChild(supplierTemplate);
+
+            // Add new supplier to the supplierNames array
+            supplierNames.push(data.name.trim());
+            customizeDropdownValues();
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            alert("An error occurred while fetching the supplier data.");
         });
     });
+});
+
 </script>
