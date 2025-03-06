@@ -12,7 +12,9 @@ Run install.sh
 
 script to create user: docker-compose exec php bin/console app:create-admin-user
 ```
+Deployment:-
 
+Run deployPim.sh
 
 - Point your virtual host to `my-project/public`
 - Open https://your-host/admin in your browser
