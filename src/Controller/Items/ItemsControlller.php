@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-
+use Pimcore\Model\Element\DuplicateFullPathException;
 use function PHPUnit\Framework\isNull;
 
 class ItemsControlller extends BaseController
@@ -56,7 +56,7 @@ class ItemsControlller extends BaseController
         $sort = $request->query->get("sort");
 
         $page = max(1, $request->query->getInt("page"));
-        $limit = 2;
+        $limit =10;
         $offset = ($page - 1) * $limit;
 
         $products = [];
@@ -235,8 +235,9 @@ class ItemsControlller extends BaseController
                     $product = new Product();
                     $product->setPath("/Products");
                     $productName = $request->get("Itemname");
-                    if($productName) {
-                        $product->setKey($productName);
+                    $validKey  = \Pimcore\Model\Element\Service::getValidKey($productName,'object');
+                    if($validKey) {
+                        $product->setKey($validKey);
                     }
                     $productsFolder = Folder::getByPath("/Products");
                     $product->setParentId($productsFolder->getId());
@@ -355,8 +356,12 @@ class ItemsControlller extends BaseController
                 }
                 
                 $this->addFlash('success', 'Product saved successfully!');
-
-                return $this->redirectToRoute('items-create');
+                if($id){
+                    return $this->redirectToRoute('items-create', ['id' => $id]);
+                }else{
+                    return $this->redirectToRoute('items-create',['id' => $product->getId()]);
+                }
+               
             } else {
                 $dropdownFields = [];
                 $addedKeys = []; // Tracking added dropdown field names to prevent duplicates
@@ -467,7 +472,6 @@ class ItemsControlller extends BaseController
                     $addedKeys["Warehouses"] = true;
                 }
             
-                $productFieldValues = [];
                 if ($id) {
                     $product = Product::getById($id);
                 }
@@ -481,8 +485,24 @@ class ItemsControlller extends BaseController
             
             
         } catch (\Exception $e) {
-            echo $e->getMessage();
-            return new Response("Problem adding product", 500);
+            if($e instanceof DuplicateFullPathException){
+                $this->addFlash('error', 'Product with the same name already exists');
+            }else{  
+                $this->addFlash('error', 'Error saving product: ' . $e->getMessage());
+            }
+
+            if($id){
+                return $this->redirectToRoute('items-create', ['id' => $id]);
+            }else{
+                if($product && $product->getId()){
+                    return $this->redirectToRoute('items-create',['id' => $product->getId()]);
+                }else{
+                    return $this->redirectToRoute('items-create');
+                }
+             
+            }
+
+            
         }
     }
 

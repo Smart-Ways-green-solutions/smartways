@@ -59,6 +59,15 @@ Encore
     // enables Sass/SCSS support
     .enableSassLoader()
 
+    .copyFiles({
+        from: 'node_modules/@tabler/core/dist/libs/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
+    .copyFiles({
+        from: 'node_modules/@tabler/core/dist/libs/tinymce/plugins',
+        to:'plugins/[path]/[name].[ext]'
+    })
+
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
 

@@ -20,14 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
         menubar: false,
         statusbar: false,
         plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table paste code help wordcount'
+            'autolink',
+             'lists' ,
+             'link', 'image', 'charmap', 'preview', 'anchor',
+            'visualblocks', 'code', 'fullscreen',
+            'media', 'table',  'code', 'help', 'wordcount'
         ],
-        toolbar: 'undo redo | formatselect | ' +
-            'bold italic backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat',
+      
+        toolbar: 'undo redo | bold italic underline strikethrough styleselect | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist checklist | forecolor backcolor casechange permanentpen formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media pageembed template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
         content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif; font-size: 14px; -webkit-font-smoothing: antialiased; }'
     }
     if (localStorage.getItem("tablerTheme") === 'dark') {

@@ -1,11 +1,11 @@
 <div class="mb-3">
     {# <label class="form-label required">Artikelnummer</label> #}
-    <input type="text" class="form-control" name="ItemNo" placeholder="{{ "ItemNo"|trans }}" value="{{ editMode ? product.getItemno() : '' }}">
+    <input type="text" class="form-control" required name="ItemNo" placeholder="{{ "ItemNo*"|trans }}" value="{{ editMode ? product.getItemno() : '' }}">
 </div>
 
 <div class="mb-3">
     {# <label class="form-label required">Produktbezeichnung</label> #}
-    <input type="text" class="form-control" name="Itemname" placeholder="{{ "Item name"|trans }}" value="{{ editMode ? product.getItemname() : '' }}">
+    <input type="text" class="form-control" required name="Itemname" placeholder="{{ "Item name*"|trans }}" value="{{ editMode ? product.getItemname() : '' }}">
 </div>
 
 <div class="mb-3">
@@ -87,15 +87,15 @@
 
         <fieldset class="form-fieldset">
             <div class="mb-3">
-                <label class="form-label">{{ "Price (with tax)"|trans }}</label>
-                <input type="text" name="price" class="form-control" autocomplete="off" value="{{ editMode ? product.getPrice() : '' }}">
+                <label class="form-label required">{{ "Price (with tax)"|trans }}</label>
+                <input type="text" required name="price" class="form-control" autocomplete="off" value="{{ editMode ? product.getPrice() : '' }}">
             </div>
 
             <div class="mb-3">
-                <select class="form-select" name="textType">
+                <select class="form-select" required name="textType">
                     {# <option value="">{{ "Regular tax"|trans }}</option>
                     <option value="">{{ "Reduced tax"|trans }}</option> #}
-                    <option value="">-Select-</option>
+                    <option value="">-Select</option>
                     {% for item in dropdownFields %}
                         {% for key, value in item %}
                             {% if key == 'textType' %}
@@ -316,17 +316,17 @@
 
 <div class="mb-3">
     <label class="form-label required">{{ "Size"|trans }}</label>
-    <input type="text" class="form-control" name="Size" placeholder="Größe" value="{{ editMode ? product.getSize() : '' }}">
+    <input type="text" class="form-control" required name="Size" placeholder="Größe" value="{{ editMode ? product.getSize() : '' }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Transport size"|trans }}</label>
-    <input type="text" class="form-control" name="TransportSize" placeholder="Transport-Größe" value="{{ editMode ? product.getTransportSize() : '' }}">
+    <input type="text" class="form-control" required name="TransportSize" placeholder="Transport-Größe" value="{{ editMode ? product.getTransportSize() : '' }}">
 </div>
 
 <div class="mb-3">
     <label class="form-label required">{{ "Transport note"|trans }}</label>
-    <input type="text" class="form-control" name="TransportNote" placeholder="Transport-Hinweis" value="{{ editMode ? product.getTransportNote() : '' }}">
+    <input type="text" class="form-control" required name="TransportNote" placeholder="Transport-Hinweis" value="{{ editMode ? product.getTransportNote() : '' }}">
 </div>
 
 <div class="mb-3">

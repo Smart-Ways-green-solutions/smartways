@@ -38,8 +38,3 @@ import '@tabler/core/dist/libs/nouislider/dist/nouislider.css';
 
 import './scripts'
 
-//import toast from 'bootstrap/js/src/toast';
-//window.toast = toast;
-
-//import popover from 'bootstrap/js/src/popover';
-//window.popover = popover;
