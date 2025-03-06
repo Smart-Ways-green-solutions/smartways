@@ -3,7 +3,7 @@ sudo cp .docker/supervisord.sample.conf .docker/supervisord.conf
 docker-compose up -d
 cat db.sql | docker-compose exec -T db mysql -u root -pROOT pimcore
 docker-compose exec php composer install
-docker-compose exec php bin/console pimcore:deployment:classes-rebuild
+docker-compose exec php bin/console pimcore:deployment:classes-rebuild -c
 sudo chown -R www-data:www-data var/* public/*
 docker-compose exec php bin/console assets:install public
 docker-compose exec php bin/console app:create-admin-user
