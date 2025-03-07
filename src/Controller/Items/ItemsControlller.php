@@ -446,16 +446,22 @@ class ItemsControlller extends BaseController
                     }
                 }
 
-                // Item set products
-                // $itemSetProducts = [];
-                // foreach($dropdownFields as $name => $value) {
-                //     if($name == "Product") {
-                //         $itemSetProducts = $value;
-                //         foreach($itemSetProducts as $product) {
-                //             if($product[])
-                //         }
-                //     }
-                // }
+                // Item set compatible products
+                $itemSetCompatible = [];
+                $productListing = Product::getList();
+                $productListing->setCondition("itemType != ?", "Item-Set");
+                
+                foreach($productListing as $product) {
+                    $productId = $product->getId();
+                    $productName = $product->getItemname();
+                    $itemSetCompatible[] = [
+                        $productId => $productName
+                    ];
+                }
+
+                $dropdownFields[] = [
+                    "Item-set" => $itemSetCompatible
+                ];
             
                 // Handling Warehouses
                 if (!isset($addedKeys["Warehouses"])) {
