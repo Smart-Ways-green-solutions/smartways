@@ -77,7 +77,7 @@
                         <option value="">-Select-</option>
                         {% for item in dropdownFields %}
                             {% for key, value in item %}
-                                {% if key == 'Product' %}
+                                {% if key == 'Item-set' %}
                                     {% for prod in value %}
                                         {% for id, name in prod %}
                                             {% if not editMode or (product is defined and product.getId() != id) %}
