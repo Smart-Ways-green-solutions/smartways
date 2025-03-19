@@ -13,7 +13,7 @@
 
 return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'dao' => NULL,
-   'id' => '7',
+   'id' => '3',
    'name' => 'TermSegmentBuilderDefinition',
    'title' => '',
    'description' => '',

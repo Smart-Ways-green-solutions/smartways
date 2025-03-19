@@ -15,7 +15,7 @@
 
 return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'dao' => NULL,
-   'id' => '6',
+   'id' => '2',
    'name' => 'CustomerSegment',
    'title' => '',
    'description' => '',

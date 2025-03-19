@@ -22,7 +22,7 @@
 
 return \Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'dao' => NULL,
-   'id' => '8',
+   'id' => '4',
    'name' => 'LinkActivityDefinition',
    'title' => '',
    'description' => '',
