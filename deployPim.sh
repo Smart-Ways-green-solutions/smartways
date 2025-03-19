@@ -1,7 +1,7 @@
 docker-compose exec php composer install
-docker-compose exec php bin/console bin/console ca:cl
-docker-compose exec php bin/console bin/console pi:ca:cl
-docker-compose exec php bin/console bin/console pim:dep:cla -c -vv
+docker-compose exec php bin/console ca:cl
+docker-compose exec php bin/console pi:ca:cl
+docker-compose exec php bin/console pim:dep:cla -c -vv
 sudo chown -R www-data:www-data var/* public/*
 docker-compose exec php bin/console assets:install public
 sudo rm -rf var/admin/*
