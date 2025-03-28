@@ -10,6 +10,7 @@ use Pimcore\Model\Asset;
 use Pimcore\Model\Asset\Folder as AssetFolder;
 use Pimcore\Model\Asset\Image;
 use Pimcore\Model\DataObject;
+use Pimcore\Model\DataObject\Category;
 use Pimcore\Model\DataObject\ClassDefinition;
 use Pimcore\Model\DataObject\ClassDefinition\Data\Fieldcollections;
 use Pimcore\Model\DataObject\ClassDefinition\Data\Hotspotimage;
@@ -51,6 +52,7 @@ class ItemsControlller extends BaseController
         $manufacturer = $request->query->get("manufacturer");
         $warehouse = $request->query->get("warehouse");
         $tag = $request->query->get("tag");
+        $category = $request->query->get("category");
 
         // sort
         $sort = $request->query->get("sort");
@@ -68,6 +70,9 @@ class ItemsControlller extends BaseController
         }
         if(!empty($manufacturer)){
             $allProducts->addConditionParam("Manufacturer__id = ?", ["$manufacturer"]);
+        }
+        if(!empty($category)){
+            $allProducts->addConditionParam("Category__id = ?", ["$category"]);
         }
         // if(!empty($warehouse)){
             
@@ -198,6 +203,11 @@ class ItemsControlller extends BaseController
             ];
         }
 
+        // Categories
+
+        $categoryListing = Category::getList();
+        $categories = $this->getCategoryTree($categoryListing);
+
         // var_dump($products);
 
         return $this->render('items/items.html.twig', [
@@ -208,8 +218,51 @@ class ItemsControlller extends BaseController
             "totalPages" => $totalPages,
             "warehouses" => $warehouses,
             "manufacturers" => $manufacturers,
-            "tags" => $tags
+            "tags" => $tags,
+            "categories" => $categories
         ]);
+    }
+
+    private function getCategoryTree($categories) {
+        $categoryTree = [];
+        foreach($categories as $category) {
+            // Only include categories where the parent is not another Category object
+            if (!$category->getParent() instanceof Category) {
+                $children = $category->getChildren();
+                
+                $categoryItem = [
+                    'category' => $category,
+                    'children' => []
+                ];
+                
+                // Recursively build children tree
+                if (count($children) > 0) {
+                    $categoryItem['children'] = $this->buildChildrenTree($children);
+                }
+                
+                $categoryTree[] = $categoryItem;
+            }
+        }
+        return $categoryTree;
+    }
+    
+    private function buildChildrenTree($children) {
+        $childTree = [];
+        foreach ($children as $child) {
+            $childItem = [
+                'category' => $child,
+                'children' => []
+            ];
+            
+            // Check if this child has its own children
+            $grandChildren = $child->getChildren();
+            if (count($grandChildren) > 0) {
+                $childItem['children'] = $this->buildChildrenTree($grandChildren);
+            }
+            
+            $childTree[] = $childItem;
+        }
+        return $childTree;
     }
 
     /**

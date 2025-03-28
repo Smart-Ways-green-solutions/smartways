@@ -73,6 +73,31 @@
 </div>
 
 <div class="mb-3">
+    <div class="form-label">{{ "Category"|trans }}</div>
+    <select class="form-select" name="Category">
+        {# <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option> #}
+        <option value="">-Select-</option>
+    {% for item in dropdownFields %}
+        {% for key, value in item %}
+            {% if key == 'Category' %}
+                {# <li><strong>{{ key }}:</strong></li> #}
+                <ul>
+                    {% for mitem in value %}
+                        {% for id, name in mitem %}
+                            <option value="{{ id }}" {{ editMode and product.getCategory() and product.getCategory().getId() == id ? 'selected' : '' }}>{{ name }}</option>
+                        {% endfor %}
+                        {# <li>{{ product }}</li>  Displays 'Test Data', 'testFromTemplate', 'Test Item' #}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    </select>
+</div>
+
+<div class="mb-3">
     {# <label class="form-label required">Produktbeschreibung kurz</label> #}
     <input type="text" class="form-control" name="shortDescription" placeholder="{{ "Short description"|trans }}" value="{{ editMode ? product.getShortDescription() : '' }}">
 </div>
