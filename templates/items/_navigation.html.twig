@@ -17,8 +17,14 @@
                 <div id="collapse-{{ item.category.id }}" class="accordion-collapse collapse" data-bs-parent="#{{ parent_id ?? 'accordion-example' }}">
                     <div class="accordion-body pt-0">
                         {% if item.children is not empty %}
-                            <div class="accordion" id="sub-accordion-{{ item.category.id }}">
-                                {{ _self.render_category_tree(item.children, 'sub-accordion-' ~ item.category.id) }}
+                            <div class='list-group list-group-flush'>
+                            {% for child in item.children  %}
+                                {% set queryParams = app.request.query.all()|merge({category: child.category.id}) %}
+                                <a href="{{ path('items', queryParams) }}" class="list-group-item list-group-item-action {% if app.request.get('category') == child.category.id %}fw-bolder text-decoration-underline{% endif %}">
+                                    {{ child.category.getKey() }}
+                                </a>
+                    
+                            {% endfor %}
                             </div>
                         {% endif %}
                     </div>
@@ -29,3 +35,4 @@
 
     {{ _self.render_category_tree(categories, null) }}
 </div>
+
