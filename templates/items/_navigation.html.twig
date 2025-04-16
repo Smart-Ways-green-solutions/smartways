@@ -1,5 +1,6 @@
 <div class="accordion" id="accordion-example">
     {% macro render_category_tree(categories, parent_id) %}
+        
         {% for item in categories %}
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading-{{ item.category.id }}">

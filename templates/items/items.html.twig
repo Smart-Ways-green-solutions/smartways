@@ -204,7 +204,12 @@
                                                         {% set total = 0 %}
                                                         {% for inventory in product.inventories %}
                                                             {% set total = total + inventory.Amount %}
-                                                            <span class="badge badge-outline text-blue">{{ inventory.Location.getName() }}: {{ inventory.Amount }}</span>
+                                                            {% if inventory.Location is not empty %}
+                                                                <span class="badge badge-outline text-blue">{{ inventory.Location.getName() }}: {{ inventory.Amount }}</span>
+                                                            {% else %}
+                                                                <span class="badge badge-outline text-blue">Location: {{ inventory.Amount }}</span>
+                                                            {% endif %}
+                                                           
                                                         {% endfor %}
                                                         <span class="badge badge-outline text-bg-blue ">ALL: {{ total }}</span>
                                                     {% endif %}
